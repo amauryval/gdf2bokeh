@@ -44,6 +44,7 @@ class BokehForMap:
             **{
                 "x": feature['geometry'].apply(lambda x: geometry_2_bokeh_format(x, 'x')).tolist(),
                 "y": feature['geometry'].apply(lambda x: geometry_2_bokeh_format(x, 'y')).tolist(),
+
             },
             **{
                 column: feature[column].to_list()
@@ -52,17 +53,16 @@ class BokehForMap:
             }
         })
 
-    def add_lines(self, features, legend, color="blue", line_width=2):
-        source_data = self._format_features(features)
-        rendered = self.figure.line(
-            x="x",
-            y="y",
+    def add_lines(self, feature, legend, color="blue", line_width=2):
+        rendered = self.figure.multi_line(
+            xs="x",
+            ys="y",
             legend_label=legend,
             line_color=color,
             line_width=line_width,
-            source=source_data,
+            source=self._format_features(feature),
         )
-        self._set_layer_parameters(rendered, features)
+        self._set_layer_parameters(rendered, feature)
 
     def add_points(self, features, legend, fill_color="red", size=4, style="circle"):
         assert style in expected_node_style, f"{style} not supported. Choose one of them : {', '.join(expected_node_style)}"
