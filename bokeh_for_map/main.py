@@ -4,9 +4,9 @@ from bokeh.tile_providers import get_provider
 from bokeh.tile_providers import CARTODBPOSITRON
 from bokeh.models import HoverTool
 
-from bfm.helpers.geometry import geometry_2_bokeh_format
+from bokeh_for_map.helpers.geometry import geometry_2_bokeh_format
 
-from bfm.helpers.settings import expected_node_style
+from bokeh_for_map.helpers.settings import expected_node_style
 
 
 class BokehForMap:
@@ -17,7 +17,7 @@ class BokehForMap:
         self.figure = figure(
             title=title,
             output_backend="webgl",
-            tools="box_select,pan,wheel_zoom,box_zoom,reset,save"
+            tools="pan,wheel_zoom,box_zoom,reset,save"
         )
 
         self.figure.plot_width = width

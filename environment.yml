@@ -1,4 +1,4 @@
-name: bfm
+name: bokeh_for_map
 channels:
   - conda-forge
   - defaults

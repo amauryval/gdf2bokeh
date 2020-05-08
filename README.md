@@ -24,7 +24,7 @@ jupyter notebook
 ```python
 from bokeh.plotting import show
 import geopandas as gpd
-from bfm import BokehForMap
+from bokeh_for_map import BokehForMap
 
 my_polygons = gpd.GeoDataFrame.from_file("my_input_data.geojson")
 
