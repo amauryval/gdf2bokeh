@@ -1,0 +1,13 @@
+name: bfm
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.8
+  - geopandas
+  - bokeh
+  - Shapely
+  - GDAL
+  - pytest
+  - pytest-cov
+  - jupyter
