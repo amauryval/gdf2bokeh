@@ -13,7 +13,7 @@ from bokeh.layouts import column
 from bokeh.layouts import row
 
 
-class RandonPointsGenerator:
+class RandomPointsGenerator:
     __POINTS_CREATE = []
 
     def __init__(self, bounds, points_number):
@@ -82,6 +82,6 @@ class MyMap(BokehForMap):
 
 
 bounds = [0, 0, 50, 50]
-random_points = RandonPointsGenerator(bounds, 50).to_gdf
+random_points = RandomPointsGenerator(bounds, 50).to_gdf
 random_points["value"] = np.random.randint(1, 6, random_points.shape[0])
 MyMap(random_points, title="My beautiful map", width=640, height=800).plot()
