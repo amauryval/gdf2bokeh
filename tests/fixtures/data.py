@@ -6,11 +6,11 @@ import geopandas as gpd
 
 
 
-multipolygons = "fixtures/multipolygons.geojson"
-polygons = "fixtures/polygons.geojson"
-points = "fixtures/points.geojson"
-linestrings = "fixtures/linestrings.geojson"
-multilinestrings = "fixtures/multilinestrings.geojson"
+multipolygons = "tests/fixtures/multipolygons.geojson"
+polygons = "tests/fixtures/polygons.geojson"
+points = "tests/fixtures/points.geojson"
+linestrings = "tests/fixtures/linestrings.geojson"
+multilinestrings = "tests/fixtures/multilinestrings.geojson"
 
 
 def open_geojson_to_gpd(input_file_path):
