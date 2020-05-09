@@ -39,11 +39,12 @@ jobs:
         conda config --get channels
         conda install --yes --quiet $CONDA_REQS
         conda env create -f environment.yml
-        activate bfm
+        activate bokeh_for_map
 
     - name: Run tests
       shell: bash -l {0}
       run: python -m pytest --cov=bokeh_for_map --cov-report=xml tests/
+
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
       with:

@@ -10,7 +10,7 @@ An easy way to map your geographic data (from a GeoDataFrame) with [bokeh __2.0.
 On your terminal:
 ```
 conda env create -f environment.yml
-activate bfm
+activate bokeh_for_map
 ```
 
 ## How to test it ?
