@@ -40,3 +40,11 @@ def multilines_data():
 @pytest.fixture
 def points_data():
     return open_geojson_to_gpd(points)
+
+@pytest.fixture
+def width():
+    return 640
+
+@pytest.fixture
+def height():
+    return 480
