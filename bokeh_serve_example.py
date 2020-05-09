@@ -60,7 +60,7 @@ class MyMap(BokehForMap):
 
         # here we get the data structure to plot and empty points layer. slider widget will fill it
         self._points_input = self.get_bokeh_structure_from_gdf_features(self._input_data)
-        self.add_points(self._points_input, fill_color="black", legend="points")
+        self.add_points(self._points_input, fill_color="red", size=10, legend="points")
 
     def slider_widget(self):
         min_value = min(self._input_data["value"])
@@ -81,7 +81,15 @@ class MyMap(BokehForMap):
         curdoc().title = "My SandBox"
 
 
-bounds = [0, 0, 50, 50]
+bounds = (-604158.2716, 5312679.2139, 1081125.3281, 6633511.0627)
 random_points = RandomPointsGenerator(bounds, 50).to_gdf
 random_points["value"] = np.random.randint(1, 6, random_points.shape[0])
-MyMap(random_points, title="My beautiful map", width=640, height=800).plot()
+MyMap(
+    random_points,
+    title="My beautiful map",
+    width=640,
+    height=800,
+    x_range=(bounds[0], bounds[2]),
+    y_range=(bounds[1], bounds[-1]),
+    background_map_name="STAMEN_TONER"
+).plot()

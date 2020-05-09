@@ -1,12 +1,15 @@
 from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource
-from bokeh.tile_providers import get_provider
+
 from bokeh.tile_providers import CARTODBPOSITRON
 from bokeh.models import HoverTool
+
+
 
 from bokeh_for_map.helpers.geometry import geometry_2_bokeh_format
 
 from bokeh_for_map.helpers.settings import expected_node_style
+from bokeh_for_map.helpers.settings import map_background_providers
 
 import geopandas as gpd
 
@@ -17,23 +20,40 @@ class BokehForMap:
         "y": []
     }
 
-    def __init__(self, title="My empty Map", width=800, height=600, background_map=CARTODBPOSITRON):
+    def __init__(self, title="My empty Map", width=800, height=600, x_range=None, y_range=None, background_map_name="CARTODBPOSITRON"):
+        """
+        :param title: figure title
+        :type title: str
+        :param width: width value
+        :type width: int
+        :param height: height value
+        :type height: int
+        :param x_range: x range to fix x canvas axe
+        :type x_range: tuple of 2 floats, default None
+        :param y_range: y range to fix y canvas axe
+        :type y_range: tuple of 2 floats, default None
+        :param background_map_name: background map name
+        :type background_map_name: str
+
+        """
         super().__init__()
 
         self.figure = figure(
             title=title,
             output_backend="webgl",
-            tools="pan,wheel_zoom,box_zoom,reset,save"
+            tools="pan,wheel_zoom,box_zoom,reset,save",
+            x_range=x_range,
+            y_range=y_range
         )
 
         self.figure.plot_width = width
         self.figure.plot_height = height
 
-        self._add_background_map(background_map)
+        self._add_background_map(background_map_name)
 
-    def _add_background_map(self, map_name_object):
-        tile_provider = get_provider(map_name_object)
-        self.figure.add_tile(tile_provider)
+    def _add_background_map(self, background_map_name):
+        assert background_map_name in map_background_providers.keys(), f"Use one of these background map : {', '.join(map_background_providers)}"
+        self.figure.add_tile(map_background_providers[background_map_name])
 
     def _set_tooltip_from_features(self, features, rendered):
         assert isinstance(features, ColumnDataSource)

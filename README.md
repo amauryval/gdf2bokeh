@@ -1,5 +1,6 @@
 # Bokeh_for_easy_map
-An easy way to map your geographic data (from a GeoDataFrame) with bokeh
+An easy way to map your geographic data (from a GeoDataFrame) with [bokeh __2.0.1__](https://github.com/bokeh/bokeh/tree/2.0.1)
+
 
 ![CI](https://github.com/wiralyki/Bokeh_for_easy_map/workflows/CI/badge.svg)
 [![codecov](https://codecov.io/gh/wiralyki/Bokeh_for_easy_map/branch/master/graph/badge.svg)](https://codecov.io/gh/wiralyki/Bokeh_for_easy_map)
@@ -29,7 +30,12 @@ import geopandas as gpd
 from bokeh_for_map import BokehForMap
 
 # Init bokeh session
-my_map = BokehForMap("My beautiful map", width=640, height=800)
+my_map = BokehForMap(
+    title="My beautiful map",
+    width=640,
+    height=800,
+    background_map_name="STAMEN_TONER"
+)
 
 # convert file data to geojson
 my_polygons = gpd.GeoDataFrame.from_file("my_input_data.geojson")
