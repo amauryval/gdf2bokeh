@@ -28,6 +28,7 @@ jobs:
       shell: bash
       run: |
         echo "::add-path::$HOME/miniconda3/bin"
+        echo "::add-path::$HOME/miniconda3/Scripts"
 
     - name: Configure conda
       shell: bash
