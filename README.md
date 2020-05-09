@@ -1,6 +1,8 @@
 # Bokeh_for_easy_map
 An easy way to map your geographic data (from a GeoDataFrame) with bokeh
 
+![CI](https://github.com/wiralyki/Bokeh_for_easy_map/workflows/CI/badge.svg?branch=master)
+[![codecov](https://codecov.io/gh/wiralyki/Bokeh_for_easy_map/branch/master/graph/badge.svg)](https://codecov.io/gh/wiralyki/Bokeh_for_easy_map)
 
 ## How to install it ?
 
