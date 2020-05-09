@@ -8,6 +8,7 @@ from bokeh_for_map.helpers.geometry import geometry_2_bokeh_format
 
 from bokeh_for_map.helpers.settings import expected_node_style
 
+import geopandas as gpd
 
 class BokehForMap:
 
@@ -35,6 +36,7 @@ class BokehForMap:
         self.figure.add_tile(tile_provider)
 
     def _set_tooltip_from_features(self, features, rendered):
+        assert isinstance(features, ColumnDataSource)
         column_tooltip = self.__build_column_tooltip(features)
         self.figure.add_tools(HoverTool(
             tooltips=column_tooltip,
@@ -47,6 +49,7 @@ class BokehForMap:
         return list(zip(map(lambda x: str(x.upper()), columns), map(lambda x: f"@{x}", columns)))
 
     def __convert_gdf_to_bokeh_data(self, features, only_one_feature=False):
+        assert isinstance(features, gpd.GeoDataFrame), "use a geodataframe please"
         if only_one_feature:
             features = features.head(1)
 
@@ -73,6 +76,7 @@ class BokehForMap:
         :return: the bokeh data input
         :rtype: ColumnDataSource
         """
+        assert isinstance(features, gpd.GeoDataFrame), "use a geodataframe please"
         assert "geometry" in features.columns
 
         bokeh_data = self.__convert_gdf_to_bokeh_data(features)
@@ -87,6 +91,8 @@ class BokehForMap:
         :return: the bokeh data structure
         :rtype: ColumnDataSource
         """
+        assert isinstance(features, gpd.GeoDataFrame), "use a geodataframe please"
+
         bokeh_data = self.__convert_gdf_to_bokeh_data(features, True)
         return ColumnDataSource(data=dict.fromkeys(bokeh_data.column_names, []))
 
@@ -103,6 +109,7 @@ class BokehForMap:
         :param line_width: line width
         :type line_width: int
         """
+        assert isinstance(features, ColumnDataSource)
         rendered = self.figure.multi_line(
             xs="x",
             ys="y",
@@ -129,6 +136,7 @@ class BokehForMap:
         :type style: str
         """
         assert style in expected_node_style, f"{style} not supported. Choose one of them : {', '.join(expected_node_style)}"
+        assert isinstance(features, ColumnDataSource)
         rendered = getattr(self.figure, style)(
             x="x",
             y="y",
@@ -150,6 +158,7 @@ class BokehForMap:
         :param fill_color: color value
         :type fill_color: str
         """
+        assert isinstance(features, ColumnDataSource)
         rendered = self.figure.multi_polygons(
             xs="x",
             ys="y",

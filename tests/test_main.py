@@ -51,3 +51,13 @@ def test_bokeh_processing(multipolygons_data, polygons_data, linestrings_data, m
     assert len(my_map.figure.renderers) == 6
     assert len(my_map.figure.tools) == 10
     # TODO improve !
+
+def test_bokeh_structure(multipolygons_data):
+    my_map = BokehForMap("My beautiful map")
+
+    points_input = my_map.get_bokeh_structure_from_gdf_features(multipolygons_data)
+
+    assert set(points_input.data.keys()) == {"x", "y", "name", "value"}
+    assert len(points_input.data.values()) == 4
+    for value in points_input.data.values():
+        assert isinstance(value, list)
