@@ -68,8 +68,8 @@ class MyMap(BokehForMap):
         self._slider_widget = Slider(start=min_value, end=max_value, value=min_value, step=1, title="my slider")
         self._slider_widget.on_change('value', self.__slider_update)
 
-    def __slider_update(self, attrname, old, new):
-        input_data_filtered = self._input_data.loc[self._input_data["value"] == self._slider_widget.value]
+    def __slider_update(self, attrname, old_value, new_value):
+        input_data_filtered = self._input_data.loc[self._input_data["value"] == new_value]
         self._points_input.data = dict(self.format_gdf_features_to_bokeh(input_data_filtered).data)
 
     def _map_layout(self):
