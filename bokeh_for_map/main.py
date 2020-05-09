@@ -29,65 +29,116 @@ class BokehForMap:
         tile_provider = get_provider(map_name_object)
         self.figure.add_tile(tile_provider)
 
-    def _set_layer_parameters(self, renderer, features):
-        self.figure.legend.click_policy = "hide"
-
+    def _set_tooltip_from_features(self, features, rendered):
         column_tooltip = self.__build_column_tooltip(features)
         self.figure.add_tools(HoverTool(
             tooltips=column_tooltip,
-            renderers=[renderer],
+            renderers=[rendered],
             mode="mouse"
         ))
 
-    def _format_features(self, feature):
-        return ColumnDataSource({
+    @staticmethod
+    def format_features(features):
+        """
+        To build the bokeh data structure from a geodataframe.
+        "format" key is useful if you want to work with some widgets
+        "data" key contaings all data to plot them
+
+        :param features: your input geodataframe
+        :type features: geopandas.GeoDataFrame
+        :return: the bokeh data and its structure
+        :rtype: dict with following keys : "data", "format"
+        """
+        bokeh_data = ColumnDataSource({
             **{
-                "x": feature['geometry'].apply(lambda x: geometry_2_bokeh_format(x, 'x')).tolist(),
-                "y": feature['geometry'].apply(lambda x: geometry_2_bokeh_format(x, 'y')).tolist(),
+                "x": features['geometry'].apply(lambda x: geometry_2_bokeh_format(x, 'x')).tolist(),
+                "y": features['geometry'].apply(lambda x: geometry_2_bokeh_format(x, 'y')).tolist(),
 
             },
             **{
-                column: feature[column].to_list()
-                for column in feature.columns
+                column: features[column].to_list()
+                for column in features.columns
                 if column != "geometry"
             }
         })
+        return {
+            "data": bokeh_data,
+            "format": ColumnDataSource(data={
+                attribute_name: []
+                for attribute_name in bokeh_data.data.keys()
+            })
+        }
 
-    def add_lines(self, feature, legend, color="blue", line_width=2):
+
+    def add_lines(self, features, legend, color="blue", line_width=2):
+        """
+        To add a lines layer on bokeh Figure
+
+        :param features: your input geodataframe
+        :type features: geopandas.GeoDataFrame
+        :param legend: layer name
+        :type legend: str
+        :param color: color value
+        :type color: str
+        :param line_width: line width
+        :type line_width: int
+        """
         rendered = self.figure.multi_line(
             xs="x",
             ys="y",
             legend_label=legend,
             line_color=color,
             line_width=line_width,
-            source=self._format_features(feature),
+            source=features,
         )
-        self._set_layer_parameters(rendered, feature)
+        self._set_tooltip_from_features(features, rendered)
 
     def add_points(self, features, legend, fill_color="red", size=4, style="circle"):
-        assert style in expected_node_style, f"{style} not supported. Choose one of them : {', '.join(expected_node_style)}"
+        """
+        To add a points layer on bokeh Figure
 
-        # MultiPoints are tricky !
+        :param features: ColumnDataSource
+        :type features: ColumnDataSource
+        :param legend: layer name
+        :type legend: str
+        :param color: color value
+        :type color: str
+        :param size: node size
+        :type size: int
+        :param style: node style, check expected_node_style variable
+        :type style: str
+        """
+        assert style in expected_node_style, f"{style} not supported. Choose one of them : {', '.join(expected_node_style)}"
         rendered = getattr(self.figure, style)(
             x="x",
             y="y",
             color=fill_color,
             size=size,
             legend_label=legend,
-            source=self._format_features(features)
+            source=features,
         )
-        self._set_layer_parameters(rendered, features)
+        self._set_tooltip_from_features(features, rendered)
 
-    def add_polygons(self, feature, legend, fill_color="red"):
+    def add_polygons(self, features, legend, fill_color="red"):
+        """
+        To add a polygons layer on bokeh Figure
+
+        :param features: your input geodataframe
+        :type features: geopandas.GeoDataFrame
+        :param legend: layer name
+        :type legend: str
+        :param fill_color: color value
+        :type fill_color: str
+        """
         rendered = self.figure.multi_polygons(
             xs="x",
             ys="y",
             legend_label=legend,
             fill_color=fill_color,
-            source=self._format_features(feature),
+            source=features,
         )
-        self._set_layer_parameters(rendered, feature)
+        self._set_tooltip_from_features(features, rendered)
 
     def __build_column_tooltip(self, features):
-        columns_filtered = list(filter(lambda x: x != "geometry", features.columns))
-        return list(zip(map(lambda x: str(x.upper()), columns_filtered), map(lambda x: f"@{x}", columns_filtered)))
+        columns = list(filter(lambda x: x not in ["x", "y"], features.data.keys()))
+        return list(zip(map(lambda x: str(x.upper()), columns), map(lambda x: f"@{x}", columns)))

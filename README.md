@@ -26,20 +26,30 @@ from bokeh.plotting import show
 import geopandas as gpd
 from bokeh_for_map import BokehForMap
 
-my_polygons = gpd.GeoDataFrame.from_file("my_input_data.geojson")
-
 # Init bokeh session
 my_map = BokehForMap("My beautiful map", width=640, height=800)
 
-# now you can add layer on you bokeh figure
+# convert file data to geojson
+my_polygons = gpd.GeoDataFrame.from_file("my_input_data.geojson")
+# now you can format data with the "format_features" static method
+bokeh_polygons = my_map.format_features(my_polygons)
+
+# now we can plot data
 my_map.add_polygons(
-    my_polygons,  # a geodataframe
+    bokeh_polygons["data"],  # you can found "format" key if you want to play with widget
     fill_color="red",
     legend="Polygons"
 )
 
 show(my_map.figure)
 ```
+
+You can find a bokeh serve example with a slider widget.
+On the terminal, run :
+```
+bokeh serve --show bokeh_serve_example.py
+```
+
 
 ### BokehForMap python class contains these methods
 

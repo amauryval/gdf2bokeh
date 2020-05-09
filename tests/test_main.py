@@ -8,9 +8,9 @@ def test_bokeh_processing(multipolygons_data):
     height = 800
 
     my_map = BokehForMap("My beautiful map", width, height)
-
+    bokeh_multipolygons = my_map.format_features(multipolygons_data)
     my_map.add_polygons(
-        multipolygons_data,
+        bokeh_multipolygons["data"],
         fill_color="orange",
         legend="MultiPolygons"
     )
