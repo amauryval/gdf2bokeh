@@ -36,12 +36,18 @@ jobs:
         fi
 
     - name: Configure conda
+      env:
+        CONDA_REQS: "conda=4.8.1 conda-verify=3.4.2"
       run: |
+        conda config --set auto_update_conda off
+        conda install --yes --quiet $CONDA_REQS
         conda env update --file environment.yml --prune
 
     - name: Run tests
       shell: bash
-      run: python -m pytest --cov=bokeh_for_map --cov-report=xml tests/
+      run: |
+        conda activate bokeh_for_map
+        python -m pytest --cov=bokeh_for_map --cov-report=xml tests/
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
