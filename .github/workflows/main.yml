@@ -38,7 +38,7 @@ jobs:
         conda config --append channels conda-forge
         conda config --get channels
         conda install --yes --quiet $CONDA_REQS
-        conda env update --prefix ./env --file environment.yml --prune
+        conda env update --file environment.yml --prune
 
     - name: Run tests
       shell: bash
