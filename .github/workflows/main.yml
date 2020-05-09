@@ -7,15 +7,40 @@ jobs:
   Unitary_tests_and_coverity:
     runs-on: ubuntu-latest
     steps:
+
     - name: Checkout
       uses: actions/checkout@v2
-    - name: Prepare Conda env
-      uses: goanpeca/setup-miniconda@v1
-      with:
-         miniconda-version: 'latest'
-         activate-environment: bokeh_for_map
-         environment-file: environment.yml
-         auto-activate-base: false
+
+    - name: Install Miniconda
+      shell: bash
+      run: |
+        if [[ "${{ runner.os }}" = "Linux" ]]; then
+          MINICONDA_FILENAME=Miniconda3-latest-Linux-x86_64.sh
+        elif [[ "${{ runner.os }}" = "macOS" ]]; then
+          MINICONDA_FILENAME=Miniconda3-latest-MacOSX-x86_64.sh
+        elif [[ "${{ runner.os }}" = "Windows" ]]; then
+          MINICONDA_FILENAME=Miniconda3-latest-Windows-x86_64.exe
+        fi
+        curl -L -o $MINICONDA_FILENAME "https://repo.anaconda.com/miniconda/$MINICONDA_FILENAME"
+        bash ${MINICONDA_FILENAME} -b -f -p $HOME/miniconda3
+
+    - name: Setup paths
+      shell: bash
+      run: |
+        echo "::add-path::$HOME/miniconda3/bin"
+
+    - name: Configure conda
+      shell: bash
+      env:
+        CONDA_REQS: "conda=4.8.1 conda-build=3.18.10 conda-verify=3.4.2 ripgrep=0.10.0 jinja2"
+      run: |
+        conda config --set auto_update_conda off
+        conda config --append channels conda-forge
+        conda config --get channels
+        conda install --yes --quiet $CONDA_REQS
+        conda env create -f environment.yml
+        activate bfm
+
     - name: Run tests
       shell: bash -l {0}
       run: python -m pytest --cov=bokeh_for_map --cov-report=xml tests/
