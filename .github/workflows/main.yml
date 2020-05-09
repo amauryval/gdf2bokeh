@@ -37,11 +37,11 @@ jobs:
 
     - name: Configure conda
       env:
-        CONDA_REQS: "conda=4.8.1 conda-verify=3.4.2"
+        CONDA_REQS: "conda conda-verify"
       run: |
         conda config --set auto_update_conda off
         conda install --yes --quiet $CONDA_REQS
-        conda env update --file environment.yml --prune
+        conda env create --file environment.yml --yes --quiet
 
     - name: Run tests
       shell: bash
