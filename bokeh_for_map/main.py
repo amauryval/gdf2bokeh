@@ -46,7 +46,6 @@ class BokehForMap:
         columns = list(filter(lambda x: x not in ["x", "y"], features.data.keys()))
         return list(zip(map(lambda x: str(x.upper()), columns), map(lambda x: f"@{x}", columns)))
 
-
     def __convert_gdf_to_bokeh_data(self, features, only_one_feature=False):
         if only_one_feature:
             features = features.head(1)
@@ -65,7 +64,7 @@ class BokehForMap:
         })
         return bokeh_data
 
-    def format_features(self, features):
+    def format_gdf_features_to_bokeh(self, features):
         """
         To build the bokeh data input from a geodataframe.
 
@@ -79,7 +78,7 @@ class BokehForMap:
         bokeh_data = self.__convert_gdf_to_bokeh_data(features)
         return bokeh_data
 
-    def get_structure_features(self, features):
+    def get_bokeh_structure_from_gdf_features(self, features):
         """
         To build the bokeh data structure from a geodataframe.
 
