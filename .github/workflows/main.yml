@@ -41,7 +41,7 @@ jobs:
       run: |
         conda config --set auto_update_conda off
         conda install --yes --quiet $CONDA_REQS
-        conda env create --file environment.yml --yes --quiet
+        conda env create --file environment.yml
 
     - name: Run tests
       shell: bash
