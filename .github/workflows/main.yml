@@ -29,16 +29,16 @@ jobs:
       run: |
         echo "::add-path::$HOME/miniconda3/bin"
         echo "::add-path::$HOME/miniconda3/Scripts"
+        if [ "${{ matrix.os }}" != "windows-latest" ]; then
+          echo '::set-env name=CONDA_EXEC::${CONDA}/bin/conda'
+        else
+          echo '::set-env name=CONDA_EXEC::C:\Miniconda\condabin\conda.bat'
+        fi
 
     - name: Configure conda
       shell: bash
       env:
-        CONDA_REQS: "conda=4.8.1 conda-build=3.18.10 conda-verify=3.4.2 ripgrep=0.10.0 jinja2"
       run: |
-        conda config --set auto_update_conda off
-        conda config --append channels conda-forge
-        conda config --get channels
-        conda install --yes --quiet $CONDA_REQS
         conda env update --file environment.yml --prune
 
     - name: Run tests
