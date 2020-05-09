@@ -36,7 +36,6 @@ jobs:
         fi
 
     - name: Configure conda
-      shell: bash
       run: |
         conda env update --file environment.yml --prune
 
