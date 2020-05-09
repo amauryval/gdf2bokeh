@@ -53,15 +53,14 @@ class MyMap(BokehForMap):
     def plot(self):
         self.prepare_data()
         self.slider_widget()
-        self.add_points(self._points_input, fill_color="black", legend="points")
 
         self._map_layout()
 
     def prepare_data(self):
 
-        # here we build the data structure
-        input_bokeh_data = self.format_features(self._input_data)
-        self._points_input = input_bokeh_data["format"]
+        # here we get the data structure to plot and empty points layer. slider widget will fill it
+        self._points_input = self.get_structure_features(self._input_data)
+        self.add_points(self._points_input, fill_color="black", legend="points")
 
     def slider_widget(self):
         min_value = min(self._input_data["value"])
@@ -71,7 +70,7 @@ class MyMap(BokehForMap):
 
     def __slider_update(self, attrname, old, new):
         input_data_filtered = self._input_data.loc[self._input_data["value"] == self._slider_widget.value]
-        self._points_input.data = dict(self.format_features(input_data_filtered)["data"].data)
+        self._points_input.data = dict(self.format_features(input_data_filtered).data)
 
     def _map_layout(self):
         layout = column(

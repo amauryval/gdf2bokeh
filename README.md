@@ -31,7 +31,7 @@ my_map = BokehForMap("My beautiful map", width=640, height=800)
 
 # convert file data to geojson
 my_polygons = gpd.GeoDataFrame.from_file("my_input_data.geojson")
-# now you can format data with the "format_features" static method
+# now you can format data with the "format_features" method contained in the BokehForMap class
 bokeh_polygons = my_map.format_features(my_polygons)
 
 # now we can plot data
@@ -53,10 +53,15 @@ bokeh serve --show bokeh_serve_example.py
 
 ### BokehForMap python class contains these methods
 
+__to format input data__
+* .get_structure_features(): to get the bokeh structure from geodataframe 
+* .format_features(): to format data from geodataframe to bokeh 
+
 __To add layers__
-* .add_lines() : for LineString and MultiLineStrings
-* .add_polygons() : for polygons and MultiPolygons (holes supported)
-* .add_points() : for Points. MultiPoint are not supported
+* .add_lines(): for LineString and MultiLineStrings
+* .add_polygons(): for polygons and MultiPolygons (holes supported)
+* .add_points(): for Points. MultiPoint are not supported
 
 __To get bokeh figure object__:
-* .figure : useful to play with all bokeh methods
+* .figure: useful to play with all bokeh methods
+

@@ -11,6 +11,11 @@ from bokeh_for_map.helpers.settings import expected_node_style
 
 class BokehForMap:
 
+    __DEFAULT_FIELD_BOKEH_DATA_FORMAT = {
+        "x": [],
+        "y": []
+    }
+
     def __init__(self, title="My empty Map", width=800, height=600, background_map=CARTODBPOSITRON):
         super().__init__()
 
@@ -37,18 +42,15 @@ class BokehForMap:
             mode="mouse"
         ))
 
-    @staticmethod
-    def format_features(features):
-        """
-        To build the bokeh data structure from a geodataframe.
-        "format" key is useful if you want to work with some widgets
-        "data" key contaings all data to plot them
+    def __build_column_tooltip(self, features):
+        columns = list(filter(lambda x: x not in ["x", "y"], features.data.keys()))
+        return list(zip(map(lambda x: str(x.upper()), columns), map(lambda x: f"@{x}", columns)))
 
-        :param features: your input geodataframe
-        :type features: geopandas.GeoDataFrame
-        :return: the bokeh data and its structure
-        :rtype: dict with following keys : "data", "format"
-        """
+
+    def __convert_gdf_to_bokeh_data(self, features, only_one_feature=False):
+        if only_one_feature:
+            features = features.head(1)
+
         bokeh_data = ColumnDataSource({
             **{
                 "x": features['geometry'].apply(lambda x: geometry_2_bokeh_format(x, 'x')).tolist(),
@@ -61,14 +63,33 @@ class BokehForMap:
                 if column != "geometry"
             }
         })
-        return {
-            "data": bokeh_data,
-            "format": ColumnDataSource(data={
-                attribute_name: []
-                for attribute_name in bokeh_data.data.keys()
-            })
-        }
+        return bokeh_data
 
+    def format_features(self, features):
+        """
+        To build the bokeh data input from a geodataframe.
+
+        :param features: your input geodataframe
+        :type features: geopandas.GeoDataFrame
+        :return: the bokeh data input
+        :rtype: ColumnDataSource
+        """
+        assert "geometry" in features.columns
+
+        bokeh_data = self.__convert_gdf_to_bokeh_data(features)
+        return bokeh_data
+
+    def get_structure_features(self, features):
+        """
+        To build the bokeh data structure from a geodataframe.
+
+        :param features: your input geodataframe
+        :type features: geopandas.GeoDataFrame
+        :return: the bokeh data structure
+        :rtype: ColumnDataSource
+        """
+        bokeh_data = self.__convert_gdf_to_bokeh_data(features, True)
+        return ColumnDataSource(data=dict.fromkeys(bokeh_data.column_names, []))
 
     def add_lines(self, features, legend, color="blue", line_width=2):
         """
@@ -139,6 +160,3 @@ class BokehForMap:
         )
         self._set_tooltip_from_features(features, rendered)
 
-    def __build_column_tooltip(self, features):
-        columns = list(filter(lambda x: x not in ["x", "y"], features.data.keys()))
-        return list(zip(map(lambda x: str(x.upper()), columns), map(lambda x: f"@{x}", columns)))
