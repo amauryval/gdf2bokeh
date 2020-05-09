@@ -41,7 +41,7 @@ jobs:
         conda env update --prefix ./env --file environment.yml --prune
 
     - name: Run tests
-      shell: bash -l {0}
+      shell: bash
       run: python -m pytest --cov=bokeh_for_map --cov-report=xml tests/
 
     - name: Upload coverage to Codecov
