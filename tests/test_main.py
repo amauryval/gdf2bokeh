@@ -9,6 +9,7 @@ def test_bokeh_session(width, height):
     assert my_map.figure.plot_height == height
     assert my_map.figure.plot_width == width
 
+
 def test_bokeh_processing(multipolygons_data, polygons_data, linestrings_data, multilines_data, points_data):
     my_map = BokehForMap("My beautiful map")
 
@@ -51,6 +52,7 @@ def test_bokeh_processing(multipolygons_data, polygons_data, linestrings_data, m
     assert len(my_map.figure.renderers) == 6
     assert len(my_map.figure.tools) == 10
     # TODO improve !
+
 
 def test_bokeh_structure(multipolygons_data):
     my_map = BokehForMap("My beautiful map")
