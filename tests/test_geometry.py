@@ -1,4 +1,4 @@
-from bokeh_for_map.helpers.geometry import geometry_2_bokeh_format
+from geo_bokeh.helpers.geometry import geometry_2_bokeh_format
 
 
 def compute_geometry(data):

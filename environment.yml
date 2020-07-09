@@ -1,4 +1,4 @@
-name: bokeh_for_map
+name: geo_bokeh
 channels:
   - conda-forge
   - defaults

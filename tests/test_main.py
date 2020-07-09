@@ -1,6 +1,6 @@
 import geopandas as gpd
 
-from bokeh_for_map import BokehForMap
+from geo_bokeh import BokehForMap
 
 
 def test_bokeh_session(width, height):

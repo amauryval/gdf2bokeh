@@ -6,7 +6,7 @@ import numpy as np
 
 from bokeh.models import ColumnDataSource
 from bokeh.models import Slider
-from bokeh_for_map import BokehForMap
+from geo_bokeh import BokehForMap
 
 from bokeh.io import curdoc
 from bokeh.layouts import column

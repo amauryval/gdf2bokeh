@@ -27,7 +27,7 @@ jupyter notebook
 ```python
 from bokeh.plotting import show
 import geopandas as gpd
-from bokeh_for_map import BokehForMap
+from geo_bokeh import BokehForMap
 
 # Init bokeh session
 my_map = BokehForMap(

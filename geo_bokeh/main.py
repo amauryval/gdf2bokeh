@@ -6,10 +6,10 @@ from bokeh.models import HoverTool
 
 
 
-from bokeh_for_map.helpers.geometry import geometry_2_bokeh_format
+from geo_bokeh.helpers.geometry import geometry_2_bokeh_format
 
-from bokeh_for_map.helpers.settings import expected_node_style
-from bokeh_for_map.helpers.settings import map_background_providers
+from geo_bokeh.helpers.settings import expected_node_style
+from geo_bokeh.helpers.settings import map_background_providers
 
 import geopandas as gpd
 
