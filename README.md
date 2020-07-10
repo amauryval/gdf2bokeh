@@ -1,4 +1,4 @@
-# Bokeh_for_easy_map
+# geo_bokeh
 An easy way to map your geographic data (from a GeoDataFrame) with [bokeh __2.0.1__](https://github.com/bokeh/bokeh/tree/2.0.1)
 
 
