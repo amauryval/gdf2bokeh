@@ -6,7 +6,10 @@ An easy way to map your geographic data (from a GeoDataFrame) with [bokeh __2.0.
 [![codecov](https://codecov.io/gh/wiralyki/Bokeh_for_easy_map/branch/master/graph/badge.svg)](https://codecov.io/gh/wiralyki/Bokeh_for_easy_map)
 
 ![conda_pf](https://anaconda.org/amauryval/geo_bokeh/badges/platforms.svg)
+
 ![conda_installer](https://anaconda.org/amauryval/geo_bokeh/badges/installer/conda.svg)
+
+![conda_last_upd](https://anaconda.org/amauryval/geo_bokeh/badges/latest_release_date.svg)
 
 ## How to install the conda package ?
 Install Anaconda
