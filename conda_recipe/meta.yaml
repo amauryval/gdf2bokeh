@@ -1,0 +1,26 @@
+{% set name = "geo_bokeh" %}
+{% set version = "0.5.1" %}
+
+package:
+  name: "{{ name|lower }}"
+  version: "{{ version }}"
+
+source:
+  path: ..
+
+requirements:
+  host:
+    - python
+    - pip
+  run:
+    - geopandas=0.7.0
+    - bokeh=2.0.2
+    - Shapely=1.7.0
+    - GDAL=3.0.4
+
+about:
+  home: https://github.com/amauryval/geo_bokeh
+  license: MIT
+  license_family: MIT
+  summary: geo bokeh
+  license_file: LICENSE
