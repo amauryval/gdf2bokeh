@@ -47,8 +47,8 @@ jobs:
       shell: bash
       run: |
         source ~/miniconda3/etc/profile.d/conda.sh
-        conda activate bokeh_for_map
-        python -m pytest --cov=bokeh_for_map --cov-report=xml tests/
+        conda activate geo_bokeh
+        python -m pytest --cov=geo_bokeh --cov-report=xml tests/
 
     - name: Upload coverage to Codecov
       uses: codecov/codecov-action@v1
