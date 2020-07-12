@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 #used by meta.yaml, do not forget space
 requirements = [
     "geopandas",
-    "bokeh"
+    "bokeh >=2.0.1"
 ]
 
 setup_requirements = []
@@ -26,6 +26,7 @@ setup(
     test_suite='tests',
     # tests_require=test_requirements,
     url='https://github.com/amauryval/geo_bokeh',
-    version='0.5.3',
+    version='0.5.4',
     zip_safe=False,
+    python_requires=">=3.6",
 )

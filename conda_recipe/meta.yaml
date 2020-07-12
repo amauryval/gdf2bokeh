@@ -1,5 +1,5 @@
 {% set name = "geo_bokeh" %}
-{% set version = "0.5.3" %}
+{% set version = "0.5.4" %}
 
 package:
   name: "{{ name|lower }}"
@@ -12,14 +12,17 @@ build:
   number: 1
 
 requirements:
+  host:
+    - python >=3.6
   build:
-    - python
+    - python >=3.6
     - pip
     - geopandas
-    - bokeh
+    - bokeh >=2.0.1
   run:
+    - python >=3.6
     - geopandas
-    - bokeh
+    - bokeh >=2.0.1
 
 about:
   home: https://github.com/amauryval/geo_bokeh
