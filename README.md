@@ -2,14 +2,16 @@
 An easy way to map your geographic data (from a GeoDataFrame) with [bokeh >=__2.0.1__](https://github.com/bokeh/bokeh/tree/2.0.1)
 Because it's boring to convert shapely geometry to bokeh format !!
 
-![CI](https://github.com/wiralyki/Bokeh_for_easy_map/workflows/CI/badge.svg)
-[![codecov](https://codecov.io/gh/wiralyki/Bokeh_for_easy_map/branch/master/graph/badge.svg)](https://codecov.io/gh/wiralyki/Bokeh_for_easy_map)
+![CI](https://github.com/amauryval/easy_map_bokeh/workflows/CI/badge.svg)
+[![codecov](https://codecov.io/gh/amauryval/easy_map_bokeh/branch/master/graph/badge.svg)](https://codecov.io/gh/amauryval/easy_map_bokeh)
 
-![conda_pf](https://anaconda.org/amauryval/geo_bokeh/badges/platforms.svg)
+[![Anaconda-Server Badge](https://anaconda.org/amauryval/easy_map_bokeh/badges/version.svg)](https://anaconda.org/amauryval/easy_map_bokeh)
+[![Anaconda-Server Badge](https://anaconda.org/amauryval/easy_map_bokeh/badges/latest_release_date.svg)](https://anaconda.org/amauryval/easy_map_bokeh)
 
-![conda_installer](https://anaconda.org/amauryval/geo_bokeh/badges/installer/conda.svg)
+[![Anaconda-Server Badge](https://anaconda.org/amauryval/easy_map_bokeh/badges/platforms.svg)](https://anaconda.org/amauryval/easy_map_bokeh)
 
-![conda_last_upd](https://anaconda.org/amauryval/geo_bokeh/badges/latest_release_date.svg)
+[![Anaconda-Server Badge](https://anaconda.org/amauryval/easy_map_bokeh/badges/installer/conda.svg)](https://conda.anaconda.org/amauryval)
+
 
 ## How to install the conda package ?
 Install Anaconda
