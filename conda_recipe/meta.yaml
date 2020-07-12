@@ -1,5 +1,5 @@
 {% set name = "geo_bokeh" %}
-{% set version = "0.5.1" %}
+{% set version = "0.5.3" %}
 
 package:
   name: "{{ name|lower }}"
@@ -8,15 +8,18 @@ package:
 source:
   path: ..
 
+build:
+  number: 1
+
 requirements:
-  host:
+  build:
     - python
     - pip
+    - geopandas
+    - bokeh
   run:
-    - geopandas=0.7.0
-    - bokeh=2.0.2
-    - Shapely=1.7.0
-    - GDAL=3.0.4
+    - geopandas
+    - bokeh
 
 about:
   home: https://github.com/amauryval/geo_bokeh
