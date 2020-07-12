@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 #used by meta.yaml, do not forget space
 requirements = [
-    "geopandas",
+    "geopandas >=0.8.0",
     "bokeh >=2.0.1"
 ]
 

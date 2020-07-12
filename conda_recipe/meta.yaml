@@ -17,11 +17,9 @@ requirements:
   build:
     - python >=3.6
     - pip
-    - geopandas
-    - bokeh >=2.0.1
   run:
     - python >=3.6
-    - geopandas
+    - geopandas >=0.8.0
     - bokeh >=2.0.1
 
 about:
