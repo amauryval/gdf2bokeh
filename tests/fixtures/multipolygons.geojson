@@ -1,6 +1,6 @@
 {
 	"type": "FeatureCollection",
-	"name": "multipolyg",
+	"name": "multipolygon",
 	"crs": {
 		"type": "name",
 		"properties": {

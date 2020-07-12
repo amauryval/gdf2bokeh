@@ -1,49 +1,44 @@
 import geopandas as gpd
 
-from geo_bokeh import BokehForMap
+from easy_map_bokeh import EasyMapBokeh
 
 
 def test_bokeh_session(width, height):
-    my_map = BokehForMap("My beautiful map", width, height)
+    my_map = EasyMapBokeh("My beautiful map" , width , height)
 
     assert my_map.figure.plot_height == height
     assert my_map.figure.plot_width == width
 
 
 def test_bokeh_processing(multipolygons_data, polygons_data, linestrings_data, multilines_data, points_data):
-    my_map = BokehForMap("My beautiful map")
+    my_map = EasyMapBokeh("My beautiful map")
 
-    bokeh_multipolygons = my_map.format_gdf_features_to_bokeh(multipolygons_data)
     my_map.add_polygons(
-        bokeh_multipolygons,
+        multipolygons_data,
         fill_color="orange",
         legend="MultiPolygons"
     )
 
-    bokeh_polygons = my_map.format_gdf_features_to_bokeh(polygons_data)
     my_map.add_polygons(
-        bokeh_polygons,
+        polygons_data,
         fill_color="orange",
         legend="Polygons"
     )
 
-    bokeh_linestrings = my_map.format_gdf_features_to_bokeh(linestrings_data)
     my_map.add_lines(
-        bokeh_linestrings,
+        linestrings_data,
         color="orange",
         legend="linestrings"
     )
 
-    bokeh_multilines = my_map.format_gdf_features_to_bokeh(multilines_data)
     my_map.add_lines(
-        bokeh_multilines,
+        multilines_data,
         color="orange",
         legend="multilinestrings"
     )
 
-    bokeh_points = my_map.format_gdf_features_to_bokeh(points_data)
     my_map.add_points(
-        bokeh_points,
+        points_data,
         fill_color="orange",
         legend="points",
         style="diamond"
@@ -51,14 +46,80 @@ def test_bokeh_processing(multipolygons_data, polygons_data, linestrings_data, m
 
     assert len(my_map.figure.renderers) == 6
     assert len(my_map.figure.tools) == 10
-    # TODO improve !
+    assert len(my_map.get_bokeh_layer_containers) == 5
 
+
+def test_bokeh_processing_with_layers_with_max_settings(multipolygons_data, polygons_data, linestrings_data, multilines_data, points_data):
+
+    layers_to_add = [
+        {
+            "input_gdf": multipolygons_data,
+            "fill_color": "orange",
+            "legend": "MultiPolygons"
+        },
+        {
+            "input_gdf": polygons_data,
+            "fill_color": "red",
+            "legend": "Polygons"
+        },
+        {
+            "input_gdf": linestrings_data,
+            "color": "grey",
+            "legend": "linestrings"
+        },
+        {
+            "input_gdf": multilines_data,
+            "color": "black",
+            "legend": "multilinestrings"
+        },
+        {
+            "input_gdf": points_data,
+            "fill_color": "blue",
+            "legend": "points",
+            "style": "diamond"
+        },
+    ]
+    my_map = EasyMapBokeh("My beautiful map", layers=layers_to_add)
+
+    assert len(my_map.figure.renderers) == 8
+    assert len(my_map.figure.tools) == 12
+    assert len(my_map.get_bokeh_layer_containers) == 7
+
+
+def test_bokeh_processing_with_layers_with_min_setting(multipolygons_data, polygons_data, linestrings_data, multilines_data, points_data):
+
+    layers_to_add = [
+        {
+            "input_gdf": multipolygons_data,
+            "legend": "MultiPolygons"
+        },
+        {
+            "input_gdf": polygons_data,
+            "legend": "Polygons"
+        },
+        {
+            "input_gdf": linestrings_data,
+            "legend": "linestrings"
+        },
+        {
+            "input_gdf": multilines_data,
+            "color": "black",
+            "legend": "multilinestrings"
+        },
+        {
+            "input_gdf": points_data,
+            "legend": "points",
+        },
+    ]
+    my_map = EasyMapBokeh("My beautiful map", layers=layers_to_add)
+
+    assert len(my_map.figure.renderers) == 8
+    assert len(my_map.figure.tools) == 12
+    assert len(my_map.get_bokeh_layer_containers) == 7
 
 def test_bokeh_structure(multipolygons_data):
-    my_map = BokehForMap("My beautiful map")
 
-    points_input = my_map.get_bokeh_structure_from_gdf_features(multipolygons_data)
-
+    points_input = EasyMapBokeh("hello").get_bokeh_structure_from_gdf(multipolygons_data)
     assert set(points_input.data.keys()) == {"x", "y", "name", "value"}
     assert len(points_input.data.values()) == 4
     for value in points_input.data.values():

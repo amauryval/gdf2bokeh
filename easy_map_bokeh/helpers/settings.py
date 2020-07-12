@@ -39,3 +39,7 @@ map_background_providers = {
     "STAMEN_TONER_BACKGROUND": get_provider(STAMEN_TONER_BACKGROUND),
     "STAMEN_TONER_LABELS": get_provider(STAMEN_TONER_LABELS)
 }
+
+add_lines_attributes = {"input_gdf", "legend", "color", "line_width"}
+add_points_attributes= {"input_gdf", "legend", "fill_color", "size", "style"}
+add_polygons_attributes = {"input_gdf", "legend", "fill_color"}

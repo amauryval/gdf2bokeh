@@ -1,4 +1,4 @@
-from geo_bokeh.helpers.geometry import geometry_2_bokeh_format
+from easy_map_bokeh.helpers.geometry import geometry_2_bokeh_format
 
 
 def compute_geometry(data):
@@ -68,8 +68,12 @@ def test_polygons_geom_to_bokeh_format(polygons_data):
 def test_multilines_geom_to_bokekeh_format(multilines_data):
     x_values, y_values = compute_geometry(multilines_data)
 
-    assert multilines_data.shape[0] == 2
-    assert len(x_values) == 2
+    assert multilines_data.shape[0] == 3
+    assert len(x_values) == 3
     assert len(x_values[0]) == 4
-    assert len(y_values) == 2
+    assert len(x_values[1]) == 4
+    assert len(x_values[-1]) == 3
+    assert len(y_values) == 3
     assert len(y_values[0]) == 4
+    assert len(y_values[1]) == 4
+    assert len(y_values[-1]) == 3

@@ -42,6 +42,21 @@
 					]
 				]
 			}
+		},
+		{
+			"type": "Feature",
+			"properties": {
+				"name": "LineString",
+				"value": "4"
+			},
+			"geometry": {
+				"type": "LineString",
+				"coordinates": [
+					[10, 50],
+					[15, 60],
+					[10, 70]
+				]
+			}
 		}
 	]
 }

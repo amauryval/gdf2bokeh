@@ -4,9 +4,8 @@ import pandas as pd
 from shapely.geometry import Point
 import numpy as np
 
-from bokeh.models import ColumnDataSource
 from bokeh.models import Slider
-from geo_bokeh import BokehForMap
+from easy_map_bokeh import EasyMapBokeh
 
 from bokeh.io import curdoc
 from bokeh.layouts import column
@@ -44,7 +43,7 @@ class RandomPointsGenerator:
         )
 
 
-class MyMap(BokehForMap):
+class MyMapBokeh(EasyMapBokeh):
 
     def __init__(self, input_data, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -59,8 +58,8 @@ class MyMap(BokehForMap):
     def prepare_data(self):
 
         # here we get the data structure to plot and empty points layer. slider widget will fill it
-        self._points_input = self.get_bokeh_structure_from_gdf_features(self._input_data)
-        self.add_points(self._points_input, fill_color="red", size=10, legend="points")
+        self._points_input = self.get_bokeh_structure_from_gdf(self._input_data)
+        self.bokeh_layer_points_container = self.add_points(self._input_data, fill_color="red", size=10, legend="points")
 
     def slider_widget(self):
         min_value = min(self._input_data["value"])
@@ -70,7 +69,7 @@ class MyMap(BokehForMap):
 
     def __slider_update(self, attrname, old_value, new_value):
         input_data_filtered = self._input_data.loc[self._input_data["value"] == new_value]
-        self._points_input.data = dict(self.format_gdf_features_to_bokeh(input_data_filtered).data)
+        self.bokeh_layer_points_container.data = dict(self._format_gdf_features_to_bokeh(input_data_filtered).data)
 
     def _map_layout(self):
         layout = column(
@@ -84,7 +83,7 @@ class MyMap(BokehForMap):
 bounds = (-604158.2716, 5312679.2139, 1081125.3281, 6633511.0627)
 random_points = RandomPointsGenerator(bounds, 50).to_gdf
 random_points["value"] = np.random.randint(1, 6, random_points.shape[0])
-MyMap(
+MyMapBokeh(
     random_points,
     title="My beautiful map",
     width=640,
