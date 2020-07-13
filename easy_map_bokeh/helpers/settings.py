@@ -26,6 +26,7 @@ expected_node_style = [
     "square_x",
     "triangle",
     "x",
+    "y"
 ]
 
 map_background_providers = {

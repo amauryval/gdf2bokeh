@@ -207,16 +207,16 @@ class EasyMapBokeh:
                 layer_settings["legend"] = f"{legend_name} ({geom_type})"
 
                 if geom_type == "Point":
-                    assert set(layer_settings.keys()).issubset(add_points_attributes)
-                    bokeh_layer_container = self.add_points(**layer_settings)
+                    assert set(layer_settings.keys()).issubset(add_points_attributes), f"Please, use these attributes {' ,'.join(add_points_attributes)}"
+                    self.add_points(**layer_settings)
 
                 elif geom_type in ("LineString", "MultiLineString"):
-                    assert set(layer_settings.keys()).issubset(add_lines_attributes)
-                    bokeh_layer_container = self.add_lines(**layer_settings)
+                    assert set(layer_settings.keys()).issubset(add_lines_attributes), f"Please, use these attributes {' ,'.join(add_points_attributes)}"
+                    self.add_lines(**layer_settings)
 
                 elif geom_type in ("Polygon", "MultiPolygon"):
-                    assert set(layer_settings.keys()).issubset(add_polygons_attributes)
-                    bokeh_layer_container = self.add_polygons(**layer_settings)
+                    assert set(layer_settings.keys()).issubset(add_polygons_attributes), f"Please, use these attributes {' ,'.join(add_points_attributes)}"
+                    self.add_polygons(**layer_settings)
 
                 else:
                     raise ErrorEasyMapBokeh(f"{geom_type} not supported (layer called {layer_settings['legend']}")
@@ -235,7 +235,7 @@ class EasyMapBokeh:
         return list(zip(map(lambda x: str(x.upper()), columns), map(lambda x: f"@{x}", columns)))
 
     def __convert_gdf_to_bokeh_data(self, input_gdf, get_gdf_structure=False):
-        assert isinstance(input_gdf , gpd.GeoDataFrame), f"use a geodataframe please => found {type(input_gdf)}"
+        assert isinstance(input_gdf, gpd.GeoDataFrame), f"use a geodataframe please => found {type(input_gdf)}"
         if get_gdf_structure:
             input_gdf = input_gdf.head(1)
 
