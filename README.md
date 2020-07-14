@@ -18,7 +18,7 @@ Install Anaconda
 
 then on your terminal:
 ```
-conda install -c amauryval geo_bokeh
+conda install -c amauryval easy_map_bokeh
 ```
 
 

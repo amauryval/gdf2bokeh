@@ -14,7 +14,7 @@ setup(
     author="amauryval",
     author_email='amauryval@gmail.com',
     url="https://github.com/amauryval/easy_map_bokeh",
-    version='1.1.0',
+    version='1.2.0',
     description="An easy way to map geodataframe on bokeh",
     entry_points={},
     install_requires=requirements,
