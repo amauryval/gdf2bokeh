@@ -18,7 +18,7 @@ setup(
     description="An easy way to map geodataframe on bokeh",
     entry_points={},
     install_requires=requirements,
-    license="MIT",
+    license="BSD-3-Clause",
     long_description="",
     include_package_data=True,
     keywords='mapping geodataframe bokeh',
