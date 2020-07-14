@@ -39,7 +39,8 @@ class RandomPointsGenerator:
         properties = df["id"]
         return gpd.GeoDataFrame(
             properties,
-            geometry=geometry
+            geometry=geometry,
+            crs='EPSG:3857'
         )
 
 
