@@ -25,6 +25,7 @@ class EasyMapBokeh:
 
     __GEOMETRY_FIELD_NAME = "geometry"
     __DEFAULT_EPSG = 3857
+    __BREWER_COLORS = brewer["Set3"][7]
 
     def __init__(self, title="My empty Map", width=800, height=600, x_range=None, y_range=None, background_map_name="CARTODBPOSITRON", layers=None):
         """
@@ -291,4 +292,4 @@ class EasyMapBokeh:
         return bokeh_data
 
     def _get_random_color(self):
-        return random.choice(brewer["Set3"][7])
+        return random.choice(self.__BREWER_COLORS)
