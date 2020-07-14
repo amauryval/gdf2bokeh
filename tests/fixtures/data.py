@@ -3,7 +3,7 @@ import pytest
 
 import geopandas as gpd
 
-
+from shapely.geometry import Polygon
 
 
 multipolygons = "tests/fixtures/multipolygons.geojson"
@@ -48,3 +48,11 @@ def width():
 @pytest.fixture
 def height():
     return 480
+
+
+@pytest.fixture
+def polygon_from_coords_without_crs():
+    lat_points = [50.9, 52.5, 50.0, 48.8, 50.9]
+    lon_points = [4.4, 13.4, 14.4, 2.4, 4.4]
+    polygon_geom = Polygon(zip(lon_points , lat_points))
+    return gpd.GeoDataFrame(index=[0], geometry=[polygon_geom])

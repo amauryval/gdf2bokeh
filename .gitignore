@@ -36,7 +36,7 @@ temp_build/
 *.manifest
 *.spec
 
-*.sh
+conda_build_runner.sh
 
 # Installer logs
 pip-log.txt

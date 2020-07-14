@@ -1,4 +1,5 @@
-import geopandas as gpd
+import pytest
+
 
 from easy_map_bokeh import EasyMapBokeh
 
@@ -47,6 +48,17 @@ def test_bokeh_processing(multipolygons_data, polygons_data, linestrings_data, m
     assert len(my_map.figure.renderers) == 6
     assert len(my_map.figure.tools) == 10
     assert len(my_map.get_bokeh_layer_containers) == 5
+
+
+def test_bokeh_processing_with_gdf_without_crs(polygon_from_coords_without_crs):
+    my_map = EasyMapBokeh("My beautiful map")
+    with pytest.raises(ValueError) as excinfo:
+        my_map.add_polygons(
+            polygon_from_coords_without_crs,
+            fill_color="purple",
+            legend="Tricky Polygons"
+        )
+    assert 'Cannot transform naive geometries.  Please set a crs on the object first.' in str(excinfo.value)
 
 
 def test_bokeh_processing_with_layers_with_max_settings(multipolygons_data, polygons_data, linestrings_data, multilines_data, points_data):

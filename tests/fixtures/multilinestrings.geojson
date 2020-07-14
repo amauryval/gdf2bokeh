@@ -1,62 +1,10 @@
 {
-	"type": "FeatureCollection",
-	"name": "multiline",
-	"crs": {
-		"type": "name",
-		"properties": {
-			"name": "urn:ogc:def:crs:OGC:1.3:CRS84"
-		}
-	},
-	"features": [{
-			"type": "Feature",
-			"properties": {
-				"name": "MultiLineString",
-				"value": "1"
-			},
-			"geometry": {
-				"type": "MultiLineString",
-				"coordinates": [
-					[
-						[20, 1],
-						[25, 35],
-						[20, 40],
-						[20, 50]
-					]
-				]
-			}
-		},
-		{
-			"type": "Feature",
-			"properties": {
-				"name": "MultiLineString",
-				"value": "2"
-			},
-			"geometry": {
-				"type": "MultiLineString",
-				"coordinates": [
-					[
-						[20, 70],
-						[20, 80],
-						[15, 90],
-						[20, 100]
-					]
-				]
-			}
-		},
-		{
-			"type": "Feature",
-			"properties": {
-				"name": "LineString",
-				"value": "4"
-			},
-			"geometry": {
-				"type": "LineString",
-				"coordinates": [
-					[10, 50],
-					[15, 60],
-					[10, 70]
-				]
-			}
-		}
-	]
+"type": "FeatureCollection",
+"name": "cc",
+"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::3857" } },
+"features": [
+{ "type": "Feature", "properties": { "name": "MultiLineString", "value": "1" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 2226389.815865471493453, 111325.142866384863737 ], [ 2782987.26983183901757, 4163881.144064293242991 ], [ 2226389.815865471493453, 4865942.279503175988793 ], [ 2226389.815865471493453, 6446275.841017157770693 ] ] ] } },
+{ "type": "Feature", "properties": { "name": "MultiLineString", "value": "2" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 1598546.462445815792307, 3065540.836767684202641 ], [ 1598546.462445815792307, 3767601.972206566948444 ], [ 1264587.990065994905308, 4523181.178895457647741 ], [ 1598546.462445815792307, 5347935.533720548264682 ] ] ] } },
+{ "type": "Feature", "properties": { "name": "LineString", "value": "4" }, "geometry": { "type": "LineString", "coordinates": [ [ 1113194.907932735746726, 6446275.841017157770693 ], [ 1669792.361899103503674, 8399737.889818355441093 ], [ 1113194.907932735746726, 11068715.659379489719868 ] ] } }
+]
 }
