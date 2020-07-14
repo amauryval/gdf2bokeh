@@ -24,6 +24,7 @@ class ErrorEasyMapBokeh(Exception):
 class EasyMapBokeh:
 
     __GEOMETRY_FIELD_NAME = "geometry"
+    __DEFAULT_EPSG = 3857
 
     def __init__(self, title="My empty Map", width=800, height=600, x_range=None, y_range=None, background_map_name="CARTODBPOSITRON", layers=None):
         """
@@ -87,6 +88,18 @@ class EasyMapBokeh:
         bokeh_data = self.__convert_gdf_to_bokeh_data(features, get_gdf_structure=True)
         return ColumnDataSource(data=dict.fromkeys(bokeh_data.column_names, []))
 
+    def __legend_settings(self):
+        # interactive legend
+        self.figure.legend.click_policy = "hide"
+
+    def __reprojection(self, input_data):
+        expected_epsg = f"epsg:{self.__DEFAULT_EPSG}"
+        if input_data.crs != expected_epsg:
+
+            return input_data.to_crs(expected_epsg)
+
+        return input_data
+
     def add_lines(self, input_gdf, legend, line_width=2, color=None):
         """
         To add a lines layer on bokeh Figure
@@ -103,8 +116,9 @@ class EasyMapBokeh:
         :return: the bokeh layer container (can be used to create dynamic (with slider) layer
         :rtype: bokeh.models.ColumnDataSource
         """
-
-        bokeh_layer_container = self._format_gdf_features_to_bokeh(input_gdf)
+        input_data = input_gdf.copy(deep=True)
+        input_data = self.__reprojection(input_data)
+        bokeh_layer_container = self._format_gdf_features_to_bokeh(input_data)
 
         if color is None:
             color = self._get_random_color()
@@ -118,6 +132,7 @@ class EasyMapBokeh:
             source=bokeh_layer_container,
         )
         self._set_tooltip_from_features(bokeh_layer_container, rendered)
+        self.__legend_settings()
 
         self.__BOKEH_LAYER_CONTAINERS[legend] = bokeh_layer_container
         return bokeh_layer_container
@@ -142,7 +157,9 @@ class EasyMapBokeh:
         """
         assert style in expected_node_style, f"{style} not supported. Choose one of them : {', '.join(expected_node_style)}"
 
-        bokeh_layer_container = self._format_gdf_features_to_bokeh(input_gdf)
+        input_data = input_gdf.copy(deep=True)
+        input_data = self.__reprojection(input_data)
+        bokeh_layer_container = self._format_gdf_features_to_bokeh(input_data)
 
         if fill_color is None:
             fill_color = self._get_random_color()
@@ -156,6 +173,7 @@ class EasyMapBokeh:
             source=bokeh_layer_container,
         )
         self._set_tooltip_from_features(bokeh_layer_container, rendered)
+        self.__legend_settings()
 
         self.__BOKEH_LAYER_CONTAINERS[legend] = bokeh_layer_container
         return bokeh_layer_container
@@ -174,7 +192,10 @@ class EasyMapBokeh:
         :return: the bokeh layer container (can be used to create dynamic (with slider) layer
         :rtype: bokeh.models.ColumnDataSource
         """
-        bokeh_layer_container = self._format_gdf_features_to_bokeh(input_gdf)
+
+        input_data = input_gdf.copy(deep=True)
+        input_data = self.__reprojection(input_data)
+        bokeh_layer_container = self._format_gdf_features_to_bokeh(input_data)
 
         if fill_color is None:
             fill_color = self._get_random_color()
@@ -187,6 +208,7 @@ class EasyMapBokeh:
             source=bokeh_layer_container,
         )
         self._set_tooltip_from_features(bokeh_layer_container, rendered)
+        self.__legend_settings()
 
         self.__BOKEH_LAYER_CONTAINERS[legend] = bokeh_layer_container
         return bokeh_layer_container
