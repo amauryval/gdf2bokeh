@@ -5,7 +5,7 @@ from easy_map_bokeh import EasyMapBokeh
 
 
 def test_bokeh_session(width, height):
-    my_map = EasyMapBokeh("My beautiful map" , width , height)
+    my_map = EasyMapBokeh("My beautiful map", width, height)
 
     assert my_map.figure.plot_height == height
     assert my_map.figure.plot_width == width
@@ -28,7 +28,6 @@ def test_bokeh_processing(multipolygons_data, polygons_data, linestrings_data, m
 
     my_map.add_lines(
         linestrings_data,
-        color="orange",
         legend="linestrings"
     )
 

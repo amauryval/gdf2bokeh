@@ -1,5 +1,5 @@
 import geopandas as gpd
-import hashlib
+
 
 from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource
@@ -14,6 +14,9 @@ from easy_map_bokeh.helpers.settings import map_background_providers
 from easy_map_bokeh.helpers.settings import add_points_attributes
 from easy_map_bokeh.helpers.settings import add_lines_attributes
 from easy_map_bokeh.helpers.settings import add_polygons_attributes
+
+from easy_map_bokeh.helpers.misc import color_based_on_the_string_value
+
 
 
 class ErrorEasyMapBokeh(Exception):
@@ -121,7 +124,7 @@ class EasyMapBokeh:
         bokeh_layer_container = self._format_gdf_features_to_bokeh(input_data)
 
         if color is None:
-            color = self.__color_based_on_the_string_value(legend)
+            color = color_based_on_the_string_value(legend)
 
         rendered = self.figure.multi_line(
             xs="x",
@@ -162,7 +165,7 @@ class EasyMapBokeh:
         bokeh_layer_container = self._format_gdf_features_to_bokeh(input_data)
 
         if fill_color is None:
-            fill_color = self.__color_based_on_the_string_value(legend)
+            fill_color = color_based_on_the_string_value(legend)
 
         rendered = getattr(self.figure, style)(
             x="x",
@@ -198,7 +201,7 @@ class EasyMapBokeh:
         bokeh_layer_container = self._format_gdf_features_to_bokeh(input_data)
 
         if fill_color is None:
-            fill_color = self.__color_based_on_the_string_value(legend)
+            fill_color = color_based_on_the_string_value(legend)
 
         rendered = self.figure.multi_polygons(
             xs="x",
@@ -291,14 +294,3 @@ class EasyMapBokeh:
         return bokeh_data
 
 
-    def __color_based_on_the_string_value(self , value):
-        """
-        To create a color based on the argument value (only string)
-
-        :param value: the string value
-        :type value: str
-
-        :return: hexadecimal color based on the value
-        :rtype: str
-        """
-        return f"#{hashlib.shake_256(bytes(value , encoding='utf-8')).hexdigest(3)}"
