@@ -1,6 +1,5 @@
 import geopandas as gpd
-import random
-
+import hashlib
 
 from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource
@@ -25,6 +24,7 @@ class EasyMapBokeh:
 
     __GEOMETRY_FIELD_NAME = "geometry"
     __DEFAULT_EPSG = 3857
+    __BREWER_COLORS = brewer["Set3"][7]
 
     def __init__(self, title="My empty Map", width=800, height=600, x_range=None, y_range=None, background_map_name="CARTODBPOSITRON", layers=None):
         """
@@ -121,7 +121,7 @@ class EasyMapBokeh:
         bokeh_layer_container = self._format_gdf_features_to_bokeh(input_data)
 
         if color is None:
-            color = self._get_random_color()
+            color = self.__color_based_on_the_string_value(legend)
 
         rendered = self.figure.multi_line(
             xs="x",
@@ -162,7 +162,7 @@ class EasyMapBokeh:
         bokeh_layer_container = self._format_gdf_features_to_bokeh(input_data)
 
         if fill_color is None:
-            fill_color = self._get_random_color()
+            fill_color = self.__color_based_on_the_string_value(legend)
 
         rendered = getattr(self.figure, style)(
             x="x",
@@ -198,7 +198,7 @@ class EasyMapBokeh:
         bokeh_layer_container = self._format_gdf_features_to_bokeh(input_data)
 
         if fill_color is None:
-            fill_color = self._get_random_color()
+            fill_color = self.__color_based_on_the_string_value(legend)
 
         rendered = self.figure.multi_polygons(
             xs="x",
@@ -290,5 +290,15 @@ class EasyMapBokeh:
         bokeh_data = self.__convert_gdf_to_bokeh_data(input_gdf)
         return bokeh_data
 
-    def _get_random_color(self):
-        return random.choice(brewer["Set3"][7])
+
+    def __color_based_on_the_string_value(self , value):
+        """
+        To create a color based on the argument value (only string)
+
+        :param value: the string value
+        :type value: str
+
+        :return: hexadecimal color based on the value
+        :rtype: str
+        """
+        return f"#{hashlib.shake_256(bytes(value , encoding='utf-8')).hexdigest(3)}"
