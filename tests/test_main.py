@@ -132,7 +132,7 @@ def test_bokeh_processing_with_layers_with_min_setting(multipolygons_data, polyg
 def test_bokeh_structure(multipolygons_data):
 
     points_input = EasyMapBokeh("hello").get_bokeh_structure_from_gdf(multipolygons_data)
-    assert set(points_input.data.keys()) == {"x", "y", "name", "value"}
+    assert set(points_input.data.keys()) == {"x", "y", "geom_type", "name"}
     assert len(points_input.data.values()) == 4
     for value in points_input.data.values():
         assert isinstance(value, list)
