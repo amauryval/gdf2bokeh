@@ -58,7 +58,9 @@ Check the jupyter notebook to find a more detailed example:
 ```
 jupyter notebook
 ```
-And check 'example.ipynb'
+And open 'example.ipynb'
+
+OR click on this [link](https://amauryval.github.io/easy_map_bokeh/)
 
 
 Also, you can find a bokeh serve example with a slider widget.
