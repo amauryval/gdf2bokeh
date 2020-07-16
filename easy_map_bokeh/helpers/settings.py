@@ -27,7 +27,7 @@ expected_node_style = [
     "triangle",
     "x",
     "y"
-]
+]  # https://docs.bokeh.org/en/latest/docs/reference/models/markers.html
 
 map_background_providers = {
     "CARTODBPOSITRON": get_provider(CARTODBPOSITRON),
@@ -42,5 +42,5 @@ map_background_providers = {
 }
 
 add_lines_attributes = {"input_gdf", "legend", "color", "line_width"}
-add_points_attributes= {"input_gdf", "legend", "fill_color", "size", "style"}
+add_points_attributes = {"input_gdf", "legend", "fill_color", "size", "style"}
 add_polygons_attributes = {"input_gdf", "legend", "fill_color"}
