@@ -15,6 +15,11 @@ from easy_map_bokeh.helpers.settings import add_points_attributes
 from easy_map_bokeh.helpers.settings import add_lines_attributes
 from easy_map_bokeh.helpers.settings import add_polygons_attributes
 
+from easy_map_bokeh.helpers.settings import geometry_compatibiliy
+from easy_map_bokeh.helpers.settings import linestrings_type_compatibility
+from easy_map_bokeh.helpers.settings import polygons_type_compatibility
+from easy_map_bokeh.helpers.settings import point_type_compatibility
+
 from easy_map_bokeh.helpers.misc import color_based_on_the_string_value
 
 
@@ -228,23 +233,30 @@ class EasyMapBokeh:
             layer_geom_types = set(list(map(lambda x: x.geom_type, layer_settings["input_gdf"][self.__GEOMETRY_FIELD_NAME].tolist())))
 
             legend_name = layer_settings["legend"]
-            for geom_type in layer_geom_types:
-                layer_settings["legend"] = f"{legend_name} ({geom_type})"
 
-                if geom_type == "Point":
-                    assert set(layer_settings.keys()).issubset(add_points_attributes), f"Please, use these attributes {' ,'.join(add_points_attributes)}"
-                    self.add_points(**layer_settings)
+            if len(layer_geom_types) > 0:
+                compatibility_checked = list(filter(lambda x: layer_geom_types.issubset(x) or layer_geom_types == x, geometry_compatibiliy))
 
-                elif geom_type in ("LineString", "MultiLineString"):
-                    assert set(layer_settings.keys()).issubset(add_lines_attributes), f"Please, use these attributes {' ,'.join(add_points_attributes)}"
-                    self.add_lines(**layer_settings)
+                if len(compatibility_checked) == 1:
+                    layer_settings["legend"] = f"{legend_name} ({' + '.join(layer_geom_types)})"
 
-                elif geom_type in ("Polygon", "MultiPolygon"):
-                    assert set(layer_settings.keys()).issubset(add_polygons_attributes), f"Please, use these attributes {' ,'.join(add_points_attributes)}"
-                    self.add_polygons(**layer_settings)
+                    if layer_geom_types.issubset(point_type_compatibility):
+                        assert set(layer_settings.keys()).issubset(add_points_attributes), f"Please, use these attributes {' ,'.join(add_points_attributes)}"
+                        self.add_points(**layer_settings)
+
+                    elif layer_geom_types.issubset(linestrings_type_compatibility):
+                        assert set(layer_settings.keys()).issubset(add_lines_attributes), f"Please, use these attributes {' ,'.join(add_points_attributes)}"
+                        self.add_lines(**layer_settings)
+
+                    elif layer_geom_types.issubset(polygons_type_compatibility):
+                        assert set(layer_settings.keys()).issubset(add_polygons_attributes), f"Please, use these attributes {' ,'.join(add_points_attributes)}"
+                        self.add_polygons(**layer_settings)
 
                 else:
-                    raise ErrorEasyMapBokeh(f"{geom_type} not supported (layer called {layer_settings['legend']}")
+                    raise ErrorEasyMapBokeh(f"{layer_geom_types} geometry have to be split to {len(layer_geom_types)} geodataframe(s) (layer concerned {layer_settings['legend']}")
+            else:
+                raise ErrorEasyMapBokeh(f"You geodataframe does not have geometry. Check geometry column name (should be named 'geometry', or check if your geodataframe is not empty ! (layer concerned {layer_settings['legend']}")
+
 
     def _set_tooltip_from_features(self, features, rendered):
         assert isinstance(features, ColumnDataSource)

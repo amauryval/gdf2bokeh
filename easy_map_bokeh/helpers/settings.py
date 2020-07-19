@@ -44,3 +44,12 @@ map_background_providers = {
 add_lines_attributes = {"input_gdf", "legend", "color", "line_width"}
 add_points_attributes = {"input_gdf", "legend", "fill_color", "size", "style"}
 add_polygons_attributes = {"input_gdf", "legend", "fill_color"}
+
+linestrings_type_compatibility = {"LineString", "MultiLineString"}
+polygons_type_compatibility = {"Polygon", "MultiPolygon"}
+point_type_compatibility = {"Point"}
+geometry_compatibiliy = [
+    linestrings_type_compatibility,
+    polygons_type_compatibility,
+    point_type_compatibility,
+]

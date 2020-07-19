@@ -92,9 +92,9 @@ def test_bokeh_processing_with_layers_with_max_settings(multipolygons_data, poly
     ]
     my_map = EasyMapBokeh("My beautiful map", layers=layers_to_add)
 
-    assert len(my_map.figure.renderers) == 8
-    assert len(my_map.figure.tools) == 12
-    assert len(my_map.get_bokeh_layer_containers) == 7
+    assert len(my_map.figure.renderers) == 6
+    assert len(my_map.figure.tools) == 10
+    assert len(my_map.get_bokeh_layer_containers) == 5
 
 
 def test_bokeh_processing_with_layers_with_min_setting(multipolygons_data, polygons_data, linestrings_data, multilines_data, points_data):
@@ -124,9 +124,9 @@ def test_bokeh_processing_with_layers_with_min_setting(multipolygons_data, polyg
     ]
     my_map = EasyMapBokeh("My beautiful map", layers=layers_to_add)
 
-    assert len(my_map.figure.renderers) == 8
-    assert len(my_map.figure.tools) == 12
-    assert len(my_map.get_bokeh_layer_containers) == 7
+    assert len(my_map.figure.renderers) == 6
+    assert len(my_map.figure.tools) == 10
+    assert len(my_map.get_bokeh_layer_containers) == 5
 
 def test_bokeh_structure(multipolygons_data):
 
