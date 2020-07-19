@@ -41,6 +41,13 @@ map_background_providers = {
     "STAMEN_TONER_LABELS": get_provider(STAMEN_TONER_LABELS)
 }
 
-add_lines_attributes = {"input_gdf", "legend", "color", "line_width"}
-add_points_attributes = {"input_gdf", "legend", "fill_color", "size", "style"}
-add_polygons_attributes = {"input_gdf", "legend", "fill_color"}
+default_attributes = {"input_gdf", "legend"}
+
+linestrings_type_compatibility = {"LineString", "MultiLineString"}
+polygons_type_compatibility = {"Polygon", "MultiPolygon"}
+point_type_compatibility = {"Point"}
+geometry_compatibility = [
+    linestrings_type_compatibility,
+    polygons_type_compatibility,
+    point_type_compatibility,
+]

@@ -60,7 +60,7 @@ class MyMapBokeh(EasyMapBokeh):
 
         # here we get the data structure to plot and empty points layer. slider widget will fill it
         self._points_input = self.get_bokeh_structure_from_gdf(self._input_data)
-        self.bokeh_layer_points_container = self.add_points(self._input_data, fill_color="red", size=10, legend="points")
+        self.bokeh_layer_points_container = self.add_points(self._input_data, fill_color="red", size=10, legend="my points")
 
     def slider_widget(self):
         min_value = min(self._input_data["value"])

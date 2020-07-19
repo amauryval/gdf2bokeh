@@ -25,6 +25,13 @@ conda install -c amauryval easy_map_bokeh
 ## How to use it ?!
 
 A small example :
+
+Check bokeh documentation in order to style your data :
+    
+* [bokeh marker style options](https://docs.bokeh.org/en/latest/docs/reference/models/markers.html) to style point features
+* [bokeh multi_line style options](https://docs.bokeh.org/en/latest/docs/reference/plotting.html?highlight=multi_polygons#bokeh.plotting.figure.Figure.multi_line) to style LineString and MultiLineString features
+* [bokeh multi_polygon style options](https://docs.bokeh.org/en/latest/docs/reference/plotting.html?highlight=multi_polygons#bokeh.plotting.figure.Figure.multi_polygons) to style polygon and multipolygons features
+
 ```python
 from bokeh.plotting import show
 import geopandas as gpd
@@ -33,8 +40,8 @@ from easy_map_bokeh import EasyMapBokeh
 layers_to_add = [
     {
         "input_gdf": gpd.GeoDataFrame.from_file("your_geo_layer.geojson"),
-        "legend": "My beautiful layer",
-        "fill_color": "orange",  # optional
+        "legend": "My beautiful layer",  # required
+        "fill_color": "orange",  # here we found one argument use by bokeh to style your layer. Take care about geometry type
     }
 ]
 # Points, LineString, MultiLineString, Polygons (+ holes) and MultiPolygons (+ holes) are supported
