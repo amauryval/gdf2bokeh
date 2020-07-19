@@ -11,10 +11,23 @@ polygons = "tests/fixtures/polygons.geojson"
 points = "tests/fixtures/points.geojson"
 linestrings = "tests/fixtures/linestrings.geojson"
 multilinestrings = "tests/fixtures/multilinestrings.geojson"
+mixed_features = "tests/fixtures/mixed_features.geojson"
 
 
 def open_geojson_to_gpd(input_file_path):
     return gpd.GeoDataFrame.from_file(input_file_path)
+
+
+@pytest.fixture
+def empty_data():
+    empty_gdf = gpd.GeoDataFrame()
+    empty_gdf['geometry'] = None
+    return empty_gdf
+
+
+@pytest.fixture
+def mixed_features_data():
+    return open_geojson_to_gpd(mixed_features)
 
 
 @pytest.fixture

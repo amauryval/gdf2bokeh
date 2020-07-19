@@ -11,17 +11,12 @@ from easy_map_bokeh.helpers.geometry import geometry_2_bokeh_format
 
 from easy_map_bokeh.helpers.settings import expected_node_style
 from easy_map_bokeh.helpers.settings import map_background_providers
-from easy_map_bokeh.helpers.settings import add_points_attributes
-from easy_map_bokeh.helpers.settings import add_lines_attributes
-from easy_map_bokeh.helpers.settings import add_polygons_attributes
+from easy_map_bokeh.helpers.settings import default_attributes
 
-from easy_map_bokeh.helpers.settings import geometry_compatibiliy
+from easy_map_bokeh.helpers.settings import geometry_compatibility
 from easy_map_bokeh.helpers.settings import linestrings_type_compatibility
 from easy_map_bokeh.helpers.settings import polygons_type_compatibility
 from easy_map_bokeh.helpers.settings import point_type_compatibility
-
-from easy_map_bokeh.helpers.misc import color_based_on_the_string_value
-
 
 
 class ErrorEasyMapBokeh(Exception):
@@ -108,154 +103,161 @@ class EasyMapBokeh:
 
         return input_data
 
-    def add_lines(self, input_gdf, legend, line_width=2, color=None):
+    def add_lines(self, input_gdf, legend, **kwargs):
         """
-        To add a lines layer on bokeh Figure
+        To add a lines layer on bokeh Figure (LineString and MultiLineString geometry types supported)
 
         :param input_gdf: your input geodataframe
         :type input_gdf: geopandas.GeoDataFrame
         :param legend: layer name
         :type legend: str
-        :param color: color value
-        :type color: str
-        :param line_width: line width
-        :type line_width: int
+        :param **kwargs: arguments from bokeh to style the layer
+        :type **kwargs: str
 
         :return: the bokeh layer container (can be used to create dynamic (with slider) layer
         :rtype: bokeh.models.ColumnDataSource
         """
-        input_data = input_gdf.copy(deep=True)
-        input_data = self.__reprojection(input_data)
-        bokeh_layer_container = self._format_gdf_features_to_bokeh(input_data)
 
-        if color is None:
-            color = color_based_on_the_string_value(legend)
+        layer_geom_types = self.__get_geom_types_from_gdf(input_gdf)
+        if layer_geom_types.issubset(linestrings_type_compatibility):
 
-        rendered = self.figure.multi_line(
-            xs="x",
-            ys="y",
-            legend_label=legend,
-            line_color=color,
-            line_width=line_width,
-            source=bokeh_layer_container,
-        )
-        self._set_tooltip_from_features(bokeh_layer_container, rendered)
-        self.__legend_settings()
+            input_data = input_gdf.copy(deep=True)
+            input_data = self.__reprojection(input_data)
+            bokeh_layer_container = self._format_gdf_features_to_bokeh(input_data)
 
-        self.__BOKEH_LAYER_CONTAINERS[legend] = bokeh_layer_container
-        return bokeh_layer_container
+            rendered = self.figure.multi_line(
+                xs="x",
+                ys="y",
+                legend_label=legend,
+                source=bokeh_layer_container,
+                **kwargs
+            )
+            self._set_tooltip_from_features(bokeh_layer_container, rendered)
+            self.__legend_settings()
 
-    def add_points(self, input_gdf, legend, size=4, style="circle", fill_color=None):
+            self.__BOKEH_LAYER_CONTAINERS[legend] = bokeh_layer_container
+            return bokeh_layer_container
+
+        else:
+            raise ErrorEasyMapBokeh(
+                f"{layer_geom_types} geometry not supported by add_lines() method: only works with {' and '.join(linestrings_type_compatibility)} (layer concerned '{legend}')")
+
+    def add_points(self, input_gdf, legend, style="circle", **kwargs):
         """
-        To add a points layer on bokeh Figure
+        To add a points layer on bokeh Figure  (Point geometry type supported)
 
         :param input_gdf: ColumnDataSource
         :type input_gdf: bokeh.models.ColumnDataSource
         :param legend: layer name
         :type legend: str
-        :param fill_color: color value
-        :type fill_color: str
-        :param size: node size
-        :type size: int
         :param style: node style, check expected_node_style variable
         :type style: str
+        :param **kwargs: arguments from bokeh to style the layer
+        :type **kwargs: str
 
         :return: the bokeh layer container (can be used to create dynamic (with slider) layer
         :rtype: bokeh.models.ColumnDataSource
         """
+
         assert style in expected_node_style, f"{style} not supported. Choose one of them : {', '.join(expected_node_style)}"
 
-        input_data = input_gdf.copy(deep=True)
-        input_data = self.__reprojection(input_data)
-        bokeh_layer_container = self._format_gdf_features_to_bokeh(input_data)
+        layer_geom_types = self.__get_geom_types_from_gdf(input_gdf)
+        if layer_geom_types.issubset(point_type_compatibility):
 
-        if fill_color is None:
-            fill_color = color_based_on_the_string_value(legend)
+            input_data = input_gdf.copy(deep=True)
+            input_data = self.__reprojection(input_data)
+            bokeh_layer_container = self._format_gdf_features_to_bokeh(input_data)
 
-        rendered = getattr(self.figure, style)(
-            x="x",
-            y="y",
-            color=fill_color,
-            size=size,
-            legend_label=legend,
-            source=bokeh_layer_container,
-        )
-        self._set_tooltip_from_features(bokeh_layer_container, rendered)
-        self.__legend_settings()
+            rendered = getattr(self.figure, style)(
+                x="x",
+                y="y",
+                legend_label=legend,
+                source=bokeh_layer_container,
+                **kwargs
+            )
+            self._set_tooltip_from_features(bokeh_layer_container, rendered)
+            self.__legend_settings()
 
-        self.__BOKEH_LAYER_CONTAINERS[legend] = bokeh_layer_container
-        return bokeh_layer_container
+            self.__BOKEH_LAYER_CONTAINERS[legend] = bokeh_layer_container
 
-    def add_polygons(self, input_gdf, legend, fill_color=None):
+            return bokeh_layer_container
+
+        else:
+            raise ErrorEasyMapBokeh(
+                f"{layer_geom_types} geometry not supported by add_points() method: only works with {' and '.join(point_type_compatibility)} (layer concerned '{legend}')")
+
+    def add_polygons(self, input_gdf, legend, **kwargs):
         """
-        To add a polygons layer on bokeh Figure
+        To add a polygons layer on bokeh Figure (Polygon and MultiPolygon geometry type supported)
 
         :param input_gdf: your input geodataframe
         :type input_gdf: geopandas.GeoDataFrame
         :param legend: layer name
         :type legend: str
-        :param fill_color: color value
-        :type fill_color: str
+        :param **kwargs: arguments from bokeh to style the layer
+        :type **kwargs: str
 
         :return: the bokeh layer container (can be used to create dynamic (with slider) layer
         :rtype: bokeh.models.ColumnDataSource
         """
 
-        input_data = input_gdf.copy(deep=True)
-        input_data = self.__reprojection(input_data)
-        bokeh_layer_container = self._format_gdf_features_to_bokeh(input_data)
+        layer_geom_types = self.__get_geom_types_from_gdf(input_gdf)
+        if layer_geom_types.issubset(polygons_type_compatibility):
 
-        if fill_color is None:
-            fill_color = color_based_on_the_string_value(legend)
+            input_data = input_gdf.copy(deep=True)
+            input_data = self.__reprojection(input_data)
+            bokeh_layer_container = self._format_gdf_features_to_bokeh(input_data)
 
-        rendered = self.figure.multi_polygons(
-            xs="x",
-            ys="y",
-            legend_label=legend,
-            fill_color=fill_color,
-            source=bokeh_layer_container,
-        )
-        self._set_tooltip_from_features(bokeh_layer_container, rendered)
-        self.__legend_settings()
+            rendered = self.figure.multi_polygons(
+                xs="x",
+                ys="y",
+                legend_label=legend,
+                source=bokeh_layer_container,
+                **kwargs
+            )
+            self._set_tooltip_from_features(bokeh_layer_container, rendered)
+            self.__legend_settings()
 
-        self.__BOKEH_LAYER_CONTAINERS[legend] = bokeh_layer_container
-        return bokeh_layer_container
+            self.__BOKEH_LAYER_CONTAINERS[legend] = bokeh_layer_container
+            return bokeh_layer_container
+
+        else:
+            raise ErrorEasyMapBokeh(
+                f"{layer_geom_types} geometry not supported by add_polygons() method: only works with {' and '.join(polygons_type_compatibility)} (layer concerned '{legend}')")
 
     def _add_background_map(self, background_map_name):
         assert background_map_name in map_background_providers.keys(), f"Use one of these background map : {', '.join(map_background_providers)}"
         self.figure.add_tile(map_background_providers[background_map_name])
+
+    def __get_geom_types_from_gdf(self, input_gdf):
+        return set(list(map(lambda x: x.geom_type, input_gdf[self.__GEOMETRY_FIELD_NAME].tolist())))
 
     def __add_layers(self):
         assert isinstance(self._layers_configuration , list), "layers arg is not a list"
 
         for layer_settings in self._layers_configuration:
             assert isinstance(layer_settings, dict), "use a dict please"
-            layer_geom_types = set(list(map(lambda x: x.geom_type, layer_settings["input_gdf"][self.__GEOMETRY_FIELD_NAME].tolist())))
-
-            legend_name = layer_settings["legend"]
+            layer_geom_types = self.__get_geom_types_from_gdf(layer_settings["input_gdf"])
+            assert default_attributes.issubset(set(layer_settings.keys())), f"These attributes are required: {' ,'.join(default_attributes)}"
 
             if len(layer_geom_types) > 0:
-                compatibility_checked = list(filter(lambda x: layer_geom_types.issubset(x) or layer_geom_types == x, geometry_compatibiliy))
+                compatibility_checked = list(filter(lambda x: layer_geom_types.issubset(x) or layer_geom_types == x, geometry_compatibility))
 
                 if len(compatibility_checked) == 1:
-                    layer_settings["legend"] = f"{legend_name} ({' + '.join(layer_geom_types)})"
 
                     if layer_geom_types.issubset(point_type_compatibility):
-                        assert set(layer_settings.keys()).issubset(add_points_attributes), f"Please, use these attributes {' ,'.join(add_points_attributes)}"
                         self.add_points(**layer_settings)
 
                     elif layer_geom_types.issubset(linestrings_type_compatibility):
-                        assert set(layer_settings.keys()).issubset(add_lines_attributes), f"Please, use these attributes {' ,'.join(add_points_attributes)}"
                         self.add_lines(**layer_settings)
 
                     elif layer_geom_types.issubset(polygons_type_compatibility):
-                        assert set(layer_settings.keys()).issubset(add_polygons_attributes), f"Please, use these attributes {' ,'.join(add_points_attributes)}"
                         self.add_polygons(**layer_settings)
 
                 else:
-                    raise ErrorEasyMapBokeh(f"{layer_geom_types} geometry have to be split to {len(layer_geom_types)} geodataframe(s) (layer concerned {layer_settings['legend']}")
+                    raise ErrorEasyMapBokeh(f"{layer_geom_types} geometry have to be split by geometry types (layer concerned '{layer_settings['legend']}')")
             else:
-                raise ErrorEasyMapBokeh(f"You geodataframe does not have geometry. Check geometry column name (should be named 'geometry', or check if your geodataframe is not empty ! (layer concerned {layer_settings['legend']}")
+                raise ErrorEasyMapBokeh(f"Your geodataframe may not have geometry features (layer concerned '{layer_settings['legend']}')")
 
 
     def _set_tooltip_from_features(self, features, rendered):
