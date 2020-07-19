@@ -13107,7 +13107,7 @@ div#notebook {
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Prepare-input-data-from-geojson-and-map-them">Prepare input data from geojson and map them<a class="anchor-link" href="#Prepare-input-data-from-geojson-and-map-them">&#182;</a></h2>
+<h1 id="Import-all-required-librairies">Import all required librairies<a class="anchor-link" href="#Import-all-required-librairies">&#182;</a></h1>
 </div>
 </div>
 </div>
@@ -13125,40 +13125,6 @@ div#notebook {
 <span class="kn">from</span> <span class="nn">easy_map_bokeh</span> <span class="kn">import</span> <span class="n">EasyMapBokeh</span>
 
 <span class="n">output_notebook</span><span class="p">()</span>
-
-<span class="n">layers_to_add</span> <span class="o">=</span> <span class="p">[</span>
-    <span class="p">{</span>
-        <span class="c1"># contains both Polygon and MultiPolygon features (Ugly but only for testing)</span>
-        <span class="s2">&quot;input_gdf&quot;</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/multipolygons.geojson&quot;</span><span class="p">),</span>
-        <span class="s2">&quot;legend&quot;</span><span class="p">:</span> <span class="s2">&quot;MultiPolygons layer&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;fill_color&quot;</span><span class="p">:</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span>  <span class="c1"># optional, default the color is computed from the hash legend value</span>
-    <span class="p">},</span>
-    <span class="p">{</span>
-        <span class="s2">&quot;input_gdf&quot;</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/polygons.geojson&quot;</span><span class="p">),</span>
-        <span class="s2">&quot;legend&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygons layer&quot;</span><span class="p">,</span>
-        <span class="c1"># &quot;fill_color&quot;: &quot;red&quot;,  # optional, default the color is computed from the hash legend value</span>
-    <span class="p">},</span>
-    <span class="p">{</span>
-        <span class="s2">&quot;input_gdf&quot;</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/linestrings.geojson&quot;</span><span class="p">),</span>
-        <span class="s2">&quot;legend&quot;</span><span class="p">:</span> <span class="s2">&quot;linestrings layer&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;green&quot;</span><span class="p">,</span>  <span class="c1"># optional, default the color is computed from the hash legend value</span>
-        <span class="s2">&quot;line_width&quot;</span><span class="p">:</span> <span class="mi">4</span>  <span class="c1"># optional, default 2</span>
-    <span class="p">},</span>
-    <span class="p">{</span>
-        <span class="c1"># contains both LineString and MultiLineString features (Ugly but only for testing)</span>
-        <span class="s2">&quot;input_gdf&quot;</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/multilinestrings.geojson&quot;</span><span class="p">),</span>
-        <span class="s2">&quot;legend&quot;</span><span class="p">:</span> <span class="s2">&quot;multilinestrings layer&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span>  <span class="c1"># optional, default the color is computed from the hash legend value</span>
-        <span class="s2">&quot;line_width&quot;</span><span class="p">:</span> <span class="mi">6</span>  <span class="c1"># optional, default 2</span>
-
-    <span class="p">},</span>
-    <span class="p">{</span>
-        <span class="s2">&quot;input_gdf&quot;</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/points.geojson&quot;</span><span class="p">),</span>
-        <span class="s2">&quot;legend&quot;</span><span class="p">:</span> <span class="s2">&quot;points layer&quot;</span><span class="p">,</span>
-        <span class="s2">&quot;style&quot;</span><span class="p">:</span> <span class="s2">&quot;square&quot;</span><span class="p">,</span>  <span class="c1"># optional, check list : https://docs.bokeh.org/en/latest/docs/reference/models/markers.html</span>
-        <span class="s2">&quot;fill_color&quot;</span><span class="p">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span>  <span class="c1"># optional, default the color is computed from the hash legend value</span>
-    <span class="p">},</span>
-<span class="p">]</span>
 </pre></div>
 
     </div>
@@ -13193,10 +13159,10 @@ div#notebook {
 
 
 
-<div id="489b7345-3d22-4450-a3cd-91a3467452e4"></div>
+<div id="66d7dd17-0aee-4bc5-a1fb-4e93edd98f8c"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#489b7345-3d22-4450-a3cd-91a3467452e4');
+var element = $('#66d7dd17-0aee-4bc5-a1fb-4e93edd98f8c');
 
 (function(root) {
   function now() {
@@ -13509,13 +13475,88 @@ var element = $('#489b7345-3d22-4450-a3cd-91a3467452e4');
 <div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
 </div><div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Let's-go-to-map-our-data">Let's go to map our data<a class="anchor-link" href="#Let's-go-to-map-our-data">&#182;</a></h2>
+<h1 id="How-to-define-style-?">How to define style ?<a class="anchor-link" href="#How-to-define-style-?">&#182;</a></h1><p>Check bokeh documentation :</p>
+<ul>
+<li><a href="https://docs.bokeh.org/en/latest/docs/reference/models/markers.html">bokeh marker style options</a> to style point features</li>
+<li><a href="https://docs.bokeh.org/en/latest/docs/reference/plotting.html?highlight=multi_polygons#bokeh.plotting.figure.Figure.multi_line">bokeh multi_line style options</a> to style LineString and MultiLineString features</li>
+<li><a href="https://docs.bokeh.org/en/latest/docs/reference/plotting.html?highlight=multi_polygons#bokeh.plotting.figure.Figure.multi_polygons">bokeh multi_polygon style options</a> to style polygon and multipolygons features</li>
+</ul>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="first-way">first way<a class="anchor-link" href="#first-way">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Prepare-input-data-from-geojson-and-map-them">Prepare input data from geojson and map them<a class="anchor-link" href="#Prepare-input-data-from-geojson-and-map-them">&#182;</a></h3>
 </div>
 </div>
 </div>
 <div class="cell border-box-sizing code_cell rendered">
 <div class="input">
 <div class="prompt input_prompt">In&nbsp;[2]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">layers_to_add</span> <span class="o">=</span> <span class="p">[</span>
+    <span class="p">{</span>
+        <span class="c1"># contains both Polygon and MultiPolygon features (Ugly but only for testing)</span>
+        <span class="s2">&quot;input_gdf&quot;</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/multipolygons.geojson&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;legend&quot;</span><span class="p">:</span> <span class="s2">&quot;MultiPolygons layer&quot;</span><span class="p">,</span>  <span class="c1"># required</span>
+        <span class="s2">&quot;fill_color&quot;</span><span class="p">:</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span>  <span class="c1"># bokeh multi_polygon style option</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;input_gdf&quot;</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/polygons.geojson&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;legend&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygons layer&quot;</span><span class="p">,</span>  <span class="c1"># required</span>
+        <span class="s2">&quot;fill_color&quot;</span><span class="p">:</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span>  <span class="c1"># bokeh multi_polygon style option</span>
+        <span class="s2">&quot;line_color&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span>  <span class="c1"># bokeh multi_polygon style option</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;input_gdf&quot;</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/linestrings.geojson&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;legend&quot;</span><span class="p">:</span> <span class="s2">&quot;linestrings layer&quot;</span><span class="p">,</span>  <span class="c1"># required</span>
+        <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;green&quot;</span><span class="p">,</span>  <span class="c1"># bokeh multi_line style option</span>
+        <span class="s2">&quot;line_width&quot;</span><span class="p">:</span> <span class="mi">4</span>  <span class="c1"># bokeh multi_line style option</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="c1"># contains both LineString and MultiLineString features (Ugly but only for testing)</span>
+        <span class="s2">&quot;input_gdf&quot;</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/multilinestrings.geojson&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;legend&quot;</span><span class="p">:</span> <span class="s2">&quot;multilinestrings layer&quot;</span><span class="p">,</span>  <span class="c1"># required</span>
+        <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span>  <span class="c1"># bokeh multi_line style option</span>
+        <span class="s2">&quot;line_width&quot;</span><span class="p">:</span> <span class="mi">6</span>  <span class="c1"># bokeh multi_line style option</span>
+
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;input_gdf&quot;</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/points.geojson&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;legend&quot;</span><span class="p">:</span> <span class="s2">&quot;points layer&quot;</span><span class="p">,</span>  <span class="c1"># required</span>
+        <span class="s2">&quot;style&quot;</span><span class="p">:</span> <span class="s2">&quot;square&quot;</span><span class="p">,</span>   <span class="c1"># required</span>
+        <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>   <span class="c1"># bokeh marker style option</span>
+        <span class="s2">&quot;fill_color&quot;</span><span class="p">:</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span>   <span class="c1"># bokeh marker style option</span>
+        <span class="s2">&quot;line_color&quot;</span><span class="p">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span>  <span class="c1"># bokeh marker style option</span>
+    <span class="p">},</span>
+<span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Let's-go-to-map-our-data">Let's go to map our data<a class="anchor-link" href="#Let's-go-to-map-our-data">&#182;</a></h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[3]:</div>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
@@ -13552,7 +13593,7 @@ var element = $('#489b7345-3d22-4450-a3cd-91a3467452e4');
 
 
 
-  <div class="bk-root" id="19486838-7ca5-4e3c-859f-9291438236d1" data-root-id="1011"></div>
+  <div class="bk-root" id="9c48632c-29b7-453c-969e-6e678a882a41" data-root-id="1011"></div>
 
 </div>
 
@@ -13566,15 +13607,15 @@ var element = $('#489b7345-3d22-4450-a3cd-91a3467452e4');
 
 
 
-<div id="46478ad7-549f-42c0-84b1-e32e0c73e603"></div>
+<div id="72c1fa01-deaf-4915-8c5f-660505321aad"></div>
 <div class="output_subarea output_javascript ">
 <script type="text/javascript">
-var element = $('#46478ad7-549f-42c0-84b1-e32e0c73e603');
+var element = $('#72c1fa01-deaf-4915-8c5f-660505321aad');
 (function(root) {
   function embed_document(root) {
     
-  var docs_json = {"4272ee61-5d6f-4014-b785-a54289c68fc4":{"roots":{"references":[{"attributes":{"below":[{"id":"1022"}],"center":[{"id":"1025"},{"id":"1029"},{"id":"1056"}],"left":[{"id":"1026"}],"output_backend":"webgl","plot_width":800,"renderers":[{"id":"1042"},{"id":"1048"},{"id":"1064"},{"id":"1081"},{"id":"1100"},{"id":"1121"},{"id":"1144"},{"id":"1169"}],"title":{"id":"1012"},"toolbar":{"id":"1036"},"x_range":{"id":"1014"},"x_scale":{"id":"1018"},"y_range":{"id":"1016"},"y_scale":{"id":"1020"}},"id":"1011","subtype":"Figure","type":"Plot"},{"attributes":{},"id":"1209","type":"UnionRenderers"},{"attributes":{},"id":"1210","type":"Selection"},{"attributes":{},"id":"1186","type":"UnionRenderers"},{"attributes":{"data":{"geom_type":["Polygon","MultiPolygon"],"name":["Polygon1","Multipolygon1"],"x":[[[[540016.2082595062,540017.2434982699,540019.8067638461,540020.5244782075,540019.396641354,540020.4219475843,540024.7282337521,540025.4459481135,540001.4537823214,539997.4038227113,540016.2082595062]]],[[[540049.0792567247,540070.661952875,540072.1999122206,540089.7326487608,540091.5658327314,540091.8235201214,540094.2777042497,540096.4996698815,540100.8059560494,540102.8565685102,540075.8910146501,540073.9890868046,540080.60742331,540074.0454634354,540051.2404200251,540049.0792567247]],[[540073.6353409432,540057.7430943716,540056.8203187642,540050.9760732509,540047.7584583072,540053.1804816464,540051.2404200251,540074.0454634354,540080.60742331,540073.9890868046,540073.6353409432]],[[540058.9734618482,540060.5114211937,540066.6632585762,540063.792401131,540058.9734618482],[540062.4047205987,540059.9600019288,540071.3686890547,540068.4146539953,540062.4047205987]],[[540091.0672570786,540102.0295357057,540106.2059301,540094.6298813347,540091.0672570786]],[[540098.4643209788,540097.3438249219,540100.1959967035,540098.4643209788]]]],"y":[[[[5742011.812036097,5742000.814194429,5742000.814194429,5741994.935679299,5741994.935679299,5741984.501324506,5741984.501324506,5741979.945483294,5741977.153194669,5742009.631974393,5742011.812036097]]],[[[5742051.075657236,5742051.663512283,5742044.609254306,5742047.401564088,5742031.914545932,5742029.737565665,5742009.004290579,5741990.232869991,5741990.967683784,5741973.3321695505,5741970.98077029,5741985.107098499,5741989.204130789,5742035.644476192,5742032.644154382,5742051.075657236]],[[5741987.734503555,5741985.089175156,5741990.820721022,5741990.379832745,5742015.469758129,5742016.098351921,5742032.644154382,5742035.644476192,5741989.204130789,5741985.107098499,5741987.734503555]],[[5742012.71819945,5742004.047379403,5742006.398787394,5742013.89390451,5742012.71819945],[5742026.287734412,5742022.491558394,5742018.549377319,5742025.849714019,5742026.287734412]],[[5742036.126586525,5742032.858042887,5742008.328915996,5742006.02905552,5742036.126586525]],[[5742022.053538189,5742017.52733066,5742018.549377319,5742022.053538189]]]]},"selected":{"id":"1091"},"selection_policy":{"id":"1090"}},"id":"1060","type":"ColumnDataSource"},{"attributes":{"label":{"value":"multilinestrings layer (MultiLineString)"},"renderers":[{"id":"1121"}]},"id":"1137","type":"LegendItem"},{"attributes":{},"id":"1187","type":"Selection"},{"attributes":{"data":{"geom_type":["Polygon","MultiPolygon"],"name":["Polygon1","Multipolygon1"],"x":[[[[540016.2082595062,540017.2434982699,540019.8067638461,540020.5244782075,540019.396641354,540020.4219475843,540024.7282337521,540025.4459481135,540001.4537823214,539997.4038227113,540016.2082595062]]],[[[540049.0792567247,540070.661952875,540072.1999122206,540089.7326487608,540091.5658327314,540091.8235201214,540094.2777042497,540096.4996698815,540100.8059560494,540102.8565685102,540075.8910146501,540073.9890868046,540080.60742331,540074.0454634354,540051.2404200251,540049.0792567247]],[[540073.6353409432,540057.7430943716,540056.8203187642,540050.9760732509,540047.7584583072,540053.1804816464,540051.2404200251,540074.0454634354,540080.60742331,540073.9890868046,540073.6353409432]],[[540058.9734618482,540060.5114211937,540066.6632585762,540063.792401131,540058.9734618482],[540062.4047205987,540059.9600019288,540071.3686890547,540068.4146539953,540062.4047205987]],[[540091.0672570786,540102.0295357057,540106.2059301,540094.6298813347,540091.0672570786]],[[540098.4643209788,540097.3438249219,540100.1959967035,540098.4643209788]]]],"y":[[[[5742011.812036097,5742000.814194429,5742000.814194429,5741994.935679299,5741994.935679299,5741984.501324506,5741984.501324506,5741979.945483294,5741977.153194669,5742009.631974393,5742011.812036097]]],[[[5742051.075657236,5742051.663512283,5742044.609254306,5742047.401564088,5742031.914545932,5742029.737565665,5742009.004290579,5741990.232869991,5741990.967683784,5741973.3321695505,5741970.98077029,5741985.107098499,5741989.204130789,5742035.644476192,5742032.644154382,5742051.075657236]],[[5741987.734503555,5741985.089175156,5741990.820721022,5741990.379832745,5742015.469758129,5742016.098351921,5742032.644154382,5742035.644476192,5741989.204130789,5741985.107098499,5741987.734503555]],[[5742012.71819945,5742004.047379403,5742006.398787394,5742013.89390451,5742012.71819945],[5742026.287734412,5742022.491558394,5742018.549377319,5742025.849714019,5742026.287734412]],[[5742036.126586525,5742032.858042887,5742008.328915996,5742006.02905552,5742036.126586525]],[[5742022.053538189,5742017.52733066,5742018.549377319,5742022.053538189]]]]},"selected":{"id":"1072"},"selection_policy":{"id":"1071"}},"id":"1044","type":"ColumnDataSource"},{"attributes":{"callback":null,"renderers":[{"id":"1169"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1190","type":"HoverTool"},{"attributes":{"axis":{"id":"1022"},"ticker":null},"id":"1025","type":"Grid"},{"attributes":{"data_source":{"id":"1096"},"glyph":{"id":"1098"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1099"},"selection_glyph":null,"view":{"id":"1101"}},"id":"1100","type":"GlyphRenderer"},{"attributes":{"fill_color":{"value":"#cf3185"},"line_color":{"value":"#1f77b4"},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1079","type":"MultiPolygons"},{"attributes":{"overlay":{"id":"1035"}},"id":"1032","type":"BoxZoomTool"},{"attributes":{},"id":"1027","type":"BasicTicker"},{"attributes":{"data_source":{"id":"1165"},"glyph":{"id":"1167"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1168"},"selection_glyph":null,"view":{"id":"1170"}},"id":"1169","type":"GlyphRenderer"},{"attributes":{"tile_source":{"id":"1001"}},"id":"1042","type":"TileRenderer"},{"attributes":{"line_color":{"value":"blue"},"line_width":{"value":6},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1119","type":"MultiLine"},{"attributes":{"callback":null,"renderers":[{"id":"1064"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1075","type":"HoverTool"},{"attributes":{"axis":{"id":"1026"},"dimension":1,"ticker":null},"id":"1029","type":"Grid"},{"attributes":{"formatter":{"id":"1052"},"ticker":{"id":"1027"}},"id":"1026","type":"LinearAxis"},{"attributes":{},"id":"1030","type":"PanTool"},{"attributes":{},"id":"1031","type":"WheelZoomTool"},{"attributes":{},"id":"1033","type":"ResetTool"},{"attributes":{},"id":"1034","type":"SaveTool"},{"attributes":{"source":{"id":"1117"}},"id":"1122","type":"CDSView"},{"attributes":{"line_alpha":{"value":0.1},"line_color":{"value":"blue"},"line_width":{"value":6},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1120","type":"MultiLine"},{"attributes":{"bottom_units":"screen","fill_alpha":0.5,"fill_color":"lightgrey","left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"render_mode":"css","right_units":"screen","top_units":"screen"},"id":"1035","type":"BoxAnnotation"},{"attributes":{"callback":null,"renderers":[{"id":"1121"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1138","type":"HoverTool"},{"attributes":{"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto","tools":[{"id":"1030"},{"id":"1031"},{"id":"1032"},{"id":"1033"},{"id":"1034"},{"id":"1058"},{"id":"1075"},{"id":"1094"},{"id":"1115"},{"id":"1138"},{"id":"1163"},{"id":"1190"}]},"id":"1036","type":"Toolbar"},{"attributes":{},"id":"1072","type":"Selection"},{"attributes":{},"id":"1111","type":"UnionRenderers"},{"attributes":{},"id":"1112","type":"Selection"},{"attributes":{"data_source":{"id":"1044"},"glyph":{"id":"1046"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1047"},"selection_glyph":null,"view":{"id":"1049"}},"id":"1048","type":"GlyphRenderer"},{"attributes":{"label":{"value":"MultiPolygons layer (Polygon)"},"renderers":[{"id":"1064"}]},"id":"1074","type":"LegendItem"},{"attributes":{"label":{"value":"MultiPolygons layer (MultiPolygon)"},"renderers":[{"id":"1048"}]},"id":"1057","type":"LegendItem"},{"attributes":{},"id":"1020","type":"LinearScale"},{"attributes":{"data":{"geom_type":["Point","Point","Point","Point","Point","Point","Point"],"name":["Point1","Point2","Point2","Point2","Point3","Point4","Point5"],"x":[540109.7261202541,540109.3159977619,540107.6755077933,540105.4198340864,540103.7793441176,540102.9590991334,540101.9337929029],"y":[5741972.7443196755,5741983.031698051,5741993.61301393,5742004.488268349,5742022.123844301,5742031.823425962,5742041.523018193]},"selected":{"id":"1210"},"selection_policy":{"id":"1209"}},"id":"1165","type":"ColumnDataSource"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"orange"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1063","type":"MultiPolygons"},{"attributes":{"fill_color":{"value":"blue"},"line_color":{"value":"blue"},"x":{"field":"x"},"y":{"field":"y"}},"id":"1167","type":"Square"},{"attributes":{},"id":"1071","type":"UnionRenderers"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"orange"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1047","type":"MultiPolygons"},{"attributes":{"data":{"geom_type":["Polygon","Polygon"],"name":["Polygon2","Polygon3"],"x":[[[[539993.3025977896,540049.0792567247,540053.1804816464,539997.4038227113,539993.3025977896]],[[540022.7288866028,540023.241539718,540029.7009689697,540029.342111789,540022.7288866028],[540008.0097301943,540005.4631482465,540010.7600386981,540011.7786714771,540008.0097301943]]],[[[540033.6483979569,540056.0000737801,540056.0000737801,540073.6353409432,540075.8910146501,540035.4939491715,540033.6483979569]]]],"y":[[[[5742044.903181605,5742051.075657236,5742016.098351921,5742009.631974393,5742044.903181605]],[[5742035.203585691,5742029.178084462,5742029.8394197645,5742035.570994434,5742035.203585691],[5742032.420022168,5742028.331829863,5742025.119680081,5742031.251967033,5742032.420022168]]],[[[5741983.325623327,5741986.852727337,5741984.795249824,5741987.734503555,5741970.98077029,5741966.277973636,5741983.325623327]]]]},"selected":{"id":"1112"},"selection_policy":{"id":"1111"}},"id":"1077","type":"ColumnDataSource"},{"attributes":{"fill_color":{"value":"orange"},"line_color":{"value":"#1f77b4"},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1046","type":"MultiPolygons"},{"attributes":{"formatter":{"id":"1054"},"ticker":{"id":"1023"}},"id":"1022","type":"LinearAxis"},{"attributes":{"click_policy":"hide","items":[{"id":"1057"},{"id":"1074"},{"id":"1093"},{"id":"1114"},{"id":"1137"},{"id":"1162"},{"id":"1189"}]},"id":"1056","type":"Legend"},{"attributes":{"text":"My beautiful map"},"id":"1012","type":"Title"},{"attributes":{"source":{"id":"1044"}},"id":"1049","type":"CDSView"},{"attributes":{"data":{"geom_type":["LineString","LineString"],"name":["Line1","Line2"],"x":[[539984.3881464862,539970.8061063938],[539979.455293679,540123.8304611129]],"y":[[5741948.61767306,5742051.336474526],[5742052.594088212,5742073.586628581]]},"selected":{"id":"1135"},"selection_policy":{"id":"1134"}},"id":"1096","type":"ColumnDataSource"},{"attributes":{"data_source":{"id":"1077"},"glyph":{"id":"1079"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1080"},"selection_glyph":null,"view":{"id":"1082"}},"id":"1081","type":"GlyphRenderer"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"blue"},"line_alpha":{"value":0.1},"line_color":{"value":"blue"},"x":{"field":"x"},"y":{"field":"y"}},"id":"1168","type":"Square"},{"attributes":{"label":{"value":"linestrings layer (LineString)"},"renderers":[{"id":"1100"}]},"id":"1114","type":"LegendItem"},{"attributes":{"data":{"geom_type":["LineString","MultiLineString"],"name":["Line3","Multiline1"],"x":[[539993.4455212295,540067.4772964783],[540075.173300289,540144.8941239576,540144.8941239576,540130.6869059505]],"y":[[5741942.141488259,5741949.894055722],[5741950.699977471,5741957.7541610375,5741957.7541610375,5742067.004449318]]},"selected":{"id":"1187"},"selection_policy":{"id":"1186"}},"id":"1140","type":"ColumnDataSource"},{"attributes":{"source":{"id":"1077"}},"id":"1082","type":"CDSView"},{"attributes":{},"id":"1018","type":"LinearScale"},{"attributes":{},"id":"1014","type":"DataRange1d"},{"attributes":{"source":{"id":"1140"}},"id":"1145","type":"CDSView"},{"attributes":{},"id":"1052","type":"BasicTickFormatter"},{"attributes":{"label":{"value":"Polygons layer (Polygon)"},"renderers":[{"id":"1081"}]},"id":"1093","type":"LegendItem"},{"attributes":{},"id":"1016","type":"DataRange1d"},{"attributes":{"callback":null,"renderers":[{"id":"1144"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1163","type":"HoverTool"},{"attributes":{"line_alpha":{"value":0.1},"line_color":{"value":"blue"},"line_width":{"value":6},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1143","type":"MultiLine"},{"attributes":{},"id":"1023","type":"BasicTicker"},{"attributes":{},"id":"1054","type":"BasicTickFormatter"},{"attributes":{"line_color":{"value":"blue"},"line_width":{"value":6},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1142","type":"MultiLine"},{"attributes":{"label":{"value":"multilinestrings layer (LineString)"},"renderers":[{"id":"1144"}]},"id":"1162","type":"LegendItem"},{"attributes":{"attribution":"&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors,&copy; <a href=\"https://cartodb.com/attributions\">CartoDB</a>","url":"https://tiles.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"},"id":"1001","type":"WMTSTileSource"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"#cf3185"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1080","type":"MultiPolygons"},{"attributes":{},"id":"1090","type":"UnionRenderers"},{"attributes":{},"id":"1091","type":"Selection"},{"attributes":{},"id":"1159","type":"UnionRenderers"},{"attributes":{},"id":"1160","type":"Selection"},{"attributes":{"fill_color":{"value":"orange"},"line_color":{"value":"#1f77b4"},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1062","type":"MultiPolygons"},{"attributes":{"source":{"id":"1096"}},"id":"1101","type":"CDSView"},{"attributes":{"data_source":{"id":"1140"},"glyph":{"id":"1142"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1143"},"selection_glyph":null,"view":{"id":"1145"}},"id":"1144","type":"GlyphRenderer"},{"attributes":{},"id":"1135","type":"Selection"},{"attributes":{"callback":null,"renderers":[{"id":"1100"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1115","type":"HoverTool"},{"attributes":{"callback":null,"renderers":[{"id":"1081"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1094","type":"HoverTool"},{"attributes":{"data":{"geom_type":["LineString","MultiLineString"],"name":["Line3","Multiline1"],"x":[[539993.4455212295,540067.4772964783],[540075.173300289,540144.8941239576,540144.8941239576,540130.6869059505]],"y":[[5741942.141488259,5741949.894055722],[5741950.699977471,5741957.7541610375,5741957.7541610375,5742067.004449318]]},"selected":{"id":"1160"},"selection_policy":{"id":"1159"}},"id":"1117","type":"ColumnDataSource"},{"attributes":{},"id":"1134","type":"UnionRenderers"},{"attributes":{"source":{"id":"1165"}},"id":"1170","type":"CDSView"},{"attributes":{"data_source":{"id":"1117"},"glyph":{"id":"1119"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1120"},"selection_glyph":null,"view":{"id":"1122"}},"id":"1121","type":"GlyphRenderer"},{"attributes":{"source":{"id":"1060"}},"id":"1065","type":"CDSView"},{"attributes":{"line_alpha":{"value":0.1},"line_color":{"value":"green"},"line_width":{"value":4},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1099","type":"MultiLine"},{"attributes":{"line_color":{"value":"green"},"line_width":{"value":4},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1098","type":"MultiLine"},{"attributes":{"callback":null,"renderers":[{"id":"1048"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1058","type":"HoverTool"},{"attributes":{"data_source":{"id":"1060"},"glyph":{"id":"1062"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1063"},"selection_glyph":null,"view":{"id":"1065"}},"id":"1064","type":"GlyphRenderer"},{"attributes":{"label":{"value":"points layer (Point)"},"renderers":[{"id":"1169"}]},"id":"1189","type":"LegendItem"}],"root_ids":["1011"]},"title":"Bokeh Application","version":"2.0.1"}};
-  var render_items = [{"docid":"4272ee61-5d6f-4014-b785-a54289c68fc4","root_ids":["1011"],"roots":{"1011":"19486838-7ca5-4e3c-859f-9291438236d1"}}];
+  var docs_json = {"4518f3ee-4887-40cc-99e8-842650a48aa1":{"roots":{"references":[{"attributes":{"below":[{"id":"1022"}],"center":[{"id":"1025"},{"id":"1029"},{"id":"1056"}],"left":[{"id":"1026"}],"output_backend":"webgl","plot_width":800,"renderers":[{"id":"1042"},{"id":"1048"},{"id":"1064"},{"id":"1081"},{"id":"1100"},{"id":"1121"}],"title":{"id":"1012"},"toolbar":{"id":"1036"},"x_range":{"id":"1014"},"x_scale":{"id":"1018"},"y_range":{"id":"1016"},"y_scale":{"id":"1020"}},"id":"1011","subtype":"Figure","type":"Plot"},{"attributes":{},"id":"1027","type":"BasicTicker"},{"attributes":{"fill_color":{"value":"red"},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1062","type":"MultiPolygons"},{"attributes":{"axis":{"id":"1026"},"dimension":1,"ticker":null},"id":"1029","type":"Grid"},{"attributes":{},"id":"1018","type":"LinearScale"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"orange"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1047","type":"MultiPolygons"},{"attributes":{},"id":"1072","type":"Selection"},{"attributes":{"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto","tools":[{"id":"1030"},{"id":"1031"},{"id":"1032"},{"id":"1033"},{"id":"1034"},{"id":"1058"},{"id":"1075"},{"id":"1094"},{"id":"1115"},{"id":"1138"}]},"id":"1036","type":"Toolbar"},{"attributes":{},"id":"1033","type":"ResetTool"},{"attributes":{"callback":null,"renderers":[{"id":"1121"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1138","type":"HoverTool"},{"attributes":{"label":{"value":"points layer"},"renderers":[{"id":"1121"}]},"id":"1137","type":"LegendItem"},{"attributes":{},"id":"1023","type":"BasicTicker"},{"attributes":{},"id":"1073","type":"UnionRenderers"},{"attributes":{},"id":"1034","type":"SaveTool"},{"attributes":{"source":{"id":"1117"}},"id":"1122","type":"CDSView"},{"attributes":{},"id":"1020","type":"LinearScale"},{"attributes":{"callback":null,"renderers":[{"id":"1081"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1094","type":"HoverTool"},{"attributes":{"overlay":{"id":"1035"}},"id":"1032","type":"BoxZoomTool"},{"attributes":{"data_source":{"id":"1117"},"glyph":{"id":"1119"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1120"},"selection_glyph":null,"view":{"id":"1122"}},"id":"1121","type":"GlyphRenderer"},{"attributes":{"click_policy":"hide","items":[{"id":"1057"},{"id":"1074"},{"id":"1093"},{"id":"1114"},{"id":"1137"}]},"id":"1056","type":"Legend"},{"attributes":{"line_alpha":{"value":0.1},"line_color":{"value":"blue"},"line_width":{"value":6},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1099","type":"MultiLine"},{"attributes":{"callback":null,"renderers":[{"id":"1048"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1058","type":"HoverTool"},{"attributes":{"line_color":{"value":"blue"},"line_width":{"value":6},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1098","type":"MultiLine"},{"attributes":{"fill_color":{"value":"red"},"line_color":{"value":"blue"},"size":{"units":"screen","value":6},"x":{"field":"x"},"y":{"field":"y"}},"id":"1119","type":"Square"},{"attributes":{"source":{"id":"1096"}},"id":"1101","type":"CDSView"},{"attributes":{"label":{"value":"multilinestrings layer"},"renderers":[{"id":"1100"}]},"id":"1114","type":"LegendItem"},{"attributes":{"fill_color":{"value":"orange"},"line_color":{"value":"#1f77b4"},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1046","type":"MultiPolygons"},{"attributes":{"callback":null,"renderers":[{"id":"1064"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1075","type":"HoverTool"},{"attributes":{},"id":"1052","type":"BasicTickFormatter"},{"attributes":{"label":{"value":"MultiPolygons layer"},"renderers":[{"id":"1048"}]},"id":"1057","type":"LegendItem"},{"attributes":{},"id":"1030","type":"PanTool"},{"attributes":{"line_alpha":{"value":0.1},"line_color":{"value":"green"},"line_width":{"value":4},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1080","type":"MultiLine"},{"attributes":{"tile_source":{"id":"1001"}},"id":"1042","type":"TileRenderer"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"red"},"line_alpha":{"value":0.1},"line_color":{"value":"blue"},"size":{"units":"screen","value":6},"x":{"field":"x"},"y":{"field":"y"}},"id":"1120","type":"Square"},{"attributes":{"source":{"id":"1077"}},"id":"1082","type":"CDSView"},{"attributes":{"label":{"value":"linestrings layer"},"renderers":[{"id":"1081"}]},"id":"1093","type":"LegendItem"},{"attributes":{"data":{"geom_type":["Polygon","MultiPolygon"],"name":["Polygon1","Multipolygon1"],"x":[[[[540016.2082595062,540017.2434982699,540019.8067638461,540020.5244782075,540019.396641354,540020.4219475843,540024.7282337521,540025.4459481135,540001.4537823214,539997.4038227113,540016.2082595062]]],[[[540049.0792567247,540070.661952875,540072.1999122206,540089.7326487608,540091.5658327314,540091.8235201214,540094.2777042497,540096.4996698815,540100.8059560494,540102.8565685102,540075.8910146501,540073.9890868046,540080.60742331,540074.0454634354,540051.2404200251,540049.0792567247]],[[540073.6353409432,540057.7430943716,540056.8203187642,540050.9760732509,540047.7584583072,540053.1804816464,540051.2404200251,540074.0454634354,540080.60742331,540073.9890868046,540073.6353409432]],[[540058.9734618482,540060.5114211937,540066.6632585762,540063.792401131,540058.9734618482],[540062.4047205987,540059.9600019288,540071.3686890547,540068.4146539953,540062.4047205987]],[[540091.0672570786,540102.0295357057,540106.2059301,540094.6298813347,540091.0672570786]],[[540098.4643209788,540097.3438249219,540100.1959967035,540098.4643209788]]]],"y":[[[[5742011.812036097,5742000.814194429,5742000.814194429,5741994.935679299,5741994.935679299,5741984.501324506,5741984.501324506,5741979.945483294,5741977.153194669,5742009.631974393,5742011.812036097]]],[[[5742051.075657236,5742051.663512283,5742044.609254306,5742047.401564088,5742031.914545932,5742029.737565665,5742009.004290579,5741990.232869991,5741990.967683784,5741973.3321695505,5741970.98077029,5741985.107098499,5741989.204130789,5742035.644476192,5742032.644154382,5742051.075657236]],[[5741987.734503555,5741985.089175156,5741990.820721022,5741990.379832745,5742015.469758129,5742016.098351921,5742032.644154382,5742035.644476192,5741989.204130789,5741985.107098499,5741987.734503555]],[[5742012.71819945,5742004.047379403,5742006.398787394,5742013.89390451,5742012.71819945],[5742026.287734412,5742022.491558394,5742018.549377319,5742025.849714019,5742026.287734412]],[[5742036.126586525,5742032.858042887,5742008.328915996,5742006.02905552,5742036.126586525]],[[5742022.053538189,5742017.52733066,5742018.549377319,5742022.053538189]]]]},"selected":{"id":"1072"},"selection_policy":{"id":"1073"}},"id":"1044","type":"ColumnDataSource"},{"attributes":{},"id":"1031","type":"WheelZoomTool"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"red"},"line_alpha":{"value":0.1},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1063","type":"MultiPolygons"},{"attributes":{"data":{"geom_type":["LineString","MultiLineString"],"name":["Line3","Multiline1"],"x":[[539993.4455212295,540067.4772964783],[540075.173300289,540144.8941239576,540144.8941239576,540130.6869059505]],"y":[[5741942.141488259,5741949.894055722],[5741950.699977471,5741957.7541610375,5741957.7541610375,5742067.004449318]]},"selected":{"id":"1135"},"selection_policy":{"id":"1136"}},"id":"1096","type":"ColumnDataSource"},{"attributes":{"source":{"id":"1060"}},"id":"1065","type":"CDSView"},{"attributes":{"data":{"geom_type":["Polygon","Polygon"],"name":["Polygon2","Polygon3"],"x":[[[[539993.3025977896,540049.0792567247,540053.1804816464,539997.4038227113,539993.3025977896]],[[540022.7288866028,540023.241539718,540029.7009689697,540029.342111789,540022.7288866028],[540008.0097301943,540005.4631482465,540010.7600386981,540011.7786714771,540008.0097301943]]],[[[540033.6483979569,540056.0000737801,540056.0000737801,540073.6353409432,540075.8910146501,540035.4939491715,540033.6483979569]]]],"y":[[[[5742044.903181605,5742051.075657236,5742016.098351921,5742009.631974393,5742044.903181605]],[[5742035.203585691,5742029.178084462,5742029.8394197645,5742035.570994434,5742035.203585691],[5742032.420022168,5742028.331829863,5742025.119680081,5742031.251967033,5742032.420022168]]],[[[5741983.325623327,5741986.852727337,5741984.795249824,5741987.734503555,5741970.98077029,5741966.277973636,5741983.325623327]]]]},"selected":{"id":"1091"},"selection_policy":{"id":"1092"}},"id":"1060","type":"ColumnDataSource"},{"attributes":{"source":{"id":"1044"}},"id":"1049","type":"CDSView"},{"attributes":{"line_color":{"value":"green"},"line_width":{"value":4},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1079","type":"MultiLine"},{"attributes":{"data_source":{"id":"1077"},"glyph":{"id":"1079"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1080"},"selection_glyph":null,"view":{"id":"1082"}},"id":"1081","type":"GlyphRenderer"},{"attributes":{"data_source":{"id":"1096"},"glyph":{"id":"1098"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1099"},"selection_glyph":null,"view":{"id":"1101"}},"id":"1100","type":"GlyphRenderer"},{"attributes":{},"id":"1155","type":"UnionRenderers"},{"attributes":{"callback":null,"renderers":[{"id":"1100"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1115","type":"HoverTool"},{"attributes":{"data_source":{"id":"1044"},"glyph":{"id":"1046"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1047"},"selection_glyph":null,"view":{"id":"1049"}},"id":"1048","type":"GlyphRenderer"},{"attributes":{},"id":"1112","type":"Selection"},{"attributes":{},"id":"1154","type":"Selection"},{"attributes":{"label":{"value":"Polygons layer"},"renderers":[{"id":"1064"}]},"id":"1074","type":"LegendItem"},{"attributes":{"data":{"geom_type":["LineString","LineString"],"name":["Line1","Line2"],"x":[[539984.3881464862,539970.8061063938],[539979.455293679,540123.8304611129]],"y":[[5741948.61767306,5742051.336474526],[5742052.594088212,5742073.586628581]]},"selected":{"id":"1112"},"selection_policy":{"id":"1113"}},"id":"1077","type":"ColumnDataSource"},{"attributes":{},"id":"1054","type":"BasicTickFormatter"},{"attributes":{"attribution":"&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors,&copy; <a href=\"https://cartodb.com/attributions\">CartoDB</a>","url":"https://tiles.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"},"id":"1001","type":"WMTSTileSource"},{"attributes":{},"id":"1113","type":"UnionRenderers"},{"attributes":{"data_source":{"id":"1060"},"glyph":{"id":"1062"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1063"},"selection_glyph":null,"view":{"id":"1065"}},"id":"1064","type":"GlyphRenderer"},{"attributes":{"bottom_units":"screen","fill_alpha":0.5,"fill_color":"lightgrey","left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"render_mode":"css","right_units":"screen","top_units":"screen"},"id":"1035","type":"BoxAnnotation"},{"attributes":{"formatter":{"id":"1052"},"ticker":{"id":"1023"}},"id":"1022","type":"LinearAxis"},{"attributes":{},"id":"1091","type":"Selection"},{"attributes":{},"id":"1092","type":"UnionRenderers"},{"attributes":{"data":{"geom_type":["Point","Point","Point","Point","Point","Point","Point"],"name":["Point1","Point2","Point2","Point2","Point3","Point4","Point5"],"x":[540109.7261202541,540109.3159977619,540107.6755077933,540105.4198340864,540103.7793441176,540102.9590991334,540101.9337929029],"y":[5741972.7443196755,5741983.031698051,5741993.61301393,5742004.488268349,5742022.123844301,5742031.823425962,5742041.523018193]},"selected":{"id":"1154"},"selection_policy":{"id":"1155"}},"id":"1117","type":"ColumnDataSource"},{"attributes":{"formatter":{"id":"1054"},"ticker":{"id":"1027"}},"id":"1026","type":"LinearAxis"},{"attributes":{},"id":"1135","type":"Selection"},{"attributes":{},"id":"1136","type":"UnionRenderers"},{"attributes":{},"id":"1014","type":"DataRange1d"},{"attributes":{},"id":"1016","type":"DataRange1d"},{"attributes":{"text":"My beautiful map"},"id":"1012","type":"Title"},{"attributes":{"axis":{"id":"1022"},"ticker":null},"id":"1025","type":"Grid"}],"root_ids":["1011"]},"title":"Bokeh Application","version":"2.0.1"}};
+  var render_items = [{"docid":"4518f3ee-4887-40cc-99e8-842650a48aa1","root_ids":["1011"],"roots":{"1011":"9c48632c-29b7-453c-969e-6e678a882a41"}}];
   root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
 
   }
@@ -13607,7 +13648,154 @@ var element = $('#46478ad7-549f-42c0-84b1-e32e0c73e603');
 
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Wall time: 696 ms
+<pre>Wall time: 514 ms
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+<div class="cell border-box-sizing text_cell rendered"><div class="prompt input_prompt">
+</div><div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Second-way">Second way<a class="anchor-link" href="#Second-way">&#182;</a></h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+<div class="prompt input_prompt">In&nbsp;[4]:</div>
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
+<span class="n">my_map</span> <span class="o">=</span> <span class="n">EasyMapBokeh</span><span class="p">(</span>
+    <span class="s2">&quot;My beautiful map v2&quot;</span><span class="p">,</span>  <span class="c1"># required: map title</span>
+    <span class="n">width</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span>  <span class="c1"># optional: figure width, default 800</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>  <span class="c1"># optional: figure width, default 600</span>
+    <span class="n">x_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># optional: x_range, default None</span>
+    <span class="n">y_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># optional: y_range, default None</span>
+    <span class="n">background_map_name</span><span class="o">=</span><span class="s2">&quot;STAMEN_TERRAIN&quot;</span><span class="p">,</span>  <span class="c1"># optional: background map name, default: CARTODBPOSITRON</span>
+<span class="p">)</span>
+
+<span class="n">my_map</span><span class="o">.</span><span class="n">add_points</span><span class="p">(</span>
+    <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/points.geojson&quot;</span><span class="p">),</span>
+    <span class="n">legend</span><span class="o">=</span><span class="s2">&quot;points layer&quot;</span><span class="p">,</span>  <span class="c1"># required</span>
+    <span class="n">style</span><span class="o">=</span><span class="s2">&quot;cross&quot;</span><span class="p">,</span>  <span class="c1"># optional, check list : https://docs.bokeh.org/en/latest/docs/reference/models/markers.html</span>
+    <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>  <span class="c1"># bokeh marker style option</span>
+    <span class="n">fill_color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>  <span class="c1"># bokeh marker style option</span>
+<span class="p">)</span>
+
+<span class="n">my_map</span><span class="o">.</span><span class="n">add_lines</span><span class="p">(</span>
+    <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/multilinestrings.geojson&quot;</span><span class="p">),</span>
+    <span class="n">legend</span><span class="o">=</span><span class="s2">&quot;multilinestrings layer&quot;</span><span class="p">,</span>  <span class="c1"># required</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span>  <span class="c1"># bokeh multi_line style option</span>
+    <span class="n">line_width</span><span class="o">=</span><span class="mi">6</span>  <span class="c1"># bokeh multi_line style option</span>
+<span class="p">)</span>
+
+<span class="n">my_map</span><span class="o">.</span><span class="n">add_lines</span><span class="p">(</span>
+    <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/linestrings.geojson&quot;</span><span class="p">),</span>
+    <span class="n">legend</span><span class="o">=</span><span class="s2">&quot;linestrings layer&quot;</span><span class="p">,</span>  <span class="c1"># required</span>
+    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span>  <span class="c1"># bokeh multi_line style option</span>
+    <span class="n">line_width</span><span class="o">=</span><span class="mi">4</span>  <span class="c1"># bokeh multi_line style option</span>
+<span class="p">)</span>
+
+<span class="n">my_map</span><span class="o">.</span><span class="n">add_polygons</span><span class="p">(</span>
+    <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/polygons.geojson&quot;</span><span class="p">),</span>
+    <span class="n">legend</span><span class="o">=</span><span class="s2">&quot;Polygons layer&quot;</span><span class="p">,</span>  <span class="c1"># required</span>
+    <span class="n">fill_color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>  <span class="c1"># bokeh multi_polygon style option</span>
+    <span class="n">line_width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>  <span class="c1"># bokeh multi_polygon style option</span>
+    <span class="n">line_color</span><span class="o">=</span><span class="s2">&quot;yellow&quot;</span>  <span class="c1"># bokeh multi_polygon style option</span>
+<span class="p">)</span>
+
+<span class="n">my_map</span><span class="o">.</span><span class="n">add_polygons</span><span class="p">(</span>
+    <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/multipolygons.geojson&quot;</span><span class="p">),</span>
+    <span class="n">legend</span><span class="o">=</span><span class="s2">&quot;MultiPolygons layer&quot;</span><span class="p">,</span>  <span class="c1"># required</span>
+    <span class="n">fill_color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span>  <span class="c1"># bokeh multi_polygon style option</span>
+    <span class="n">line_color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>  <span class="c1"># bokeh multi_polygon style option</span>
+<span class="p">)</span>
+
+<span class="n">show</span><span class="p">(</span><span class="n">my_map</span><span class="o">.</span><span class="n">figure</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+<div class="output_html rendered_html output_subarea ">
+
+
+
+
+
+
+  <div class="bk-root" id="98a3efb7-417f-4ed1-9d77-6ba58109439d" data-root-id="1252"></div>
+
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+
+
+
+<div id="1b243c9d-bbad-4901-8ab9-d66b3cc556bc"></div>
+<div class="output_subarea output_javascript ">
+<script type="text/javascript">
+var element = $('#1b243c9d-bbad-4901-8ab9-d66b3cc556bc');
+(function(root) {
+  function embed_document(root) {
+    
+  var docs_json = {"1bd6856a-8e3c-4b01-8038-a9b50fac1dab":{"roots":{"references":[{"attributes":{"below":[{"id":"1263"}],"center":[{"id":"1266"},{"id":"1270"},{"id":"1297"}],"left":[{"id":"1267"}],"output_backend":"webgl","plot_height":800,"plot_width":700,"renderers":[{"id":"1283"},{"id":"1289"},{"id":"1305"},{"id":"1322"},{"id":"1341"},{"id":"1362"}],"title":{"id":"1253"},"toolbar":{"id":"1277"},"x_range":{"id":"1255"},"x_scale":{"id":"1259"},"y_range":{"id":"1257"},"y_scale":{"id":"1261"}},"id":"1252","subtype":"Figure","type":"Plot"},{"attributes":{"line_color":{"value":"green"},"line_width":{"value":6},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1303","type":"MultiLine"},{"attributes":{"bottom_units":"screen","fill_alpha":0.5,"fill_color":"lightgrey","left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"render_mode":"css","right_units":"screen","top_units":"screen"},"id":"1276","type":"BoxAnnotation"},{"attributes":{"data_source":{"id":"1301"},"glyph":{"id":"1303"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1304"},"selection_glyph":null,"view":{"id":"1306"}},"id":"1305","type":"GlyphRenderer"},{"attributes":{},"id":"1293","type":"BasicTickFormatter"},{"attributes":{"fill_color":{"value":"red"},"line_color":{"value":"yellow"},"line_width":{"value":5},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1339","type":"MultiPolygons"},{"attributes":{"data":{"geom_type":["Polygon","MultiPolygon"],"name":["Polygon1","Multipolygon1"],"x":[[[[540016.2082595062,540017.2434982699,540019.8067638461,540020.5244782075,540019.396641354,540020.4219475843,540024.7282337521,540025.4459481135,540001.4537823214,539997.4038227113,540016.2082595062]]],[[[540049.0792567247,540070.661952875,540072.1999122206,540089.7326487608,540091.5658327314,540091.8235201214,540094.2777042497,540096.4996698815,540100.8059560494,540102.8565685102,540075.8910146501,540073.9890868046,540080.60742331,540074.0454634354,540051.2404200251,540049.0792567247]],[[540073.6353409432,540057.7430943716,540056.8203187642,540050.9760732509,540047.7584583072,540053.1804816464,540051.2404200251,540074.0454634354,540080.60742331,540073.9890868046,540073.6353409432]],[[540058.9734618482,540060.5114211937,540066.6632585762,540063.792401131,540058.9734618482],[540062.4047205987,540059.9600019288,540071.3686890547,540068.4146539953,540062.4047205987]],[[540091.0672570786,540102.0295357057,540106.2059301,540094.6298813347,540091.0672570786]],[[540098.4643209788,540097.3438249219,540100.1959967035,540098.4643209788]]]],"y":[[[[5742011.812036097,5742000.814194429,5742000.814194429,5741994.935679299,5741994.935679299,5741984.501324506,5741984.501324506,5741979.945483294,5741977.153194669,5742009.631974393,5742011.812036097]]],[[[5742051.075657236,5742051.663512283,5742044.609254306,5742047.401564088,5742031.914545932,5742029.737565665,5742009.004290579,5741990.232869991,5741990.967683784,5741973.3321695505,5741970.98077029,5741985.107098499,5741989.204130789,5742035.644476192,5742032.644154382,5742051.075657236]],[[5741987.734503555,5741985.089175156,5741990.820721022,5741990.379832745,5742015.469758129,5742016.098351921,5742032.644154382,5742035.644476192,5741989.204130789,5741985.107098499,5741987.734503555]],[[5742012.71819945,5742004.047379403,5742006.398787394,5742013.89390451,5742012.71819945],[5742026.287734412,5742022.491558394,5742018.549377319,5742025.849714019,5742026.287734412]],[[5742036.126586525,5742032.858042887,5742008.328915996,5742006.02905552,5742036.126586525]],[[5742022.053538189,5742017.52733066,5742018.549377319,5742022.053538189]]]]},"selected":{"id":"1411"},"selection_policy":{"id":"1412"}},"id":"1358","type":"ColumnDataSource"},{"attributes":{"source":{"id":"1301"}},"id":"1306","type":"CDSView"},{"attributes":{},"id":"1295","type":"BasicTickFormatter"},{"attributes":{},"id":"1376","type":"Selection"},{"attributes":{"tile_source":{"id":"1005"}},"id":"1283","type":"TileRenderer"},{"attributes":{},"id":"1353","type":"Selection"},{"attributes":{},"id":"1377","type":"UnionRenderers"},{"attributes":{"callback":null,"renderers":[{"id":"1362"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1379","type":"HoverTool"},{"attributes":{},"id":"1354","type":"UnionRenderers"},{"attributes":{"line_color":{"value":"orange"},"line_width":{"value":4},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1320","type":"MultiLine"},{"attributes":{"text":"My beautiful map v2"},"id":"1253","type":"Title"},{"attributes":{},"id":"1264","type":"BasicTicker"},{"attributes":{"line_alpha":{"value":0.1},"line_color":{"value":"green"},"line_width":{"value":6},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1304","type":"MultiLine"},{"attributes":{},"id":"1255","type":"DataRange1d"},{"attributes":{"callback":null,"renderers":[{"id":"1305"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1316","type":"HoverTool"},{"attributes":{},"id":"1332","type":"Selection"},{"attributes":{"axis":{"id":"1267"},"dimension":1,"ticker":null},"id":"1270","type":"Grid"},{"attributes":{},"id":"1333","type":"UnionRenderers"},{"attributes":{"data":{"geom_type":["Point","Point","Point","Point","Point","Point","Point"],"name":["Point1","Point2","Point2","Point2","Point3","Point4","Point5"],"x":[540109.7261202541,540109.3159977619,540107.6755077933,540105.4198340864,540103.7793441176,540102.9590991334,540101.9337929029],"y":[5741972.7443196755,5741983.031698051,5741993.61301393,5742004.488268349,5742022.123844301,5742031.823425962,5742041.523018193]},"selected":{"id":"1313"},"selection_policy":{"id":"1314"}},"id":"1285","type":"ColumnDataSource"},{"attributes":{},"id":"1257","type":"DataRange1d"},{"attributes":{"label":{"value":"multilinestrings layer"},"renderers":[{"id":"1305"}]},"id":"1315","type":"LegendItem"},{"attributes":{},"id":"1259","type":"LinearScale"},{"attributes":{"axis":{"id":"1263"},"ticker":null},"id":"1266","type":"Grid"},{"attributes":{"formatter":{"id":"1293"},"ticker":{"id":"1264"}},"id":"1263","type":"LinearAxis"},{"attributes":{},"id":"1261","type":"LinearScale"},{"attributes":{"click_policy":"hide","items":[{"id":"1298"},{"id":"1315"},{"id":"1334"},{"id":"1355"},{"id":"1378"}]},"id":"1297","type":"Legend"},{"attributes":{"data_source":{"id":"1285"},"glyph":{"id":"1287"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1288"},"selection_glyph":null,"view":{"id":"1290"}},"id":"1289","type":"GlyphRenderer"},{"attributes":{},"id":"1271","type":"PanTool"},{"attributes":{},"id":"1268","type":"BasicTicker"},{"attributes":{"source":{"id":"1285"}},"id":"1290","type":"CDSView"},{"attributes":{"callback":null,"renderers":[{"id":"1341"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1356","type":"HoverTool"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"red"},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"size":{"units":"screen","value":10},"x":{"field":"x"},"y":{"field":"y"}},"id":"1288","type":"Cross"},{"attributes":{},"id":"1272","type":"WheelZoomTool"},{"attributes":{"active_drag":"auto","active_inspect":"auto","active_multi":null,"active_scroll":"auto","active_tap":"auto","tools":[{"id":"1271"},{"id":"1272"},{"id":"1273"},{"id":"1274"},{"id":"1275"},{"id":"1299"},{"id":"1316"},{"id":"1335"},{"id":"1356"},{"id":"1379"}]},"id":"1277","type":"Toolbar"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"blue"},"line_alpha":{"value":0.1},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1361","type":"MultiPolygons"},{"attributes":{"overlay":{"id":"1276"}},"id":"1273","type":"BoxZoomTool"},{"attributes":{"formatter":{"id":"1295"},"ticker":{"id":"1268"}},"id":"1267","type":"LinearAxis"},{"attributes":{},"id":"1274","type":"ResetTool"},{"attributes":{"source":{"id":"1318"}},"id":"1323","type":"CDSView"},{"attributes":{},"id":"1275","type":"SaveTool"},{"attributes":{"callback":null,"renderers":[{"id":"1289"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1299","type":"HoverTool"},{"attributes":{"attribution":"Map tiles by <a href=\"https://stamen.com\">Stamen Design</a>, under <a href=\"https://creativecommons.org/licenses/by/3.0\">CC BY 3.0</a>. Data by <a href=\"https://openstreetmap.org\">OpenStreetMap</a>, under <a href=\"https://creativecommons.org/licenses/by-sa/3.0\">CC BY SA</a>.","url":"http://tile.stamen.com/terrain/{Z}/{X}/{Y}.png"},"id":"1005","type":"WMTSTileSource"},{"attributes":{"label":{"value":"linestrings layer"},"renderers":[{"id":"1322"}]},"id":"1334","type":"LegendItem"},{"attributes":{"source":{"id":"1337"}},"id":"1342","type":"CDSView"},{"attributes":{"source":{"id":"1358"}},"id":"1363","type":"CDSView"},{"attributes":{},"id":"1412","type":"UnionRenderers"},{"attributes":{"label":{"value":"MultiPolygons layer"},"renderers":[{"id":"1362"}]},"id":"1378","type":"LegendItem"},{"attributes":{"data_source":{"id":"1337"},"glyph":{"id":"1339"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1340"},"selection_glyph":null,"view":{"id":"1342"}},"id":"1341","type":"GlyphRenderer"},{"attributes":{"fill_color":{"value":"red"},"line_color":{"value":"#1f77b4"},"size":{"units":"screen","value":10},"x":{"field":"x"},"y":{"field":"y"}},"id":"1287","type":"Cross"},{"attributes":{"data":{"geom_type":["LineString","LineString"],"name":["Line1","Line2"],"x":[[539984.3881464862,539970.8061063938],[539979.455293679,540123.8304611129]],"y":[[5741948.61767306,5742051.336474526],[5742052.594088212,5742073.586628581]]},"selected":{"id":"1353"},"selection_policy":{"id":"1354"}},"id":"1318","type":"ColumnDataSource"},{"attributes":{"callback":null,"renderers":[{"id":"1322"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1335","type":"HoverTool"},{"attributes":{"data":{"geom_type":["Polygon","Polygon"],"name":["Polygon2","Polygon3"],"x":[[[[539993.3025977896,540049.0792567247,540053.1804816464,539997.4038227113,539993.3025977896]],[[540022.7288866028,540023.241539718,540029.7009689697,540029.342111789,540022.7288866028],[540008.0097301943,540005.4631482465,540010.7600386981,540011.7786714771,540008.0097301943]]],[[[540033.6483979569,540056.0000737801,540056.0000737801,540073.6353409432,540075.8910146501,540035.4939491715,540033.6483979569]]]],"y":[[[[5742044.903181605,5742051.075657236,5742016.098351921,5742009.631974393,5742044.903181605]],[[5742035.203585691,5742029.178084462,5742029.8394197645,5742035.570994434,5742035.203585691],[5742032.420022168,5742028.331829863,5742025.119680081,5742031.251967033,5742032.420022168]]],[[[5741983.325623327,5741986.852727337,5741984.795249824,5741987.734503555,5741970.98077029,5741966.277973636,5741983.325623327]]]]},"selected":{"id":"1376"},"selection_policy":{"id":"1377"}},"id":"1337","type":"ColumnDataSource"},{"attributes":{"line_alpha":{"value":0.1},"line_color":{"value":"orange"},"line_width":{"value":4},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1321","type":"MultiLine"},{"attributes":{},"id":"1411","type":"Selection"},{"attributes":{"label":{"value":"points layer"},"renderers":[{"id":"1289"}]},"id":"1298","type":"LegendItem"},{"attributes":{"data":{"geom_type":["LineString","MultiLineString"],"name":["Line3","Multiline1"],"x":[[539993.4455212295,540067.4772964783],[540075.173300289,540144.8941239576,540144.8941239576,540130.6869059505]],"y":[[5741942.141488259,5741949.894055722],[5741950.699977471,5741957.7541610375,5741957.7541610375,5742067.004449318]]},"selected":{"id":"1332"},"selection_policy":{"id":"1333"}},"id":"1301","type":"ColumnDataSource"},{"attributes":{"label":{"value":"Polygons layer"},"renderers":[{"id":"1341"}]},"id":"1355","type":"LegendItem"},{"attributes":{"data_source":{"id":"1358"},"glyph":{"id":"1360"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1361"},"selection_glyph":null,"view":{"id":"1363"}},"id":"1362","type":"GlyphRenderer"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"red"},"line_alpha":{"value":0.1},"line_color":{"value":"yellow"},"line_width":{"value":5},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1340","type":"MultiPolygons"},{"attributes":{"fill_color":{"value":"blue"},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1360","type":"MultiPolygons"},{"attributes":{},"id":"1313","type":"Selection"},{"attributes":{"data_source":{"id":"1318"},"glyph":{"id":"1320"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"1321"},"selection_glyph":null,"view":{"id":"1323"}},"id":"1322","type":"GlyphRenderer"},{"attributes":{},"id":"1314","type":"UnionRenderers"}],"root_ids":["1252"]},"title":"Bokeh Application","version":"2.0.1"}};
+  var render_items = [{"docid":"1bd6856a-8e3c-4b01-8038-a9b50fac1dab","root_ids":["1252"],"roots":{"1252":"98a3efb7-417f-4ed1-9d77-6ba58109439d"}}];
+  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
+
+  }
+  if (root.Bokeh !== undefined) {
+    embed_document(root);
+  } else {
+    var attempts = 0;
+    var timer = setInterval(function(root) {
+      if (root.Bokeh !== undefined) {
+        clearInterval(timer);
+        embed_document(root);
+      } else {
+        attempts++;
+        if (attempts > 100) {
+          clearInterval(timer);
+          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+        }
+      }
+    }, 10, root)
+  }
+})(window);
+</script>
+</div>
+
+</div>
+
+<div class="output_area">
+
+    <div class="prompt"></div>
+
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Wall time: 627 ms
 </pre>
 </div>
 </div>
