@@ -75,9 +75,3 @@ On the terminal, run :
 ```
 bokeh serve --show bokeh_serve_example.py
 ```
-
-## Process
-
-The main feature is about the shapely geometry conversion to bokeh format. The next figure try to describe the process
-
-![link](docs/geom_conversion_process.png)
