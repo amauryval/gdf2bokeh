@@ -125,10 +125,11 @@ class EasyMapBokeh:
             input_data = self.__reprojection(input_data)
             bokeh_layer_container = self._format_gdf_features_to_bokeh(input_data)
 
+            kwargs = self._check_if_legend_is_a_input_data_field(input_data, legend, kwargs)
+
             rendered = self.figure.multi_line(
                 xs="x",
                 ys="y",
-                legend_label=legend,
                 source=bokeh_layer_container,
                 **kwargs
             )
@@ -168,10 +169,11 @@ class EasyMapBokeh:
             input_data = self.__reprojection(input_data)
             bokeh_layer_container = self._format_gdf_features_to_bokeh(input_data)
 
+            kwargs = self._check_if_legend_is_a_input_data_field(input_data, legend, kwargs)
+
             rendered = getattr(self.figure, style)(
                 x="x",
                 y="y",
-                legend_label=legend,
                 source=bokeh_layer_container,
                 **kwargs
             )
@@ -185,6 +187,14 @@ class EasyMapBokeh:
         else:
             raise ErrorEasyMapBokeh(
                 f"{layer_geom_types} geometry not supported by add_points() method: only works with {' and '.join(point_type_compatibility)} (layer concerned '{legend}')")
+
+    def _check_if_legend_is_a_input_data_field(self, input_data, legend, kwargs):
+        if legend in input_data.columns.to_list():
+            kwargs["legend_field"] = legend
+        else:
+            kwargs["legend_label"] = legend
+
+        return kwargs
 
     def add_polygons(self, input_gdf, legend, **kwargs):
         """
@@ -208,10 +218,11 @@ class EasyMapBokeh:
             input_data = self.__reprojection(input_data)
             bokeh_layer_container = self._format_gdf_features_to_bokeh(input_data)
 
+            kwargs = self._check_if_legend_is_a_input_data_field(input_data, legend, kwargs)
+
             rendered = self.figure.multi_polygons(
                 xs="x",
                 ys="y",
-                legend_label=legend,
                 source=bokeh_layer_container,
                 **kwargs
             )

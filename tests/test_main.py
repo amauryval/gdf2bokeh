@@ -29,7 +29,8 @@ def test_bokeh_processing(multipolygons_data, polygons_data, linestrings_data, m
 
     my_map.add_lines(
         linestrings_data,
-        legend="linestrings"
+        legend="name",  # we can use an attribute name containing color value (as usual on bokeh)
+        color="color",  # we can use an attribute name containing color value (as usual on bokeh)
     )
 
     my_map.add_lines(
