@@ -1,3 +1,6 @@
+from typing import List
+
+from shapely.geometry import base
 from shapely.geometry import Point
 from shapely.geometry import MultiPoint
 
@@ -12,7 +15,7 @@ from shapely.geometry import MultiPolygon
 from shapely.geometry import GeometryCollection
 
 
-def geometry_2_bokeh_format(geometry, coord_name="xy"):
+def geometry_2_bokeh_format(geometry: base, coord_name: str = "xy") -> List:
     """
     geometry_2_bokeh_format
     Used for bokeh library
@@ -21,7 +24,7 @@ def geometry_2_bokeh_format(geometry, coord_name="xy"):
     :type coord_name: str, default: xy (x or y)
     :return: float or list of tuple
     """
-    coord_values = []
+    coord_values: List = []
     if isinstance(geometry, Point):
         if coord_name != "xy":
             coord_values = getattr(geometry, coord_name)

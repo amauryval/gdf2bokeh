@@ -1,8 +1,14 @@
-import geopandas as gpd
+from typing import List
+from typing import Optional
+from typing import Dict
+from typing import Set
+from typing import Tuple
 
+import geopandas as gpd
 
 from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource
+from bokeh.models.renderers import GlyphRenderer
 
 from bokeh.models import HoverTool
 from bokeh.palettes import brewer
@@ -25,11 +31,11 @@ class ErrorEasyMapBokeh(Exception):
 
 class EasyMapBokeh:
 
-    __GEOMETRY_FIELD_NAME = "geometry"
-    __DEFAULT_EPSG = 3857
-    __BREWER_COLORS = brewer["Set3"][7]
+    __GEOMETRY_FIELD_NAME: str = "geometry"
+    __DEFAULT_EPSG: int = 3857
+    __BREWER_COLORS: List = brewer["Set3"][7]
 
-    def __init__(self, title="My empty Map", width=800, height=600, x_range=None, y_range=None, background_map_name="CARTODBPOSITRON", layers=None):
+    def __init__(self, title: str = "My empty Map", width: int = 800, height: int = 600, x_range: Optional[int] = None, y_range: Optional[int] = None, background_map_name: str = "CARTODBPOSITRON", layers: Optional[Dict] = None) -> None:
         """
         :param title: figure title
         :type title: str
@@ -48,7 +54,7 @@ class EasyMapBokeh:
         """
         super().__init__()
 
-        self.__BOKEH_LAYER_CONTAINERS = {}
+        self.__BOKEH_LAYER_CONTAINERS: Dict = {}
 
         self.figure = figure(
             title=title,
@@ -68,7 +74,7 @@ class EasyMapBokeh:
             self.__add_layers()
 
     @property
-    def get_bokeh_layer_containers(self):
+    def get_bokeh_layer_containers(self) -> Dict:
         """
         To get all the bokeh layer containers in order to create dynamic layer (with slider for example)
 
@@ -77,7 +83,7 @@ class EasyMapBokeh:
         """
         return self.__BOKEH_LAYER_CONTAINERS
 
-    def get_bokeh_structure_from_gdf(self, features):
+    def get_bokeh_structure_from_gdf(self, features: gpd.GeoDataFrame) -> ColumnDataSource:
         """
         To build the bokeh data structure from a geodataframe.
 
@@ -91,11 +97,11 @@ class EasyMapBokeh:
         bokeh_data = self.__convert_gdf_to_bokeh_data(features, get_gdf_structure=True)
         return ColumnDataSource(data=dict.fromkeys(bokeh_data.column_names, []))
 
-    def __legend_settings(self):
+    def __legend_settings(self) -> None:
         # interactive legend
         self.figure.legend.click_policy = "hide"
 
-    def __reprojection(self, input_data):
+    def __reprojection(self, input_data: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
         expected_epsg = f"epsg:{self.__DEFAULT_EPSG}"
         if input_data.crs != expected_epsg:
 
@@ -103,7 +109,7 @@ class EasyMapBokeh:
 
         return input_data
 
-    def add_lines(self, input_gdf, legend, **kwargs):
+    def add_lines(self, input_gdf: gpd.GeoDataFrame, legend: str, **kwargs) -> ColumnDataSource:
         """
         To add a lines layer on bokeh Figure (LineString and MultiLineString geometry types supported)
 
@@ -143,7 +149,7 @@ class EasyMapBokeh:
             raise ErrorEasyMapBokeh(
                 f"{layer_geom_types} geometry not supported by add_lines() method: only works with {' and '.join(linestrings_type_compatibility)} (layer concerned '{legend}')")
 
-    def add_points(self, input_gdf, legend, style="circle", **kwargs):
+    def add_points(self, input_gdf: gpd.GeoDataFrame, legend: str, style: str = "circle", **kwargs) -> ColumnDataSource:
         """
         To add a points layer on bokeh Figure  (Point geometry type supported)
 
@@ -188,7 +194,7 @@ class EasyMapBokeh:
             raise ErrorEasyMapBokeh(
                 f"{layer_geom_types} geometry not supported by add_points() method: only works with {' and '.join(point_type_compatibility)} (layer concerned '{legend}')")
 
-    def _check_if_legend_is_a_input_data_field(self, input_data, legend, kwargs):
+    def _check_if_legend_is_a_input_data_field(self, input_data: gpd.GeoDataFrame, legend: str, kwargs) -> Dict:
         if legend in input_data.columns.to_list():
             kwargs["legend_field"] = legend
         else:
@@ -196,7 +202,7 @@ class EasyMapBokeh:
 
         return kwargs
 
-    def add_polygons(self, input_gdf, legend, **kwargs):
+    def add_polygons(self, input_gdf: gpd.GeoDataFrame, legend: str, **kwargs) -> ColumnDataSource:
         """
         To add a polygons layer on bokeh Figure (Polygon and MultiPolygon geometry type supported)
 
@@ -236,14 +242,14 @@ class EasyMapBokeh:
             raise ErrorEasyMapBokeh(
                 f"{layer_geom_types} geometry not supported by add_polygons() method: only works with {' and '.join(polygons_type_compatibility)} (layer concerned '{legend}')")
 
-    def _add_background_map(self, background_map_name):
+    def _add_background_map(self, background_map_name: str) -> None:
         assert background_map_name in map_background_providers.keys(), f"Use one of these background map : {', '.join(map_background_providers)}"
         self.figure.add_tile(map_background_providers[background_map_name])
 
-    def __get_geom_types_from_gdf(self, input_gdf):
+    def __get_geom_types_from_gdf(self, input_gdf: gpd.GeoDataFrame) -> Set[str]:
         return set(list(map(lambda x: x.geom_type, input_gdf[self.__GEOMETRY_FIELD_NAME].tolist())))
 
-    def __add_layers(self):
+    def __add_layers(self) -> None:
         assert isinstance(self._layers_configuration , list), "layers arg is not a list"
 
         for layer_settings in self._layers_configuration:
@@ -271,8 +277,8 @@ class EasyMapBokeh:
                 raise ErrorEasyMapBokeh(f"Your geodataframe may not have geometry features (layer concerned '{layer_settings['legend']}')")
 
 
-    def _set_tooltip_from_features(self, features, rendered):
-        assert isinstance(features, ColumnDataSource)
+    def _set_tooltip_from_features(self, features: ColumnDataSource, rendered: GlyphRenderer) -> None:
+
         column_tooltip = self.__build_column_tooltip(features)
         self.figure.add_tools(HoverTool(
             tooltips=column_tooltip,
@@ -280,11 +286,11 @@ class EasyMapBokeh:
             mode="mouse"
         ))
 
-    def __build_column_tooltip(self, features):
+    def __build_column_tooltip(self, features: gpd.GeoDataFrame) -> List[Tuple[str, str]]:
         columns = list(filter(lambda x: x not in ["x", "y"], features.data.keys()))
         return list(zip(map(lambda x: str(x.upper()), columns), map(lambda x: f"@{x}", columns)))
 
-    def __convert_gdf_to_bokeh_data(self, input_gdf, get_gdf_structure=False):
+    def __convert_gdf_to_bokeh_data(self, input_gdf: gpd.GeoDataFrame, get_gdf_structure: bool = False) -> ColumnDataSource:
         assert isinstance(input_gdf, gpd.GeoDataFrame), f"use a geodataframe please => found {type(input_gdf)}"
         if get_gdf_structure:
             input_gdf = input_gdf.head(1)
@@ -303,7 +309,7 @@ class EasyMapBokeh:
         })
         return bokeh_data
 
-    def _format_gdf_features_to_bokeh(self , input_gdf):
+    def _format_gdf_features_to_bokeh(self, input_gdf: gpd.GeoDataFrame) -> ColumnDataSource:
         """
         To build the bokeh data input from a geodataframe.
 

@@ -1,3 +1,8 @@
+from typing import List
+from typing import Optional
+from typing import Dict
+from typing import Set
+from typing import Tuple
 
 from bokeh.tile_providers import CARTODBPOSITRON
 from bokeh.tile_providers import CARTODBPOSITRON_RETINA
@@ -10,7 +15,7 @@ from bokeh.tile_providers import STAMEN_TONER_BACKGROUND
 from bokeh.tile_providers import STAMEN_TONER_LABELS
 from bokeh.tile_providers import get_provider
 
-expected_node_style = [
+expected_node_style: List[str] = [
     "asterisk",
     "circle",
     "circle_cross",
@@ -29,7 +34,7 @@ expected_node_style = [
     "y"
 ]  # https://docs.bokeh.org/en/latest/docs/reference/models/markers.html
 
-map_background_providers = {
+map_background_providers: Dict = {
     "CARTODBPOSITRON": get_provider(CARTODBPOSITRON),
     "CARTODBPOSITRON_RETINA": get_provider(CARTODBPOSITRON_RETINA),
     "ESRI_IMAGERY": get_provider(ESRI_IMAGERY),
@@ -41,12 +46,12 @@ map_background_providers = {
     "STAMEN_TONER_LABELS": get_provider(STAMEN_TONER_LABELS)
 }
 
-default_attributes = {"input_gdf", "legend"}
+default_attributes: Set[str] = {"input_gdf", "legend"}
 
-linestrings_type_compatibility = {"LineString", "MultiLineString"}
-polygons_type_compatibility = {"Polygon", "MultiPolygon"}
-point_type_compatibility = {"Point"}
-geometry_compatibility = [
+linestrings_type_compatibility: Set[str] = {"LineString", "MultiLineString"}
+polygons_type_compatibility: Set[str] = {"Polygon", "MultiPolygon"}
+point_type_compatibility: Set[str] = {"Point"}
+geometry_compatibility: List[Set[str]] = [
     linestrings_type_compatibility,
     polygons_type_compatibility,
     point_type_compatibility,
