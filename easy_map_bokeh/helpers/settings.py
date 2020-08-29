@@ -31,7 +31,7 @@ expected_node_style: List[str] = [
     "square_x",
     "triangle",
     "x",
-    "y"
+    "y",
 ]  # https://docs.bokeh.org/en/latest/docs/reference/models/markers.html
 
 map_background_providers: Dict = {
@@ -43,7 +43,7 @@ map_background_providers: Dict = {
     "STAMEN_TERRAIN_RETINA": get_provider(STAMEN_TERRAIN_RETINA),
     "STAMEN_TONER": get_provider(STAMEN_TONER),
     "STAMEN_TONER_BACKGROUND": get_provider(STAMEN_TONER_BACKGROUND),
-    "STAMEN_TONER_LABELS": get_provider(STAMEN_TONER_LABELS)
+    "STAMEN_TONER_LABELS": get_provider(STAMEN_TONER_LABELS),
 }
 
 default_attributes: Set[str] = {"input_gdf", "legend"}

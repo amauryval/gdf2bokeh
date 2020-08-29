@@ -32,20 +32,15 @@ def geometry_2_bokeh_format(geometry: base, coord_name: str = "xy") -> List:
             coord_values = next(iter(geometry.coords))
 
     elif isinstance(geometry, Polygon):
-        exterior = [
-            geometry_2_bokeh_format(geometry.exterior, coord_name)
-        ]
-        interiors = geometry_2_bokeh_format(
-            geometry.interiors, coord_name
-        )
+        exterior = [geometry_2_bokeh_format(geometry.exterior, coord_name)]
+        interiors = geometry_2_bokeh_format(geometry.interiors, coord_name)
         coord_values = [exterior, interiors]
         if len(interiors) == 0:
             coord_values = [exterior]
 
     elif isinstance(geometry, (LinearRing, LineString)):
         coord_values = [
-            geometry_2_bokeh_format(Point(feat), coord_name)
-            for feat in geometry.coords
+            geometry_2_bokeh_format(Point(feat), coord_name) for feat in geometry.coords
         ]
 
     if isinstance(geometry, (MultiPolygon, MultiLineString)):
@@ -53,20 +48,17 @@ def geometry_2_bokeh_format(geometry: base, coord_name: str = "xy") -> List:
             if isinstance(feat, Point):
                 coord_values.append([geometry_2_bokeh_format(feat, coord_name)])
             else:
-                coord_values.extend(
-                    geometry_2_bokeh_format(feat, coord_name)
-                )
+                coord_values.extend(geometry_2_bokeh_format(feat, coord_name))
 
     if isinstance(geometry, MultiPoint):
-        raise ValueError("no interest to handle MultiPoint, it's very tricky to support point simple points and multipoints")
+        raise ValueError(
+            "no interest to handle MultiPoint, it's very tricky to support point simple points and multipoints"
+        )
 
     if isinstance(geometry, InteriorRingSequence):
         # compute holes
         coord_values.extend(
-            [
-                geometry_2_bokeh_format(feat, coord_name)
-                for feat in geometry
-            ]
+            [geometry_2_bokeh_format(feat, coord_name) for feat in geometry]
         )
 
     if isinstance(geometry, GeometryCollection):
