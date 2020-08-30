@@ -4,6 +4,7 @@ Because it's boring to convert shapely geometry to bokeh format !!
 
 ![CI](https://github.com/amauryval/easy_map_bokeh/workflows/CI/badge.svg)
 [![codecov](https://codecov.io/gh/amauryval/easy_map_bokeh/branch/master/graph/badge.svg)](https://codecov.io/gh/amauryval/easy_map_bokeh)
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
 [![Anaconda-Server Badge](https://anaconda.org/amauryval/easy_map_bokeh/badges/version.svg)](https://anaconda.org/amauryval/easy_map_bokeh)
 [![Anaconda-Server Badge](https://anaconda.org/amauryval/easy_map_bokeh/badges/latest_release_date.svg)](https://anaconda.org/amauryval/easy_map_bokeh)
