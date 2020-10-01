@@ -1,4 +1,4 @@
-name: Publishing
+name: Publishing Conda Package
 
 on:
   push:
@@ -59,6 +59,6 @@ jobs:
       uses: amauryval/publish_conda_package_action@main
       with:
         CondaDir: 'conda_recipe'
-        Platforms: 'osx-64 linux-32 linux-64 win-32 win-64'
+        Platforms: 'osx-64 linux-64 win-64'
         CondaUsername: ${{ secrets.CONDA_USERNAME }}
         CondaPassword: ${{ secrets.CONDA_PASSWORD }}
