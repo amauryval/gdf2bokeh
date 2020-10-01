@@ -29,12 +29,12 @@ share/python-wheels/
 MANIFEST
 conda_build/
 temp_build/
-
+conda_recipe/
 pkg.Dockerfile
 
 # PyInstaller
 #  Usually these files are written by a python script from a template
-#  before PyInstaller builds the exe, so as to inject date/other infos into it.
+#  before PyInstgit aller builds the exe, so as to inject date/other infos into it.
 *.manifest
 *.spec
 
@@ -134,3 +134,4 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+!/conda_recipe/

@@ -14,7 +14,7 @@ setup(
     author="amauryval",
     author_email='amauryval@gmail.com',
     url="https://github.com/amauryval/easy_map_bokeh",
-    version='1.4.5',
+    version='1.4.6',
     description="An easy way to map geodataframe on bokeh - BSD-3-Clause",
     entry_points={},
     install_requires=requirements,
@@ -28,5 +28,5 @@ setup(
     test_suite='tests',
     # tests_require=test_requirements,
     zip_safe=False,
-    python_requires=">=3.6",
+    python_requires=">=3.8",
 )
