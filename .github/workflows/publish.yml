@@ -56,7 +56,7 @@ jobs:
         python -m pytest --cov=easy_map_bokeh --cov-report=xml tests/
 
     - name: publish-to-conda
-      uses: amauryval/publish_conda_package_action@master
+      uses: amauryval/publish_conda_package_action@main
       with:
         CondaDir: 'conda_recipe'
         Platforms: 'osx-64 linux-32 linux-64 win-32 win-64'
