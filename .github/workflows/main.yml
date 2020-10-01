@@ -36,9 +36,9 @@ jobs:
           echo '::set-env name=CONDA_EXEC::C:\Miniconda\condabin\conda.bat'
         fi
 
-    - name: Configure conda
+    - name: Configure conda_recipe
       env:
-        CONDA_REQS: "conda conda-verify"
+        CONDA_REQS: "conda_recipe conda_recipe-verify"
       run: |
         conda config --set auto_update_conda off
         conda install --yes --quiet $CONDA_REQS

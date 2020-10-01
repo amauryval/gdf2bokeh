@@ -1,6 +1,6 @@
 name: easy_map_bokeh
 channels:
-  - conda-forge
+  - conda_recipe-forge
   - defaults
 dependencies:
   - python=3.8

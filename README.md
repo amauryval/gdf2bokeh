@@ -14,6 +14,13 @@ Because it's boring to convert shapely geometry to bokeh format !!
 [![Anaconda-Server Badge](https://anaconda.org/amauryval/easy_map_bokeh/badges/installer/conda.svg)](https://conda.anaconda.org/amauryval)
 
 
+## Demo
+
+To play with the notebook on binder: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/amauryval/easy_map_bokeh/master?filepath=example.ipynb)
+
+If you do not want to wait :), you can find the html version of the jupyter notebook : click [here](https://amauryval.github.io/easy_map_bokeh/) to get the result
+
+
 ## How to install the conda package ?
 Install Anaconda
 
@@ -61,14 +68,6 @@ bokeh_layer_containers = my_map.get_bokeh_layer_containers
 
 show(my_map.figure)
 ```
-
-Check the jupyter notebook to find a more detailed example: 
-```
-jupyter notebook
-```
-And open 'example.ipynb'
-
-OR click on this [link](https://amauryval.github.io/easy_map_bokeh/)
 
 
 Also, you can find a bokeh serve example with a slider widget.

@@ -28,5 +28,5 @@ setup(
     test_suite='tests',
     # tests_require=test_requirements,
     zip_safe=False,
-    python_requires=">=3.6",
+    python_requires=">=3.8",
 )
