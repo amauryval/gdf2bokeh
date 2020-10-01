@@ -29,7 +29,7 @@ share/python-wheels/
 MANIFEST
 conda_build/
 temp_build/
-conda_recipe/
+
 pkg.Dockerfile
 
 # PyInstaller
