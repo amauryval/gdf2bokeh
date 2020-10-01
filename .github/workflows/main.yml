@@ -59,6 +59,8 @@ jobs:
 
     - name: Build the notebook index.html
       run: |
+        source ~/miniconda3/etc/profile.d/conda.sh
+        conda activate easy_map_bokeh
         jupyter nbconvert --to html example.ipynb --ExecutePreprocessor.kernel_name=python --ExecutePreprocessor.enabled=True --output=index.html
 
     # Deploy the book's HTML to gh-pages branch
