@@ -5,7 +5,7 @@ from shapely.geometry import Point
 import numpy as np
 
 from bokeh.models import Slider
-from easy_map_bokeh import EasyMapBokeh
+from gdf_2_bokeh import Gdf2Bokeh
 
 from bokeh.io import curdoc
 from bokeh.layouts import column
@@ -44,7 +44,7 @@ class RandomPointsGenerator:
         )
 
 
-class MyMapBokeh(EasyMapBokeh):
+class MyMapBokeh(Gdf2Bokeh):
 
     def __init__(self, input_data, *args, **kwargs):
         super().__init__(*args, **kwargs)
