@@ -11,13 +11,11 @@ build:
   number: 0
 
 requirements:
-  host:
-    - python {{ data.get('python_requires') }}
   build:
-    - python {{ data.get('python_requires') }}
+    - python {{ python }}
     - pip
   run:
-    - python {{ data.get('python_requires') }}
+    - python {{ python }}
 
     {% for dep in data.get('install_requires') %}
     - {{ dep.lower() }}
