@@ -1,9 +1,0 @@
-{
-"type": "FeatureCollection",
-"name": "cc",
-"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:EPSG::3857" } },
-"features": [
-{ "type": "Feature", "properties": { "geom_type": "LineString", "name": "Line3" }, "geometry": { "type": "LineString", "coordinates": [ [ 539993.445521229528822, 5741942.141488258726895 ], [ 540067.477296478347853, 5741949.894055722281337 ] ] } },
-{ "type": "Feature", "properties": { "geom_type": "MultiLineString", "name": "Multiline1" }, "geometry": { "type": "MultiLineString", "coordinates": [ [ [ 540075.173300288966857, 5741950.699977470561862 ], [ 540144.894123957608826, 5741957.754161037504673 ] ], [ [ 540144.894123957608826, 5741957.754161037504673 ], [ 540130.686905950540677, 5742067.004449318163097 ] ] ] } }
-]
-}

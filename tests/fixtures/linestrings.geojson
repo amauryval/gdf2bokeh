@@ -1,9 +1,0 @@
-{
-"type": "FeatureCollection",
-"name": "linestrings",
-"crs": { "type": "name", "properties": { "name": "urn:ogc:def:crs:OGC:1.3:CRS84" } },
-"features": [
-{ "type": "Feature", "properties": { "geom_type": "LineString", "name": "Line1", "color": "black" }, "geometry": { "type": "LineString", "coordinates": [ [ 4.850762290579167, 45.759852752083148 ], [ 4.850640281037122, 45.760496512956308 ] ] } },
-{ "type": "Feature", "properties": { "geom_type": "LineString", "name": "Line2", "color": "red" }, "geometry": { "type": "LineString", "coordinates": [ [ 4.850717978008457, 45.760504394646368 ], [ 4.852014922203989, 45.760635958489786 ] ] } }
-]
-}
