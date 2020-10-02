@@ -14,7 +14,7 @@ setup(
     author="amauryval",
     author_email='amauryval@gmail.com',
     url="https://github.com/amauryval/gdf_2_bokeh",
-    version='v1.5.0',
+    version='2.0.0',
     description="An easy way to map geodataframes on bokeh",
     entry_points={},
     install_requires=requirements,
