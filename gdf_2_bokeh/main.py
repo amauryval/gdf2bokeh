@@ -13,23 +13,23 @@ from bokeh.models.renderers import GlyphRenderer
 from bokeh.models import HoverTool
 from bokeh.palettes import brewer
 
-from easy_map_bokeh.helpers.geometry import geometry_2_bokeh_format
+from gdf_2_bokeh.helpers.geometry import geometry_2_bokeh_format
 
-from easy_map_bokeh.helpers.settings import expected_node_style
-from easy_map_bokeh.helpers.settings import map_background_providers
-from easy_map_bokeh.helpers.settings import default_attributes
+from gdf_2_bokeh.helpers.settings import expected_node_style
+from gdf_2_bokeh.helpers.settings import map_background_providers
+from gdf_2_bokeh.helpers.settings import default_attributes
 
-from easy_map_bokeh.helpers.settings import geometry_compatibility
-from easy_map_bokeh.helpers.settings import linestrings_type_compatibility
-from easy_map_bokeh.helpers.settings import polygons_type_compatibility
-from easy_map_bokeh.helpers.settings import point_type_compatibility
+from gdf_2_bokeh.helpers.settings import geometry_compatibility
+from gdf_2_bokeh.helpers.settings import linestrings_type_compatibility
+from gdf_2_bokeh.helpers.settings import polygons_type_compatibility
+from gdf_2_bokeh.helpers.settings import point_type_compatibility
 
 
-class ErrorEasyMapBokeh(Exception):
+class ErrorGdf2Bokeh(Exception):
     pass
 
 
-class EasyMapBokeh:
+class Gdf2Bokeh:
 
     __GEOMETRY_FIELD_NAME: str = "geometry"
     __DEFAULT_EPSG: int = 3857
@@ -158,7 +158,7 @@ class EasyMapBokeh:
             return bokeh_layer_container
 
         else:
-            raise ErrorEasyMapBokeh(
+            raise ErrorGdf2Bokeh(
                 f"{layer_geom_types} geometry not supported by add_lines() method: only works with {' and '.join(linestrings_type_compatibility)} (layer concerned '{legend}')"
             )
 
@@ -207,7 +207,7 @@ class EasyMapBokeh:
             return bokeh_layer_container
 
         else:
-            raise ErrorEasyMapBokeh(
+            raise ErrorGdf2Bokeh(
                 f"{layer_geom_types} geometry not supported by add_points() method: only works with {' and '.join(point_type_compatibility)} (layer concerned '{legend}')"
             )
 
@@ -259,7 +259,7 @@ class EasyMapBokeh:
             return bokeh_layer_container
 
         else:
-            raise ErrorEasyMapBokeh(
+            raise ErrorGdf2Bokeh(
                 f"{layer_geom_types} geometry not supported by add_polygons() method: only works with {' and '.join(polygons_type_compatibility)} (layer concerned '{legend}')"
             )
 
@@ -311,11 +311,11 @@ class EasyMapBokeh:
                         self.add_polygons(**layer_settings)
 
                 else:
-                    raise ErrorEasyMapBokeh(
+                    raise ErrorGdf2Bokeh(
                         f"{layer_geom_types} geometry have to be split by geometry types (layer concerned '{layer_settings['legend']}')"
                     )
             else:
-                raise ErrorEasyMapBokeh(
+                raise ErrorGdf2Bokeh(
                     f"Your geodataframe may not have geometry features (layer concerned '{layer_settings['legend']}')"
                 )
 

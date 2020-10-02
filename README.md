@@ -1,24 +1,24 @@
-# easy_map_bokeh
+# gdf_2_bokeh
 An easy way to map your geographic data (from a GeoDataFrame) with [bokeh >=__2.0.1__](https://github.com/bokeh/bokeh/tree/2.0.1)
 Because it's boring to convert shapely geometry to bokeh format !!
 
-![CI](https://github.com/amauryval/easy_map_bokeh/workflows/CI/badge.svg)
-[![codecov](https://codecov.io/gh/amauryval/easy_map_bokeh/branch/master/graph/badge.svg)](https://codecov.io/gh/amauryval/easy_map_bokeh)
+![CI](https://github.com/amauryval/gdf_2_bokeh/workflows/CI/badge.svg)
+[![codecov](https://codecov.io/gh/amauryval/gdf_2_bokeh/branch/master/graph/badge.svg)](https://codecov.io/gh/amauryval/gdf_2_bokeh)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
-[![Anaconda-Server Badge](https://anaconda.org/amauryval/easy_map_bokeh/badges/version.svg)](https://anaconda.org/amauryval/easy_map_bokeh)
-[![Anaconda-Server Badge](https://anaconda.org/amauryval/easy_map_bokeh/badges/latest_release_date.svg)](https://anaconda.org/amauryval/easy_map_bokeh)
+[![Anaconda-Server Badge](https://anaconda.org/amauryval/gdf_2_bokeh/badges/version.svg)](https://anaconda.org/amauryval/gdf_2_bokeh)
+[![Anaconda-Server Badge](https://anaconda.org/amauryval/gdf_2_bokeh/badges/latest_release_date.svg)](https://anaconda.org/amauryval/gdf_2_bokeh)
 
-[![Anaconda-Server Badge](https://anaconda.org/amauryval/easy_map_bokeh/badges/platforms.svg)](https://anaconda.org/amauryval/easy_map_bokeh)
+[![Anaconda-Server Badge](https://anaconda.org/amauryval/gdf_2_bokeh/badges/platforms.svg)](https://anaconda.org/amauryval/gdf_2_bokeh)
 
-[![Anaconda-Server Badge](https://anaconda.org/amauryval/easy_map_bokeh/badges/installer/conda.svg)](https://conda.anaconda.org/amauryval)
+[![Anaconda-Server Badge](https://anaconda.org/amauryval/gdf_2_bokeh/badges/installer/conda.svg)](https://conda.anaconda.org/amauryval)
 
 
 ## Demo
 
-To play with the notebook on binder: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/amauryval/easy_map_bokeh/master?filepath=example.ipynb)
+To play with the notebook on binder: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/amauryval/gdf_2_bokeh/master?filepath=example.ipynb)
 
-If you do not want to wait :), you can find the html version of the jupyter notebook : click [here](https://amauryval.github.io/easy_map_bokeh/) to get the result
+If you do not want to wait :), you can find the html version of the jupyter notebook : click [here](https://amauryval.github.io/gdf_2_bokeh/) to get the result
 
 
 ## How to install the conda package ?
@@ -26,7 +26,7 @@ Install Anaconda
 
 then on your terminal:
 ```
-conda install -c amauryval easy_map_bokeh
+conda install -c amauryval gdf_2_bokeh
 ```
 
 
@@ -43,7 +43,7 @@ Check bokeh documentation in order to style your data :
 ```python
 from bokeh.plotting import show
 import geopandas as gpd
-from easy_map_bokeh import EasyMapBokeh
+from gdf_2_bokeh import Gdf2Bokeh
 
 layers_to_add = [
     {
@@ -54,7 +54,7 @@ layers_to_add = [
 ]
 # Points, LineString, MultiLineString, Polygons (+ holes) and MultiPolygons (+ holes) are supported
 
-my_map = EasyMapBokeh(
+my_map = Gdf2Bokeh(
     "My beautiful map",  # required: map title
     width=800,  # optional: figure width, default 800
     height=600,  # optional: figure width, default 600
