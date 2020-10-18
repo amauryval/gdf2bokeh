@@ -53,13 +53,13 @@ jobs:
       shell: bash
       run: |
         source ~/miniconda3/etc/profile.d/conda.sh
-        conda activate gdf_2_bokeh
+        conda activate gdf2bokeh
         python -m pytest --cov=gdf2bokeh --cov-report=xml tests/
 
     - name: Build the notebook index.html
       run: |
         source ~/miniconda3/etc/profile.d/conda.sh
-        conda activate gdf_2_bokeh
+        conda activate gdf2bokeh
         mkdir _build
         jupyter nbconvert --to html example.ipynb --ExecutePreprocessor.kernel_name=python --ExecutePreprocessor.enabled=True --output=_build/index.html
 

@@ -5,7 +5,7 @@ from shapely.geometry import Point
 import numpy as np
 
 from bokeh.models import Slider
-from gdf_2_bokeh import Gdf2Bokeh
+from gdf2bokeh import Gdf2Bokeh
 
 from bokeh.io import curdoc
 from bokeh.layouts import column

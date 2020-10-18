@@ -13,16 +13,16 @@ from bokeh.models.renderers import GlyphRenderer
 from bokeh.models import HoverTool
 from bokeh.palettes import brewer
 
-from gdf_2_bokeh.helpers.geometry import geometry_2_bokeh_format
+from gdf2bokeh.helpers.geometry import geometry_2_bokeh_format
 
-from gdf_2_bokeh.helpers.settings import expected_node_style
-from gdf_2_bokeh.helpers.settings import map_background_providers
-from gdf_2_bokeh.helpers.settings import default_attributes
+from gdf2bokeh.helpers.settings import expected_node_style
+from gdf2bokeh.helpers.settings import map_background_providers
+from gdf2bokeh.helpers.settings import default_attributes
 
-from gdf_2_bokeh.helpers.settings import geometry_compatibility
-from gdf_2_bokeh.helpers.settings import linestrings_type_compatibility
-from gdf_2_bokeh.helpers.settings import polygons_type_compatibility
-from gdf_2_bokeh.helpers.settings import point_type_compatibility
+from gdf2bokeh.helpers.settings import geometry_compatibility
+from gdf2bokeh.helpers.settings import linestrings_type_compatibility
+from gdf2bokeh.helpers.settings import polygons_type_compatibility
+from gdf2bokeh.helpers.settings import point_type_compatibility
 
 
 class ErrorGdf2Bokeh(Exception):

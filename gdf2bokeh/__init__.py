@@ -1,1 +1,1 @@
-from gdf_2_bokeh.main import *
+from gdf2bokeh.main import *

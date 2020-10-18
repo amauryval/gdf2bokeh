@@ -1,4 +1,4 @@
-name: gdf_2_bokeh
+name: gdf2bokeh
 channels:
   - conda-forge
   - defaults

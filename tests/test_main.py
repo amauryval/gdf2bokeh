@@ -1,8 +1,8 @@
 import pytest
 
 
-from gdf_2_bokeh import Gdf2Bokeh
-from gdf_2_bokeh import ErrorGdf2Bokeh
+from gdf2bokeh import Gdf2Bokeh
+from gdf2bokeh import ErrorGdf2Bokeh
 
 
 def test_bokeh_session(width, height):
