@@ -72,6 +72,7 @@ show(my_map.figure)
 
 Also, you can find a bokeh serve example with a slider widget.
 On the terminal, run :
+
 ```
 bokeh serve --show bokeh_serve_example.py
 ```
