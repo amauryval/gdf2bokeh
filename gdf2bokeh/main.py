@@ -64,8 +64,8 @@ class Gdf2Bokeh:
         :type y_range: tuple of 2 floats, default None
         :param background_map_name: background map name
         :type background_map_name: str
-        :param layers: list of geodataframe
-        :type layers: list(geopandas.GeoDataFrame)
+        :param layers: list of dict containing input data: (input_gdf or input_wkt) and legend, and bokeh style properties
+        :type layers: lit of dict
         """
         super().__init__()
 
@@ -288,49 +288,65 @@ class Gdf2Bokeh:
         assert isinstance(self._layers_configuration, list), "layers arg is not a list"
 
         for layer_settings in self._layers_configuration:
-            assert isinstance(layer_settings, dict), "use a dict please"
-            assert len(input_data_default_attributes.intersection(set(layer_settings.keys()))) == 1,\
-                f"One of these input attributes are required: {' ,'.join(input_data_default_attributes)}"
+            _ = self.compute_layer(layer_settings)
 
-            if "input_wkt" in layer_settings:
-                layer_settings["input_gdf"] = wkt_to_gpd(layer_settings["input_wkt"])
-                del layer_settings["input_wkt"]
+    def compute_layer(self, layer_settings):
+        """
+        To generate a bokeh container
 
-            layer_geom_types = self.__get_geom_types_from_gdf(
-                layer_settings["input_gdf"]
+        :param layer_settings: list of dict containing input data: (input_gdf or input_wkt) and legend, and bokeh style properties
+        :type layer_settings: lit of dict
+
+        :return: the bokeh layer container (can be used to create dynamic (with widgets) layer
+        :rtype: bokeh.models.ColumnDataSource
+        """
+        #TODO add exceptions on docistring
+
+        assert isinstance(layer_settings, dict), "use a dict please"
+        assert len(input_data_default_attributes.intersection(set(layer_settings.keys()))) == 1,\
+            f"One of these input attributes are required: {' ,'.join(input_data_default_attributes)}"
+
+        if "input_wkt" in layer_settings:
+            layer_settings["input_gdf"] = wkt_to_gpd(layer_settings["input_wkt"])
+            del layer_settings["input_wkt"]
+
+        layer_geom_types = self.__get_geom_types_from_gdf(
+            layer_settings["input_gdf"]
+        )
+
+        assert default_attributes.issubset(
+            set(layer_settings.keys())
+        ), f"This attribute is required: {' ,'.join(default_attributes)}"
+
+        if len(layer_geom_types) > 0:
+            compatibility_checked = list(
+                filter(
+                    lambda x: layer_geom_types.issubset(x) or layer_geom_types == x,
+                    geometry_compatibility,
+                )
             )
 
-            assert default_attributes.issubset(
-                set(layer_settings.keys())
-            ), f"This attribute is required: {' ,'.join(default_attributes)}"
+            if len(compatibility_checked) == 1:
 
-            if len(layer_geom_types) > 0:
-                compatibility_checked = list(
-                    filter(
-                        lambda x: layer_geom_types.issubset(x) or layer_geom_types == x,
-                        geometry_compatibility,
-                    )
-                )
+                if layer_geom_types.issubset(point_type_compatibility):
+                    bokeh_container = self.add_points(**layer_settings)
 
-                if len(compatibility_checked) == 1:
+                elif layer_geom_types.issubset(linestrings_type_compatibility):
+                    bokeh_container = self.add_lines(**layer_settings)
 
-                    if layer_geom_types.issubset(point_type_compatibility):
-                        self.add_points(**layer_settings)
+                elif layer_geom_types.issubset(polygons_type_compatibility):
+                    bokeh_container = self.add_polygons(**layer_settings)
 
-                    elif layer_geom_types.issubset(linestrings_type_compatibility):
-                        self.add_lines(**layer_settings)
+                return bokeh_container
 
-                    elif layer_geom_types.issubset(polygons_type_compatibility):
-                        self.add_polygons(**layer_settings)
-
-                else:
-                    raise ErrorGdf2Bokeh(
-                        f"{layer_geom_types} geometry have to be split by geometry types (layer concerned '{layer_settings['legend']}')"
-                    )
             else:
                 raise ErrorGdf2Bokeh(
-                    f"Your geodataframe may not have geometry features (layer concerned '{layer_settings['legend']}')"
+                    f"{layer_geom_types} geometry have to be split by geometry types (layer concerned '{layer_settings['legend']}')"
                 )
+        else:
+            raise ErrorGdf2Bokeh(
+                f"Your geodataframe may not have geometry features (layer concerned '{layer_settings['legend']}')"
+            )
 
     def _set_tooltip_from_features(
         self, features: ColumnDataSource, rendered: GlyphRenderer

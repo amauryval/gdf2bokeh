@@ -46,9 +46,9 @@ class RandomPointsGenerator:
 
 class MyMapBokeh(Gdf2Bokeh):
 
-    def __init__(self, input_data, *args, **kwargs):
+    def __init__(self, layer_settings, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self._input_data = input_data
+        self._layer_settings = layer_settings
 
     def plot(self):
         self.prepare_data()
@@ -58,18 +58,18 @@ class MyMapBokeh(Gdf2Bokeh):
 
     def prepare_data(self):
 
-        # here we get the data structure to plot and empty points layer. slider widget will fill it
-        self._points_input = self.get_bokeh_structure_from_gdf(self._input_data)
-        self.bokeh_layer_points_container = self.add_points(self._input_data, fill_color="red", size=10, legend="my points")
+        self.bokeh_layer_points_container = self.compute_layer(layer_settings)
 
     def slider_widget(self):
-        min_value = min(self._input_data["value"])
-        max_value = max(self._input_data["value"])
+        input_data = self._layer_settings["input_gdf"]
+        min_value = min(input_data["value"])
+        max_value = max(input_data["value"])
         self._slider_widget = Slider(start=min_value, end=max_value, value=min_value, step=1, title="my slider")
         self._slider_widget.on_change('value', self.__slider_update)
 
     def __slider_update(self, attrname, old_value, new_value):
-        input_data_filtered = self._input_data.loc[self._input_data["value"] == new_value]
+        input_data = self._layer_settings["input_gdf"]
+        input_data_filtered = input_data.loc[input_data["value"] == new_value]
         self.bokeh_layer_points_container.data = dict(self._format_gdf_features_to_bokeh(input_data_filtered).data)
 
     def _map_layout(self):
@@ -84,8 +84,16 @@ class MyMapBokeh(Gdf2Bokeh):
 bounds = (-604158.2716, 5312679.2139, 1081125.3281, 6633511.0627)
 random_points = RandomPointsGenerator(bounds, 50).to_gdf
 random_points["value"] = np.random.randint(1, 6, random_points.shape[0])
+
+layer_settings = {
+    "input_gdf": random_points,
+    "fill_color": "red",
+    "size": 10,
+    "legend": "my points"
+}
+
 MyMapBokeh(
-    random_points,
+    layer_settings,
     title="My beautiful map",
     width=640,
     height=800,
