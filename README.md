@@ -54,7 +54,7 @@ layers_to_add = [
     {
         "input_wkt": "LINESTRING(0 0, 25 25)",  # you can add an input wkt
         "legend": "My beautiful layer",  # required
-        "fill_color": "orange",  # here we found one argument use by bokeh to style your layer. Take care about geometry type
+        "color": "orange",  # here we found one argument use by bokeh to style your layer. Take care about geometry type
     }
 ]
 # Points, LineString, MultiLineString, Polygons (+ holes) and MultiPolygons (+ holes) are supported
