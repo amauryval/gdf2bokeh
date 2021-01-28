@@ -154,11 +154,11 @@ def test_bokeh_processing_with_layers_with_max_settings(multipolygons_data, poly
     my_map = Gdf2Bokeh("My beautiful map", layers=layers_to_add)
 
     assert len(my_map.figure.renderers) == 6
-    assert len(my_map.figure.tools) == 10
-    assert len(my_map.get_bokeh_layer_containers) == 5
+    assert len(my_map.figure.tools) == 11
+    assert len(my_map.get_bokeh_layer_containers) == 6
 
 
-def test_bokeh_processing_with_layers_with_min_setting(multipolygons_data, polygons_data, linestrings_data, multilines_data, points_data):
+def test_bokeh_processing_with_layers_with_min_setting(geom_wkt, multipolygons_data, polygons_data, linestrings_data, multilines_data, points_data):
 
     layers_to_add = [
         {
@@ -182,12 +182,17 @@ def test_bokeh_processing_with_layers_with_min_setting(multipolygons_data, polyg
             "input_gdf": points_data,
             "legend": "points",
         },
+        {
+            "input_wkt": geom_wkt,
+            "color": "grey",
+            "legend": "linestrings_from_wkt"
+        },
     ]
     my_map = Gdf2Bokeh("My beautiful map", layers=layers_to_add)
 
-    assert len(my_map.figure.renderers) == 6
-    assert len(my_map.figure.tools) == 10
-    assert len(my_map.get_bokeh_layer_containers) == 5
+    assert len(my_map.figure.renderers) == 7
+    assert len(my_map.figure.tools) == 11
+    assert len(my_map.get_bokeh_layer_containers) == 6
 
 
 def test_bokeh_processing_with_layers_with_min_setting_and_incompatible_geometry(mixed_features_data, multipolygons_data, polygons_data, linestrings_data, multilines_data, points_data):
@@ -224,7 +229,8 @@ def test_bokeh_processing_with_layers_with_min_setting_and_incompatible_geometry
 
     assert "geometry have to be split by geometry types (layer concerned 'incompatible_features')" in str(exception_returned.value)
 
-def test_bokeh_processing_with_layers_with_min_setting_and_empty_data(empty_data, multipolygons_data, polygons_data, linestrings_data, multilines_data, points_data):
+
+def test_bokeh_processing_with_layers_with_min_setting_and_empty_data(geom_wkt, empty_data, multipolygons_data, polygons_data, linestrings_data, multilines_data, points_data):
 
     layers_to_add = [
         {
@@ -251,7 +257,12 @@ def test_bokeh_processing_with_layers_with_min_setting_and_empty_data(empty_data
         {
             "input_gdf": empty_data,
             "legend": "empty_data",
-        }
+        },
+        {
+            "input_wkt": geom_wkt,
+            "color": "grey",
+            "legend": "linestrings_from_wkt"
+        },
     ]
     with pytest.raises(ErrorGdf2Bokeh) as exception_returned:
         _ = Gdf2Bokeh("My beautiful map", layers=layers_to_add)
@@ -266,3 +277,21 @@ def test_bokeh_structure(multipolygons_data):
     assert len(points_input.data.values()) == 4
     for value in points_input.data.values():
         assert isinstance(value, list)
+
+
+def test_bokeh_processing_with_layers_with_max_settings(geom_wkt):
+
+    layers_to_add = [
+        {
+            "input_wkt": geom_wkt,
+            "color": "grey",
+            "legend": "linestrings"
+        },
+     ]
+    my_map = Gdf2Bokeh("My beautiful map", layers=layers_to_add)
+
+    assert len(my_map.figure.renderers) == 2
+    assert len(my_map.figure.tools) == 6
+    assert len(my_map.get_bokeh_layer_containers) == 1
+
+

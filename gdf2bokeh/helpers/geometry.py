@@ -14,6 +14,10 @@ from shapely.geometry import MultiPolygon
 
 from shapely.geometry import GeometryCollection
 
+import pandas as pd
+import geopandas as gpd
+from shapely.wkt import loads
+
 
 def geometry_2_bokeh_format(geometry: base, coord_name: str = "xy") -> List:
     """
@@ -65,3 +69,18 @@ def geometry_2_bokeh_format(geometry: base, coord_name: str = "xy") -> List:
         raise ValueError("no interest to handle GeometryCollection")
 
     return coord_values
+
+
+def wkt_to_gpd(geom_wkt, geom_epsg=3857):
+    df = pd.DataFrame([{
+        "geometry": loads(geom_wkt),
+        "id": "1"
+    }])
+    geometry = df["geometry"]
+    properties = df["id"]
+
+    return gpd.GeoDataFrame(
+        properties,
+        geometry=geometry,
+        crs=f"EPSG:{geom_epsg}"
+    )

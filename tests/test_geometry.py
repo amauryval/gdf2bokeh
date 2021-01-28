@@ -1,5 +1,8 @@
 from gdf2bokeh.helpers.geometry import geometry_2_bokeh_format
+from gdf2bokeh.helpers.geometry import wkt_to_gpd
+
 import itertools
+
 
 def compute_geometry(data):
     x_values = data['geometry'].apply(lambda x: geometry_2_bokeh_format(x, 'x')).tolist()
@@ -117,3 +120,9 @@ def test_multilines_geom_to_bokekeh_format(multilines_data):
     assert y_values[-1] == list(itertools.chain.from_iterable(
         [list(geom.xy[-1]) for geom in multilines_data.iloc[-1].geometry.geoms]
     ))
+
+
+def test_wkt_to_gpd(geom_wkt):
+    output_gdf = wkt_to_gpd(geom_wkt)
+    assert output_gdf.shape[0] == 1
+    assert output_gdf.shape[-1] == 2
