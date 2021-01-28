@@ -54,9 +54,11 @@ def multilines_data():
 def points_data():
     return open_geojson_to_gpd(points)
 
+
 @pytest.fixture
 def width():
     return 640
+
 
 @pytest.fixture
 def height():
@@ -69,3 +71,8 @@ def polygon_from_coords_without_crs():
     lon_points = [4.4, 13.4, 14.4, 2.4, 4.4]
     polygon_geom = Polygon(zip(lon_points , lat_points))
     return gpd.GeoDataFrame(index=[0], geometry=[polygon_geom])
+
+
+@pytest.fixture
+def geom_wkt():
+    return "LINESTRING(0 0, 25 25)"

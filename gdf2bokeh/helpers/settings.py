@@ -45,8 +45,8 @@ map_background_providers: Dict = {
     "STAMEN_TONER_BACKGROUND": get_provider(STAMEN_TONER_BACKGROUND),
     "STAMEN_TONER_LABELS": get_provider(STAMEN_TONER_LABELS),
 }
-
-default_attributes: Set[str] = {"input_gdf", "legend"}
+input_data_default_attributes: Set[str] = {"input_gdf", "input_wkt"}
+default_attributes: Set[str] = {"legend"}
 
 linestrings_type_compatibility: Set[str] = {"LineString", "MultiLineString"}
 polygons_type_compatibility: Set[str] = {"Polygon", "MultiPolygon"}

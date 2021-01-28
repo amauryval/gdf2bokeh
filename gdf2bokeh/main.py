@@ -3,6 +3,8 @@ from typing import Optional
 from typing import Dict
 from typing import Set
 from typing import Tuple
+from typing import Union
+from typing import Any
 
 import geopandas as gpd
 
@@ -13,11 +15,15 @@ from bokeh.models.renderers import GlyphRenderer
 from bokeh.models import HoverTool
 from bokeh.palettes import brewer
 
+from gdf2bokeh.helpers.geometry import wkt_to_gpd
+
 from gdf2bokeh.helpers.geometry import geometry_2_bokeh_format
 
 from gdf2bokeh.helpers.settings import expected_node_style
 from gdf2bokeh.helpers.settings import map_background_providers
+
 from gdf2bokeh.helpers.settings import default_attributes
+from gdf2bokeh.helpers.settings import input_data_default_attributes
 
 from gdf2bokeh.helpers.settings import geometry_compatibility
 from gdf2bokeh.helpers.settings import linestrings_type_compatibility
@@ -43,7 +49,7 @@ class Gdf2Bokeh:
         x_range: Optional[int] = None,
         y_range: Optional[int] = None,
         background_map_name: str = "CARTODBPOSITRON",
-        layers: Optional[Dict] = None,
+        layers: Optional[List[Dict[str, Union[str, Any]]]] = None,
     ) -> None:
         """
         :param title: figure title
@@ -211,9 +217,8 @@ class Gdf2Bokeh:
                 f"{layer_geom_types} geometry not supported by add_points() method: only works with {' and '.join(point_type_compatibility)} (layer concerned '{legend}')"
             )
 
-    def _check_if_legend_is_a_input_data_field(
-        self, input_data: gpd.GeoDataFrame, legend: str, kwargs
-    ) -> Dict:
+    @staticmethod
+    def _check_if_legend_is_a_input_data_field(input_data: gpd.GeoDataFrame, legend: str, kwargs) -> Dict:
         if legend in input_data.columns.to_list():
             kwargs["legend_field"] = legend
         else:
@@ -284,12 +289,20 @@ class Gdf2Bokeh:
 
         for layer_settings in self._layers_configuration:
             assert isinstance(layer_settings, dict), "use a dict please"
+            assert len(input_data_default_attributes.intersection(set(layer_settings.keys()))) == 1,\
+                f"One of these input attributes are required: {' ,'.join(input_data_default_attributes)}"
+
+            if "input_wkt" in layer_settings:
+                layer_settings["input_gdf"] = wkt_to_gpd(layer_settings["input_wkt"])
+                del layer_settings["input_wkt"]
+
             layer_geom_types = self.__get_geom_types_from_gdf(
                 layer_settings["input_gdf"]
             )
+
             assert default_attributes.issubset(
                 set(layer_settings.keys())
-            ), f"These attributes are required: {' ,'.join(default_attributes)}"
+            ), f"This attribute is required: {' ,'.join(default_attributes)}"
 
             if len(layer_geom_types) > 0:
                 compatibility_checked = list(
