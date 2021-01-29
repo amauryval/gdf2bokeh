@@ -74,10 +74,9 @@ def geometry_2_bokeh_format(geometry: base, coord_name: str = "xy") -> List:
 def wkt_to_gpd(geom_wkt, geom_epsg=3857):
     df = pd.DataFrame([{
         "geometry": loads(geom_wkt),
-        "id": "1"
     }])
     geometry = df["geometry"]
-    properties = df["id"]
+    properties = df.drop(columns=["geometry"])
 
     return gpd.GeoDataFrame(
         properties,

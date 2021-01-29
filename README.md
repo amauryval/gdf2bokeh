@@ -48,7 +48,7 @@ from gdf2bokeh import Gdf2Bokeh
 layers_to_add = [
     {
         "input_gdf": gpd.GeoDataFrame.from_file("your_geo_layer.geojson"),
-        "legend": "My beautiful layer",  # required
+        "legend": "My beautiful layer",  # required, can be the name of an column name (from your input gdf)
         "fill_color": "orange",  # here we found one argument use by bokeh to style your layer. Take care about geometry type
     },
     {

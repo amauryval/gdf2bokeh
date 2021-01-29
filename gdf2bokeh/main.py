@@ -64,7 +64,7 @@ class Gdf2Bokeh:
         :type y_range: tuple of 2 floats, default None
         :param background_map_name: background map name
         :type background_map_name: str
-        :param layers: list of dict containing input data: (input_gdf or input_wkt) and legend, and bokeh style properties
+        :param layers: list of dict with input data: (input_gdf or input_wkt) and legend, and bokeh style properties
         :type layers: lit of dict
         """
         super().__init__()
@@ -103,14 +103,14 @@ class Gdf2Bokeh:
         self, features: gpd.GeoDataFrame
     ) -> ColumnDataSource:
         """
-        To build the bokeh data structure from a geodataframe.
+        To build the bokeh data structure from a GeoDataframe.
 
-        :param features: your input geodataframe
+        :param features: your input GeoDataframe
         :type features: geopandas.GeoDataFrame
         :return: the bokeh data structure
         :rtype: bokeh.models.ColumnDataSource
         """
-        assert isinstance(features, gpd.GeoDataFrame), "use a geodataframe please"
+        assert isinstance(features, gpd.GeoDataFrame), "use a GeoDataframe please"
 
         bokeh_data = self.__convert_gdf_to_bokeh_data(features, get_gdf_structure=True)
         return ColumnDataSource(data=dict.fromkeys(bokeh_data.column_names, []))
@@ -133,12 +133,12 @@ class Gdf2Bokeh:
         """
         To add a lines layer on bokeh Figure (LineString and MultiLineString geometry types supported)
 
-        :param input_gdf: your input geodataframe
+        :param input_gdf: your input GeoDataframe
         :type input_gdf: geopandas.GeoDataFrame
         :param legend: layer name
         :type legend: str
-        :param **kwargs: arguments from bokeh to style the layer
-        :type **kwargs: str
+        :param kwargs: arguments from bokeh to style the layer
+        :type kwargs: str
 
         :return: the bokeh layer container (can be used to create dynamic (with slider) layer
         :rtype: bokeh.models.ColumnDataSource
@@ -147,11 +147,9 @@ class Gdf2Bokeh:
         layer_geom_types = self.__get_geom_types_from_gdf(input_gdf)
         if layer_geom_types.issubset(linestrings_type_compatibility):
 
-            input_data = input_gdf.copy(deep=True)
-            input_data = self.__reprojection(input_data)
+            input_data = self.__post_proc_input_gdf(input_gdf)
             bokeh_layer_container = self._format_gdf_features_to_bokeh(input_data)
-
-            kwargs = self._check_if_legend_is_a_input_data_field(
+            kwargs = self.__check_is_legend_field_exists_in_input_gdf(
                 input_data, legend, kwargs
             )
 
@@ -166,12 +164,17 @@ class Gdf2Bokeh:
 
         else:
             raise ErrorGdf2Bokeh(
-                f"{layer_geom_types} geometry not supported by add_lines() method: only works with {' and '.join(linestrings_type_compatibility)} (layer concerned '{legend}')"
+                f"{layer_geom_types} geometry not supported by add_lines() method: only works with "
+                f"{' and '.join(linestrings_type_compatibility)} (layer concerned '{legend}')"
             )
 
-    def add_points(
-        self, input_gdf: gpd.GeoDataFrame, legend: str, style: str = "circle", **kwargs
-    ) -> ColumnDataSource:
+    def __post_proc_input_gdf(self, input_gdf):
+        input_gdf_proceed = input_gdf.copy(deep=True)
+        input_gdf_proceed = self.__reprojection(input_gdf_proceed)
+
+        return input_gdf_proceed
+
+    def add_points(self, input_gdf: gpd.GeoDataFrame, legend: str, style: str = "circle", **kwargs) -> ColumnDataSource:
         """
         To add a points layer on bokeh Figure  (Point geometry type supported)
 
@@ -181,8 +184,8 @@ class Gdf2Bokeh:
         :type legend: str
         :param style: node style, check expected_node_style variable
         :type style: str
-        :param **kwargs: arguments from bokeh to style the layer
-        :type **kwargs: str
+        :param kwargs: arguments from bokeh to style the layer
+        :type kwargs: str
 
         :return: the bokeh layer container (can be used to create dynamic (with slider) layer
         :rtype: bokeh.models.ColumnDataSource
@@ -195,11 +198,9 @@ class Gdf2Bokeh:
         layer_geom_types = self.__get_geom_types_from_gdf(input_gdf)
         if layer_geom_types.issubset(point_type_compatibility):
 
-            input_data = input_gdf.copy(deep=True)
-            input_data = self.__reprojection(input_data)
+            input_data = self.__post_proc_input_gdf(input_gdf)
             bokeh_layer_container = self._format_gdf_features_to_bokeh(input_data)
-
-            kwargs = self._check_if_legend_is_a_input_data_field(
+            kwargs = self.__check_is_legend_field_exists_in_input_gdf(
                 input_data, legend, kwargs
             )
 
@@ -215,11 +216,12 @@ class Gdf2Bokeh:
 
         else:
             raise ErrorGdf2Bokeh(
-                f"{layer_geom_types} geometry not supported by add_points() method: only works with {' and '.join(point_type_compatibility)} (layer concerned '{legend}')"
+                f"{layer_geom_types} geometry not supported by add_points() method: only works with "
+                f"{' and '.join(point_type_compatibility)} (layer concerned '{legend}')"
             )
 
     @staticmethod
-    def _check_if_legend_is_a_input_data_field(input_data: gpd.GeoDataFrame, legend: str, kwargs) -> Dict:
+    def __check_is_legend_field_exists_in_input_gdf(input_data: gpd.GeoDataFrame, legend: str, kwargs) -> Dict:
         if legend in input_data.columns.to_list():
             kwargs["legend_field"] = legend
         else:
@@ -227,18 +229,16 @@ class Gdf2Bokeh:
 
         return kwargs
 
-    def add_polygons(
-        self, input_gdf: gpd.GeoDataFrame, legend: str, **kwargs
-    ) -> ColumnDataSource:
+    def add_polygons(self, input_gdf: gpd.GeoDataFrame, legend: str, **kwargs) -> ColumnDataSource:
         """
         To add a polygons layer on bokeh Figure (Polygon and MultiPolygon geometry type supported)
 
-        :param input_gdf: your input geodataframe
+        :param input_gdf: your input GeoDataframe
         :type input_gdf: geopandas.GeoDataFrame
         :param legend: layer name
         :type legend: str
-        :param **kwargs: arguments from bokeh to style the layer
-        :type **kwargs: str
+        :param kwargs: arguments from bokeh to style the layer
+        :type kwargs: str
 
         :return: the bokeh layer container (can be used to create dynamic (with slider) layer
         :rtype: bokeh.models.ColumnDataSource
@@ -247,11 +247,9 @@ class Gdf2Bokeh:
         layer_geom_types = self.__get_geom_types_from_gdf(input_gdf)
         if layer_geom_types.issubset(polygons_type_compatibility):
 
-            input_data = input_gdf.copy(deep=True)
-            input_data = self.__reprojection(input_data)
+            input_data = self.__post_proc_input_gdf(input_gdf)
             bokeh_layer_container = self._format_gdf_features_to_bokeh(input_data)
-
-            kwargs = self._check_if_legend_is_a_input_data_field(
+            kwargs = self.__check_is_legend_field_exists_in_input_gdf(
                 input_data, legend, kwargs
             )
 
@@ -266,7 +264,8 @@ class Gdf2Bokeh:
 
         else:
             raise ErrorGdf2Bokeh(
-                f"{layer_geom_types} geometry not supported by add_polygons() method: only works with {' and '.join(polygons_type_compatibility)} (layer concerned '{legend}')"
+                f"{layer_geom_types} geometry not supported by add_polygons() method: only works with "
+                f"{' and '.join(polygons_type_compatibility)} (layer concerned '{legend}')"
             )
 
     def _add_background_map(self, background_map_name: str) -> None:
@@ -289,31 +288,22 @@ class Gdf2Bokeh:
         assert isinstance(self._layers_configuration, list), "layers arg is not a list"
 
         for layer_settings in self._layers_configuration:
-            _ = self.compute_layer(layer_settings)
+            _ = self.add_layer(layer_settings)
 
-    def compute_layer(self, layer_settings, refresh_enabled=False):
+    def add_layer(self, layer_settings):
         """
         To generate a bokeh container
 
-        :param layer_settings: list of dict containing input data: (input_gdf or input_wkt) and legend, and bokeh style properties
+        :param layer_settings: list of dict with input data: (input_gdf or input_wkt) and legend, and bokeh style properties
         :type layer_settings: lit of dict
-        :param refresh_enabled: to refresh an existing map, if False it will create the map on bokeh app
-        :type refresh_enabled: boolean, default False
 
         :return: the bokeh layer container (can be used to create dynamic (with widgets) layer
         :rtype: bokeh.models.ColumnDataSource
         """
 
-        assert isinstance(layer_settings, dict), "use a dict please"
-        assert len(input_data_default_attributes.intersection(set(layer_settings.keys()))) == 1,\
-            f"One of these input attributes are required: {' ,'.join(input_data_default_attributes)}"
+        layer_settings = self.__prepare_input_data(layer_settings)
 
-        # compute gdf if needed
-        if "input_wkt" in layer_settings:
-            layer_settings["input_gdf"] = wkt_to_gpd(layer_settings["input_wkt"])
-            del layer_settings["input_wkt"]
-
-        #check geom type
+        # geom type checking
         layer_geom_types = self.__get_geom_types_from_gdf(
             layer_settings["input_gdf"]
         )
@@ -323,46 +313,47 @@ class Gdf2Bokeh:
 
         if len(layer_geom_types) > 0:
 
-            if not refresh_enabled:
-                compatibility_checked = list(
-                    filter(
-                        lambda x: layer_geom_types.issubset(x) or layer_geom_types == x,
-                        geometry_compatibility,
-                    )
-                )
+            compatibility_checked = list(filter(
+                lambda x: layer_geom_types.issubset(x) or layer_geom_types == x,
+                geometry_compatibility
+            ))
 
-                if len(compatibility_checked) == 1:
-                    if layer_geom_types.issubset(point_type_compatibility):
-                        bokeh_container = self.add_points(**layer_settings)
-                    elif layer_geom_types.issubset(linestrings_type_compatibility):
-                        bokeh_container = self.add_lines(**layer_settings)
-                    elif layer_geom_types.issubset(polygons_type_compatibility):
-                        bokeh_container = self.add_polygons(**layer_settings)
-                    else:
-                        raise ErrorGdf2Bokeh(
-                            "It should not happened :)')"
-                        )
-                    return bokeh_container
+            if len(compatibility_checked) == 1:
+                if layer_geom_types.issubset(point_type_compatibility):
+                    bokeh_container = self.add_points(**layer_settings)
+                elif layer_geom_types.issubset(linestrings_type_compatibility):
+                    bokeh_container = self.add_lines(**layer_settings)
+                elif layer_geom_types.issubset(polygons_type_compatibility):
+                    bokeh_container = self.add_polygons(**layer_settings)
+                else:
+                    raise ErrorGdf2Bokeh("It should not happened :)")
+                return bokeh_container
 
-                else:
-                    raise ErrorGdf2Bokeh(
-                        f"{layer_geom_types} geometry have to be split by geometry types (layer concerned '{layer_settings['legend']}')"
-                    )
-            else:
-                if layer_settings["legend"] in self.get_bokeh_layer_containers:
-                    #refresh data
-                    return self._format_gdf_features_to_bokeh(layer_settings["input_gdf"])
-                else:
-                    raise ErrorGdf2Bokeh(
-                        f"Cannot refresh the current layer named '{layer_settings['legend']}'. It does not exist on the map yet!')"
-                    )
-        else:
-            if layer_settings["legend"] in self.get_bokeh_layer_containers:
-                return self._format_gdf_features_to_bokeh(layer_settings["input_gdf"])
             else:
                 raise ErrorGdf2Bokeh(
-                    f"Cannot display this empty layer: '{layer_settings['legend']}'. It's not initialized.')"
+                    f"{layer_geom_types} geometry have to be split by geometry types (layer concerned '{layer_settings['legend']}')"
                 )
+        else:
+            # means that the input gdf is empty, we are going to refresh the bokeh map container only
+            self.refresh_existing_layer(layer_settings)
+
+    def refresh_existing_layer(self, layer_settings):
+        # used also if input gdf is empty
+        layer_settings = self.__prepare_input_data(layer_settings)
+        return self._format_gdf_features_to_bokeh(layer_settings["input_gdf"])
+
+    @staticmethod
+    def __prepare_input_data(layer_settings):
+        assert isinstance(layer_settings, dict), "use a dict please"
+        assert len(input_data_default_attributes.intersection(set(layer_settings.keys()))) == 1,\
+            f"One of these input attributes are required: {' ,'.join(input_data_default_attributes)}"
+
+        # compute gdf if needed
+        if "input_wkt" in layer_settings:
+            layer_settings["input_gdf"] = wkt_to_gpd(layer_settings["input_wkt"])
+            del layer_settings["input_wkt"]
+
+        return layer_settings
 
     def _set_tooltip_from_features(
         self, features: ColumnDataSource, rendered: GlyphRenderer
@@ -372,21 +363,19 @@ class Gdf2Bokeh:
         self.figure.add_tools(
             HoverTool(tooltips=column_tooltip, renderers=[rendered], mode="mouse")
         )
-
-    def __build_column_tooltip(
-        self, features: gpd.GeoDataFrame
-    ) -> List[Tuple[str, str]]:
-        columns = list(filter(lambda x: x not in ["x", "y"], features.data.keys()))
+    
+    @staticmethod
+    def __build_column_tooltip(features_column_data_source: ColumnDataSource) -> List[Tuple[str, str]]:
+        columns = list(filter(lambda x: x not in ["x", "y"], features_column_data_source.data.keys()))
         return list(
             zip(map(lambda x: str(x.upper()), columns), map(lambda x: f"@{x}", columns))
         )
-
-    def __convert_gdf_to_bokeh_data(
-        self, input_gdf: gpd.GeoDataFrame, get_gdf_structure: bool = False
-    ) -> ColumnDataSource:
+    
+    @staticmethod
+    def __convert_gdf_to_bokeh_data(input_gdf: gpd.GeoDataFrame, get_gdf_structure: bool = False) -> ColumnDataSource:
         assert isinstance(
             input_gdf, gpd.GeoDataFrame
-        ), f"use a geodataframe please => found {type(input_gdf)}"
+        ), f"use a GeoDataframe please => found {type(input_gdf)}"
         if get_gdf_structure:
             input_gdf = input_gdf.head(1)
 
@@ -409,20 +398,18 @@ class Gdf2Bokeh:
         )
         return bokeh_data
 
-    def _format_gdf_features_to_bokeh(
-        self, input_gdf: gpd.GeoDataFrame
-    ) -> ColumnDataSource:
+    def _format_gdf_features_to_bokeh(self, input_gdf: gpd.GeoDataFrame) -> ColumnDataSource:
         """
-        To build the bokeh data input from a geodataframe.
+        To build the bokeh data input from a GeoDataframe.
 
-        :param input_gdf: your input geodataframe
+        :param input_gdf: your input GeoDataframe
         :type input_gdf: geopandas.GeoDataFrame
         :return: the bokeh data input
         :rtype: ColumnDataSource
         """
         assert isinstance(
             input_gdf, gpd.GeoDataFrame
-        ), f"use a geodataframe please => found {type(input_gdf)}"
+        ), f"use a GeoDataframe please => found {type(input_gdf)}"
         assert "geometry" in input_gdf.columns
 
         bokeh_data = self.__convert_gdf_to_bokeh_data(input_gdf)

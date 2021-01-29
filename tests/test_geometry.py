@@ -125,4 +125,4 @@ def test_multilines_geom_to_bokekeh_format(multilines_data):
 def test_wkt_to_gpd(geom_wkt):
     output_gdf = wkt_to_gpd(geom_wkt)
     assert output_gdf.shape[0] == 1
-    assert output_gdf.shape[-1] == 2
+    assert output_gdf.shape[-1] == 1
