@@ -50,6 +50,8 @@ class MyMapBokeh(Gdf2Bokeh):
         super().__init__(*args, **kwargs)
         self._layer_settings = layer_settings
 
+        self._start_value = 1
+
     def plot(self):
         self.prepare_data()
         self.slider_widget()
@@ -57,14 +59,15 @@ class MyMapBokeh(Gdf2Bokeh):
         self._map_layout()
 
     def prepare_data(self):
-
-        self.bokeh_layer_points_container = self.compute_layer(layer_settings)
+        input_data = self._layer_settings["input_gdf"]
+        input_data_filtered = input_data.loc[input_data["value"] == self._start_value]
+        layer_filtered = {**self._layer_settings, "input_gdf": input_data_filtered}
+        self.compute_layer(layer_filtered)
 
     def slider_widget(self):
         input_data = self._layer_settings["input_gdf"]
-        min_value = min(input_data["value"])
         max_value = max(input_data["value"])
-        self._slider_widget = Slider(start=min_value - 5, end=max_value + 1, value=min_value, step=1, title="my slider")
+        self._slider_widget = Slider(start=self._start_value - 5, end=max_value + 1, value=self._start_value, step=1, title="my slider")
         self._slider_widget.on_change('value', self.__slider_update)
 
     def __slider_update(self, attrname, old_value, new_value):

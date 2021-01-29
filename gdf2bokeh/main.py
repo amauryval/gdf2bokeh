@@ -297,6 +297,8 @@ class Gdf2Bokeh:
 
         :param layer_settings: list of dict containing input data: (input_gdf or input_wkt) and legend, and bokeh style properties
         :type layer_settings: lit of dict
+        :param refresh_enabled: to refresh an existing map, if False it will create the map on bokeh app
+        :type refresh_enabled: boolean, default False
 
         :return: the bokeh layer container (can be used to create dynamic (with widgets) layer
         :rtype: bokeh.models.ColumnDataSource
@@ -336,6 +338,10 @@ class Gdf2Bokeh:
                         bokeh_container = self.add_lines(**layer_settings)
                     elif layer_geom_types.issubset(polygons_type_compatibility):
                         bokeh_container = self.add_polygons(**layer_settings)
+                    else:
+                        raise ErrorGdf2Bokeh(
+                            "It should not happened :)')"
+                        )
                     return bokeh_container
 
                 else:
@@ -351,7 +357,12 @@ class Gdf2Bokeh:
                         f"Cannot refresh the current layer named '{layer_settings['legend']}'. It does not exist on the map yet!')"
                     )
         else:
-            return self._format_gdf_features_to_bokeh(layer_settings["input_gdf"])
+            if layer_settings["legend"] in self.get_bokeh_layer_containers:
+                return self._format_gdf_features_to_bokeh(layer_settings["input_gdf"])
+            else:
+                raise ErrorGdf2Bokeh(
+                    f"Cannot display this empty layer: '{layer_settings['legend']}'. It's not initialized.')"
+                )
 
     def _set_tooltip_from_features(
         self, features: ColumnDataSource, rendered: GlyphRenderer
