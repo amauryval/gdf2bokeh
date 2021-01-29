@@ -74,6 +74,7 @@ bokeh_layer_containers = my_map.get_bokeh_layer_containers
 show(my_map.figure)
 ```
 
+
 Also, you can find a bokeh serve example with a slider widget.
 On the terminal, run :
 

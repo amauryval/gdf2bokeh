@@ -264,10 +264,12 @@ def test_bokeh_processing_with_layers_with_min_setting_and_empty_data(geom_wkt, 
             "legend": "linestrings_from_wkt"
         },
     ]
-    with pytest.raises(ErrorGdf2Bokeh) as exception_returned:
-        _ = Gdf2Bokeh("My beautiful map", layers=layers_to_add)
+    my_map = Gdf2Bokeh("My beautiful map", layers=layers_to_add)
 
-    assert "Your geodataframe may not have geometry features (layer concerned 'empty_data')" in str(exception_returned.value)
+    assert len(my_map.figure.renderers) == 7
+    assert len(my_map.figure.tools) == 11
+    assert len(my_map.get_bokeh_layer_containers) == 6
+
 
 
 def test_bokeh_structure(multipolygons_data):

@@ -69,6 +69,7 @@ class Gdf2Bokeh:
         """
         super().__init__()
 
+        # TODO create a getter, keys should be unique
         self.__BOKEH_LAYER_CONTAINERS: Dict = {}
 
         self.figure = figure(
@@ -290,7 +291,7 @@ class Gdf2Bokeh:
         for layer_settings in self._layers_configuration:
             _ = self.compute_layer(layer_settings)
 
-    def compute_layer(self, layer_settings):
+    def compute_layer(self, layer_settings, refresh_enabled=False):
         """
         To generate a bokeh container
 
@@ -300,53 +301,57 @@ class Gdf2Bokeh:
         :return: the bokeh layer container (can be used to create dynamic (with widgets) layer
         :rtype: bokeh.models.ColumnDataSource
         """
-        #TODO add exceptions on docistring
 
         assert isinstance(layer_settings, dict), "use a dict please"
         assert len(input_data_default_attributes.intersection(set(layer_settings.keys()))) == 1,\
             f"One of these input attributes are required: {' ,'.join(input_data_default_attributes)}"
 
+        # compute gdf if needed
         if "input_wkt" in layer_settings:
             layer_settings["input_gdf"] = wkt_to_gpd(layer_settings["input_wkt"])
             del layer_settings["input_wkt"]
 
+        #check geom type
         layer_geom_types = self.__get_geom_types_from_gdf(
             layer_settings["input_gdf"]
         )
-
         assert default_attributes.issubset(
             set(layer_settings.keys())
         ), f"This attribute is required: {' ,'.join(default_attributes)}"
 
         if len(layer_geom_types) > 0:
-            compatibility_checked = list(
-                filter(
-                    lambda x: layer_geom_types.issubset(x) or layer_geom_types == x,
-                    geometry_compatibility,
+
+            if not refresh_enabled:
+                compatibility_checked = list(
+                    filter(
+                        lambda x: layer_geom_types.issubset(x) or layer_geom_types == x,
+                        geometry_compatibility,
+                    )
                 )
-            )
 
-            if len(compatibility_checked) == 1:
+                if len(compatibility_checked) == 1:
+                    if layer_geom_types.issubset(point_type_compatibility):
+                        bokeh_container = self.add_points(**layer_settings)
+                    elif layer_geom_types.issubset(linestrings_type_compatibility):
+                        bokeh_container = self.add_lines(**layer_settings)
+                    elif layer_geom_types.issubset(polygons_type_compatibility):
+                        bokeh_container = self.add_polygons(**layer_settings)
+                    return bokeh_container
 
-                if layer_geom_types.issubset(point_type_compatibility):
-                    bokeh_container = self.add_points(**layer_settings)
-
-                elif layer_geom_types.issubset(linestrings_type_compatibility):
-                    bokeh_container = self.add_lines(**layer_settings)
-
-                elif layer_geom_types.issubset(polygons_type_compatibility):
-                    bokeh_container = self.add_polygons(**layer_settings)
-
-                return bokeh_container
-
+                else:
+                    raise ErrorGdf2Bokeh(
+                        f"{layer_geom_types} geometry have to be split by geometry types (layer concerned '{layer_settings['legend']}')"
+                    )
             else:
-                raise ErrorGdf2Bokeh(
-                    f"{layer_geom_types} geometry have to be split by geometry types (layer concerned '{layer_settings['legend']}')"
-                )
+                if layer_settings["legend"] in self.get_bokeh_layer_containers:
+                    #refresh data
+                    return self._format_gdf_features_to_bokeh(layer_settings["input_gdf"])
+                else:
+                    raise ErrorGdf2Bokeh(
+                        f"Cannot refresh the current layer named '{layer_settings['legend']}'. It does not exist yet on map!')"
+                    )
         else:
-            raise ErrorGdf2Bokeh(
-                f"Your geodataframe may not have geometry features (layer concerned '{layer_settings['legend']}')"
-            )
+            return self._format_gdf_features_to_bokeh(layer_settings["input_gdf"])
 
     def _set_tooltip_from_features(
         self, features: ColumnDataSource, rendered: GlyphRenderer
