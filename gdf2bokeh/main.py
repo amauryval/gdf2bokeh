@@ -348,7 +348,7 @@ class Gdf2Bokeh:
                     return self._format_gdf_features_to_bokeh(layer_settings["input_gdf"])
                 else:
                     raise ErrorGdf2Bokeh(
-                        f"Cannot refresh the current layer named '{layer_settings['legend']}'. It does not exist yet on map!')"
+                        f"Cannot refresh the current layer named '{layer_settings['legend']}'. It does not exist on the map yet!')"
                     )
         else:
             return self._format_gdf_features_to_bokeh(layer_settings["input_gdf"])
