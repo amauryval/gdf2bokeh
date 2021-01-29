@@ -168,7 +168,7 @@ class Gdf2Bokeh:
                 f"{' and '.join(linestrings_type_compatibility)} (layer concerned '{legend}')"
             )
 
-    def __post_proc_input_gdf(self, input_gdf):
+    def __post_proc_input_gdf(self, input_gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
         input_gdf_proceed = input_gdf.copy(deep=True)
         input_gdf_proceed = self.__reprojection(input_gdf_proceed)
 
@@ -290,7 +290,7 @@ class Gdf2Bokeh:
         for layer_settings in self._layers_configuration:
             _ = self.add_layer(layer_settings)
 
-    def add_layer(self, layer_settings):
+    def add_layer(self, layer_settings: dict):
         """
         To generate a bokeh container
 
@@ -337,10 +337,20 @@ class Gdf2Bokeh:
             # means that the input gdf is empty, we are going to refresh the bokeh map container only
             self.refresh_existing_layer(layer_settings)
 
-    def refresh_existing_layer(self, layer_settings):
+    def refresh_existing_layer(self, layer_settings: dict) -> dict:
+        """
+
+        To return a dict to update the data of an existing bokeh layer container
+
+        :param layer_settings: list of dict with input data: (input_gdf or input_wkt) and legend, and bokeh style properties
+        :type layer_settings: lit of dict
+
+        :return: ColumnDataSource data
+        :rtype: dict
+        """
         # used also if input gdf is empty
         layer_settings = self.__prepare_input_data(layer_settings)
-        return self._format_gdf_features_to_bokeh(layer_settings["input_gdf"])
+        return dict(self._format_gdf_features_to_bokeh(layer_settings["input_gdf"]).data)
 
     @staticmethod
     def __prepare_input_data(layer_settings):
