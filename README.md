@@ -14,13 +14,6 @@ Because it's boring to convert shapely geometry to bokeh format !!
 [![Anaconda-Server Badge](https://anaconda.org/amauryval/gdf2bokeh/badges/installer/conda.svg)](https://conda.anaconda.org/amauryval)
 
 
-## Demo
-
-To play with the notebook on binder: [![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/amauryval/gdf2bokeh/master?filepath=example.ipynb)
-
-If you do not want to wait :), you can find the html version of the jupyter notebook : click [here](https://amauryval.github.io/gdf2bokeh/) to get the result
-
-
 ## How to install the conda package ?
 Install Anaconda
 
