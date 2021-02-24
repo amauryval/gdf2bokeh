@@ -1,11 +1,12 @@
 name: gdf2bokeh
 channels:
+  - bokeh
   - conda-forge
   - defaults
 dependencies:
   - python=3.8
   - geopandas=0.8.0
-  - bokeh>=2.0.2
+  - bokeh>=2.3
   - Shapely=1.7.0
   - GDAL=3.0.4
   - pytest

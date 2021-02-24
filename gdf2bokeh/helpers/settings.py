@@ -30,6 +30,8 @@ expected_node_style: List[str] = [
     "square_cross",
     "square_x",
     "triangle",
+    "star",
+    "star_dot",
     "x",
     "y",
 ]  # https://docs.bokeh.org/en/latest/docs/reference/models/markers.html

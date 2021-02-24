@@ -271,7 +271,6 @@ def test_bokeh_processing_with_layers_with_min_setting_and_empty_data(geom_wkt, 
     assert len(my_map.get_bokeh_layer_containers) == 6
 
 
-
 def test_bokeh_structure(multipolygons_data):
 
     points_input = Gdf2Bokeh("hello").get_bokeh_structure_from_gdf(multipolygons_data)

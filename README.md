@@ -1,5 +1,5 @@
 # gdf2bokeh
-An easy way to map your geographic data (from a GeoDataFrame) with [bokeh >=__2.0.1__](https://github.com/bokeh/bokeh/tree/2.0.1)
+An easy way to map your geographic data (from a GeoDataFrame) with [bokeh >=__2.3__](https://github.com/bokeh/bokeh/tree/2.3)
 Because it's boring to convert shapely geometry to bokeh format !!
 
 ![CI](https://github.com/amauryval/gdf2bokeh/workflows/CI/badge.svg)
