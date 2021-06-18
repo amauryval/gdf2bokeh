@@ -3,7 +3,11 @@ import pytest
 
 import geopandas as gpd
 
+from shapely.geometry import Point
+from shapely.geometry import LineString
+from shapely.geometry import MultiLineString
 from shapely.geometry import Polygon
+from shapely.geometry import MultiPoint
 
 
 multipolygons = "tests/fixtures/multipolygons.geojson"
@@ -76,3 +80,47 @@ def polygon_from_coords_without_crs():
 @pytest.fixture
 def geom_wkt():
     return "LINESTRING(0 0, 25 25)"
+
+
+@pytest.fixture
+def shapely_point():
+    return Point(0.0, 1.0)
+
+
+@pytest.fixture
+def shapely_linestring():
+    return LineString([(0, 0), (1, 2)])
+
+
+@pytest.fixture
+def shapely_polygon():
+    return Polygon([(0, 0), (1, 1), (1, 0), (0, 0)])
+
+
+@pytest.fixture
+def shapely_polygon_with_hole():
+    return Polygon(((0, 0), (10, 0), (10, 10), (0, 10), (0, 0)), (((1, 2), (5, 2), (5, 1), (1, 1)), ((9, 9), (9, 8), (8, 8), (8, 9))))
+
+
+@pytest.fixture
+def shapely_multilinestring_without_continuity():
+    return MultiLineString([((0, 0), (5, 2)), ((6, 0), (10, 10))])
+
+
+@pytest.fixture
+def shapely_multilinestring_continuity():
+    return MultiLineString([((0, 0), (5, 2)), ((5, 2), (10, 10))])
+
+
+@pytest.fixture
+def shapely_multilinestring_unordered():
+    return MultiLineString([((0, 0), (5, 2)), ((10, 10), (5, 2))])
+
+
+@pytest.fixture
+def shapely_multipoint():
+    return MultiPoint([(0, 0), (1, 1), (1, 2), (2, 2)])
+
+from shapely.geometry import MultiLineString
+from functools import reduce
+
