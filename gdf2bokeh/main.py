@@ -16,8 +16,8 @@ from bokeh.models import HoverTool
 from bokeh.palettes import brewer
 
 from gdf2bokeh.helpers.geometry import wkt_to_gpd
-
 from gdf2bokeh.helpers.geometry import geometry_2_bokeh_format
+from gdf2bokeh.helpers.geometry import check_multilinestring_continuity
 
 from gdf2bokeh.helpers.settings import expected_node_style
 from gdf2bokeh.helpers.settings import map_background_providers
@@ -148,6 +148,9 @@ class Gdf2Bokeh:
         if layer_geom_types.issubset(linestrings_type_compatibility):
 
             input_data = self.__post_proc_input_gdf(input_gdf)
+            # go to check the multilinestring continuity, because the bokeh format cannot display a multilinestring
+            # containing a discontinuity. We'll convert the objet into linestring if needed.
+            input_data = self.__post_proc_multilinestring_gdf(input_data)
             bokeh_layer_container = self._format_gdf_features_to_bokeh(input_data)
             kwargs = self.__check_is_legend_field_exists_in_input_gdf(
                 input_data, legend, kwargs
@@ -172,6 +175,15 @@ class Gdf2Bokeh:
         input_gdf_proceed = input_gdf.copy(deep=True)
         input_gdf_proceed = self.__reprojection(input_gdf_proceed)
 
+        return input_gdf_proceed
+
+    @staticmethod
+    def __post_proc_multilinestring_gdf(input_gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
+        input_gdf_proceed = input_gdf.copy(deep=True)
+        input_gdf_proceed["geometry"] = input_gdf_proceed["geometry"].apply(
+            lambda x: check_multilinestring_continuity(x)
+        )
+        input_gdf_proceed = input_gdf_proceed.explode("geometry")
         return input_gdf_proceed
 
     def add_points(self, input_gdf: gpd.GeoDataFrame, legend: str, style: str = "circle", **kwargs) -> ColumnDataSource:
@@ -294,7 +306,7 @@ class Gdf2Bokeh:
         """
         To generate a bokeh container
 
-        :param layer_settings: list of dict with input data: (input_gdf or input_wkt) and legend, and bokeh style properties
+        :param layer_settings: list of dict with settings: (input_gdf or input_wkt) and legend + bokeh style properties
         :type layer_settings: lit of dict
 
         :return: the bokeh layer container (can be used to create dynamic (with widgets) layer
@@ -383,9 +395,8 @@ class Gdf2Bokeh:
     
     @staticmethod
     def __convert_gdf_to_bokeh_data(input_gdf: gpd.GeoDataFrame, get_gdf_structure: bool = False) -> ColumnDataSource:
-        assert isinstance(
-            input_gdf, gpd.GeoDataFrame
-        ), f"use a GeoDataframe please => found {type(input_gdf)}"
+        assert isinstance(input_gdf, gpd.GeoDataFrame), f"use a GeoDataframe please => found {type(input_gdf)}"
+
         if get_gdf_structure:
             input_gdf = input_gdf.head(1)
 
