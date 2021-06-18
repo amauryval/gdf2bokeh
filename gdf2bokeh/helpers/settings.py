@@ -1,8 +1,6 @@
 from typing import List
-from typing import Optional
 from typing import Dict
 from typing import Set
-from typing import Tuple
 
 from bokeh.tile_providers import CARTODBPOSITRON
 from bokeh.tile_providers import CARTODBPOSITRON_RETINA
