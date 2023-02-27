@@ -80,8 +80,8 @@ class Gdf2Bokeh:
             y_range=y_range,
         )
 
-        self.figure.plot_width = width
-        self.figure.plot_height = height
+        self.figure.width = width
+        self.figure.height = height
 
         self._add_background_map(background_map_name)
 
