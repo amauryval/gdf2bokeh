@@ -15,11 +15,17 @@ Because it's boring to convert shapely geometry to bokeh format !!
 
 
 ## How to install the conda package ?
-Install Anaconda
 
-then on your terminal:
-```
+### With Anaconda
+
+```bash
 conda install -c amauryval gdf2bokeh
+```
+
+### with pip
+
+```bash
+pip install gdf2bokeh
 ```
 
 
@@ -71,6 +77,6 @@ show(my_map.figure)
 Also, you can find a bokeh serve example with a slider widget.
 On the terminal, run :
 
-```
+```bash
 bokeh serve --show bokeh_serve_example.py
 ```
