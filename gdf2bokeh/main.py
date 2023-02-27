@@ -7,6 +7,7 @@ from typing import Union
 from typing import Any
 
 import geopandas as gpd
+import pandas as pd
 
 from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource
@@ -46,8 +47,6 @@ class Gdf2Bokeh:
         title: str = "My empty Map",
         width: int = 800,
         height: int = 600,
-        x_range: Optional[int] = None,
-        y_range: Optional[int] = None,
         background_map_name: str = "CARTODBPOSITRON",
         layers: Optional[List[Dict[str, Union[str, Any]]]] = None,
     ) -> None:
@@ -76,8 +75,6 @@ class Gdf2Bokeh:
             title=title,
             output_backend="webgl",
             tools="pan,wheel_zoom,box_zoom,reset,save",
-            x_range=x_range,
-            y_range=y_range,
         )
 
         self.figure.width = width
@@ -394,8 +391,8 @@ class Gdf2Bokeh:
         )
     
     @staticmethod
-    def __convert_gdf_to_bokeh_data(input_gdf: gpd.GeoDataFrame, get_gdf_structure: bool = False) -> ColumnDataSource:
-        assert isinstance(input_gdf, gpd.GeoDataFrame), f"use a GeoDataframe please => found {type(input_gdf)}"
+    def __convert_gdf_to_bokeh_data(input_gdf: gpd.GeoDataFrame | pd.DataFrame, get_gdf_structure: bool = False) -> ColumnDataSource:
+        assert isinstance(input_gdf, (gpd.GeoDataFrame | pd.DataFrame)), f"use a GeoDataframe please => found {type(input_gdf)}"
 
         if get_gdf_structure:
             input_gdf = input_gdf.head(1)
@@ -428,9 +425,9 @@ class Gdf2Bokeh:
         :return: the bokeh data input
         :rtype: ColumnDataSource
         """
-        assert isinstance(
-            input_gdf, gpd.GeoDataFrame
-        ), f"use a GeoDataframe please => found {type(input_gdf)}"
+        assert isinstance(input_gdf,
+                          (gpd.GeoDataFrame | pd.DataFrame)), f"use a GeoDataframe please => found {type(input_gdf)}"
+
         assert "geometry" in input_gdf.columns
 
         bokeh_data = self.__convert_gdf_to_bokeh_data(input_gdf)

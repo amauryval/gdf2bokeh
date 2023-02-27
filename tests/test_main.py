@@ -8,8 +8,8 @@ from gdf2bokeh import ErrorGdf2Bokeh
 def test_bokeh_session(width, height):
     my_map = Gdf2Bokeh("My beautiful map", width, height)
 
-    assert my_map.figure.plot_height == height
-    assert my_map.figure.plot_width == width
+    assert my_map.figure.height == height
+    assert my_map.figure.width == width
 
 
 def test_bokeh_processing(multipolygons_data, polygons_data, linestrings_data, multilines_data, points_data):
