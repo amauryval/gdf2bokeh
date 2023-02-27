@@ -9,7 +9,6 @@ Because it's boring to convert shapely geometry to bokeh format !!
 [![Anaconda-Server Badge](https://anaconda.org/amauryval/gdf2bokeh/badges/version.svg)](https://anaconda.org/amauryval/gdf2bokeh)
 [![Anaconda-Server Badge](https://anaconda.org/amauryval/gdf2bokeh/badges/latest_release_date.svg)](https://anaconda.org/amauryval/gdf2bokeh)
 [![Anaconda-Server Badge](https://anaconda.org/amauryval/gdf2bokeh/badges/platforms.svg)](https://anaconda.org/amauryval/gdf2bokeh)
-[![Anaconda-Server Badge](https://anaconda.org/amauryval/gdf2bokeh/badges/installer/conda.svg)](https://conda.anaconda.org/amauryval)
 
 [![PyPI version](https://badge.fury.io/py/gdf2bokeh.svg)](https://badge.fury.io/py/gdf2bokeh)
 
