@@ -242,8 +242,7 @@ class Gdf2Bokeh:
         """
         To add a polygons layer on bokeh Figure (Polygon and MultiPolygon geometry type supported)
 
-        :param input_gdf: your input GeoDataframe
-        :type input_gdf: geopandas.GeoDataFrame
+        :param input_gdf: your input [Geo]Dataframe
         :param legend: layer name
         :type legend: str
         :param kwargs: arguments from bokeh to style the layer
@@ -416,12 +415,11 @@ class Gdf2Bokeh:
         )
         return bokeh_data
 
-    def _format_gdf_features_to_bokeh(self, input_gdf: gpd.GeoDataFrame) -> ColumnDataSource:
+    def _format_gdf_features_to_bokeh(self, input_gdf: gpd.GeoDataFrame | pd.DataFrame) -> ColumnDataSource:
         """
         To build the bokeh data input from a GeoDataframe.
 
-        :param input_gdf: your input GeoDataframe
-        :type input_gdf: geopandas.GeoDataFrame
+        :param input_gdf: your input [Geo]Dataframe
         :return: the bokeh data input
         :rtype: ColumnDataSource
         """

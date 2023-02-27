@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gdf2bokeh"
-version = "2.3.2"
+version = "2.3.4"
 description = "An easy way to map geodataframes on bokeh"
 authors = ["amauryval <amauryval@gmail.com>"]
 license = "GPL3"
