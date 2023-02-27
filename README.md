@@ -1,17 +1,17 @@
 # gdf2bokeh
-An easy way to map your geographic data (from a GeoDataFrame) with [bokeh >=__2.3__](https://github.com/bokeh/bokeh/tree/2.3)
+An easy way to map your geographic data (from a GeoDataFrame)
 Because it's boring to convert shapely geometry to bokeh format !!
 
-![CI](https://github.com/amauryval/gdf2bokeh/workflows/CI/badge.svg)
+![CI](https://github.com/amauryval/gdf2bokeh/workflows/RunTest/badge.svg)
 [![codecov](https://codecov.io/gh/amauryval/gdf2bokeh/branch/master/graph/badge.svg)](https://codecov.io/gh/amauryval/gdf2bokeh)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
 
 [![Anaconda-Server Badge](https://anaconda.org/amauryval/gdf2bokeh/badges/version.svg)](https://anaconda.org/amauryval/gdf2bokeh)
 [![Anaconda-Server Badge](https://anaconda.org/amauryval/gdf2bokeh/badges/latest_release_date.svg)](https://anaconda.org/amauryval/gdf2bokeh)
-
 [![Anaconda-Server Badge](https://anaconda.org/amauryval/gdf2bokeh/badges/platforms.svg)](https://anaconda.org/amauryval/gdf2bokeh)
-
 [![Anaconda-Server Badge](https://anaconda.org/amauryval/gdf2bokeh/badges/installer/conda.svg)](https://conda.anaconda.org/amauryval)
+
+[![PyPI version](https://badge.fury.io/py/gdf2bokeh.svg)](https://badge.fury.io/py/gdf2bokeh)
 
 
 ## How to install the conda package ?
