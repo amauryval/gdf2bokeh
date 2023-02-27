@@ -63,6 +63,7 @@ span.linenos.special { color: #000000; background-color: #ffffc0; padding-left: 
 .highlight .m { color: var(--jp-mirror-editor-number-color) } /* Literal.Number */
 .highlight .s { color: var(--jp-mirror-editor-string-color) } /* Literal.String */
 .highlight .ow { color: var(--jp-mirror-editor-operator-color); font-weight: bold } /* Operator.Word */
+.highlight .pm { color: var(--jp-mirror-editor-punctuation-color) } /* Punctuation.Marker */
 .highlight .w { color: var(--jp-mirror-editor-variable-color) } /* Text.Whitespace */
 .highlight .mb { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Bin */
 .highlight .mf { color: var(--jp-mirror-editor-number-color) } /* Literal.Number.Float */
@@ -14481,25 +14482,102 @@ all of MD as it is not optimized for dense, information rich UIs.
 </style>
 
 <style type="text/css">
-a.anchor-link {
-   display: none;
+/* Force rendering true colors when outputing to pdf */
+* {
+  -webkit-print-color-adjust: exact;
 }
-.highlight  {
-    margin: 0.4em;
+
+/* Misc */
+a.anchor-link {
+  display: none;
 }
 
 /* Input area styling */
 .jp-InputArea {
-    overflow: hidden;
+  overflow: hidden;
 }
 
 .jp-InputArea-editor {
-    overflow: hidden;
+  overflow: hidden;
+}
+
+.CodeMirror.cm-s-jupyter .highlight pre {
+/* weird, but --jp-code-padding defined to be 5px but 4px horizontal padding is hardcoded for pre.CodeMirror-line */
+  padding: var(--jp-code-padding) 4px;
+  margin: 0;
+
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+  color: inherit;
+
+}
+
+.jp-OutputArea-output pre {
+  line-height: inherit;
+  font-family: inherit;
+}
+
+.jp-RenderedText pre {
+  color: var(--jp-content-font-color1);
+  font-size: var(--jp-code-font-size);
+}
+
+/* Using table instead of flexbox so that we can use break-inside property */
+/* CSS rules under this comment should not be required anymore after we move to the JupyterLab 4.0 CSS */
+
+
+.jp-CodeCell.jp-mod-outputsScrolled .jp-OutputArea-prompt {
+  min-width: calc(
+    var(--jp-cell-prompt-width) - var(--jp-private-cell-scrolling-output-offset)
+  );
+}
+
+.jp-OutputArea-child {
+  display: table;
+  width: 100%;
+}
+
+.jp-OutputPrompt {
+  display: table-cell;
+  vertical-align: top;
+  min-width: var(--jp-cell-prompt-width);
+}
+
+body[data-format='mobile'] .jp-OutputPrompt {
+  display: table-row;
+}
+
+.jp-OutputArea-output {
+  display: table-cell;
+  width: 100%;
+}
+
+body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
+  display: table-row;
+}
+
+.jp-OutputArea-output.jp-OutputArea-executeResult {
+  width: 100%;
+}
+
+/* Hiding the collapser by default */
+.jp-Collapser {
+  display: none;
+}
+
+@page {
+    margin: 0.5in; /* Margin for each printed piece of paper */
 }
 
 @media print {
-  body {
-    margin: 0;
+  .jp-Cell-inputWrapper,
+  .jp-Cell-outputWrapper {
+    display: block;
+  }
+
+  .jp-OutputArea-child {
+    break-inside: avoid-page;
   }
 }
 </style>
@@ -14526,12 +14604,12 @@ a.anchor-link {
                 },
                 displayAlign: 'center',
                 CommonHTML: {
-                    linebreaks: { 
-                    automatic: true 
+                    linebreaks: {
+                    automatic: true
                     }
                 }
             });
-        
+
             MathJax.Hub.Queue(["Typeset", MathJax.Hub]);
         }
     }
@@ -14540,17 +14618,31 @@ a.anchor-link {
     <!-- End of mathjax configuration --></head>
 <body class="jp-Notebook" data-jp-theme-light="true" data-jp-theme-name="JupyterLab Light">
 
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h1 id="gdf-2-bokeh">gdf 2 bokeh<a class="anchor-link" href="#gdf-2-bokeh">&#182;</a></h1>
 </div>
 </div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="Import-all-required-librairies">Import all required librairies<a class="anchor-link" href="#Import-all-required-librairies">&#182;</a></h2>
 </div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[1]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
@@ -14572,39 +14664,64 @@ a.anchor-link {
 </div>
 
 <div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
 
 
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
+<pre>BokehDeprecationWarning: tile_providers module was deprecated in Bokeh 3.0.0 and will be removed, use add_tile directly instead.
+BokehDeprecationWarning: get_provider was deprecated in Bokeh 3.0.0 and will be removed, use add_tile directly instead.
+BokehDeprecationWarning: get_provider was deprecated in Bokeh 3.0.0 and will be removed, use add_tile directly instead.
+BokehDeprecationWarning: get_provider was deprecated in Bokeh 3.0.0 and will be removed, use add_tile directly instead.
+BokehDeprecationWarning: get_provider was deprecated in Bokeh 3.0.0 and will be removed, use add_tile directly instead.
+BokehDeprecationWarning: get_provider was deprecated in Bokeh 3.0.0 and will be removed, use add_tile directly instead.
+BokehDeprecationWarning: get_provider was deprecated in Bokeh 3.0.0 and will be removed, use add_tile directly instead.
+BokehDeprecationWarning: get_provider was deprecated in Bokeh 3.0.0 and will be removed, use add_tile directly instead.
+BokehDeprecationWarning: get_provider was deprecated in Bokeh 3.0.0 and will be removed, use add_tile directly instead.
+BokehDeprecationWarning: get_provider was deprecated in Bokeh 3.0.0 and will be removed, use add_tile directly instead.
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
     
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
 
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-
-    <div class="bk-root">
-        <a href="https://bokeh.org" target="_blank" class="bk-logo bk-logo-small bk-logo-notebook"></a>
-        <span id="1011">Loading BokehJS ...</span>
+<style>
+        .bk-notebook-logo {
+            display: block;
+            width: 20px;
+            height: 20px;
+            background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUCAYAAACNiR0NAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAALEgAACxIB0t1+/AAAABx0RVh0U29mdHdhcmUAQWRvYmUgRmlyZXdvcmtzIENTNui8sowAAAOkSURBVDiNjZRtaJVlGMd/1/08zzln5zjP1LWcU9N0NkN8m2CYjpgQYQXqSs0I84OLIC0hkEKoPtiH3gmKoiJDU7QpLgoLjLIQCpEsNJ1vqUOdO7ppbuec5+V+rj4ctwzd8IIbbi6u+8f1539dt3A78eXC7QizUF7gyV1fD1Yqg4JWz84yffhm0qkFqBogB9rM8tZdtwVsPUhWhGcFJngGeWrPzHm5oaMmkfEg1usvLFyc8jLRqDOMru7AyC8saQr7GG7f5fvDeH7Ej8CM66nIF+8yngt6HWaKh7k49Soy9nXurCi1o3qUbS3zWfrYeQDTB/Qj6kX6Ybhw4B+bOYoLKCC9H3Nu/leUTZ1JdRWkkn2ldcCamzrcf47KKXdAJllSlxAOkRgyHsGC/zRday5Qld9DyoM4/q/rUoy/CXh3jzOu3bHUVZeU+DEn8FInkPBFlu3+nW3Nw0mk6vCDiWg8CeJaxEwuHS3+z5RgY+YBR6V1Z1nxSOfoaPa4LASWxxdNp+VWTk7+4vzaou8v8PN+xo+KY2xsw6une2frhw05CTYOmQvsEhjhWjn0bmXPjpE1+kplmmkP3suftwTubK9Vq22qKmrBhpY4jvd5afdRA3wGjFAgcnTK2s4hY0/GPNIb0nErGMCRxWOOX64Z8RAC4oCXdklmEvcL8o0BfkNK4lUg9HTl+oPlQxdNo3Mg4Nv175e/1LDGzZen30MEjRUtmXSfiTVu1kK8W4txyV6BMKlbgk3lMwYCiusNy9fVfvvwMxv8Ynl6vxoByANLTWplvuj/nF9m2+PDtt1eiHPBr1oIfhCChQMBw6Aw0UulqTKZdfVvfG7VcfIqLG9bcldL/+pdWTLxLUy8Qq38heUIjh4XlzZxzQm19lLFlr8vdQ97rjZVOLf8nclzckbcD4wxXMidpX30sFd37Fv/GtwwhzhxGVAprjbg0gCAEeIgwCZyTV2Z1REEW8O4py0wsjeloKoMr6iCY6dP92H6Vw/oTyICIthibxjm/DfN9lVz8IqtqKYLUXfoKVMVQVVJOElGjrnnUt9T9wbgp8AyYKaGlqingHZU/uG2NTZSVqwHQTWkx9hxjkpWDaCg6Ckj5qebgBVbT3V3NNXMSiWSDdGV3hrtzla7J+duwPOToIg42ChPQOQjspnSlp1V+Gjdged7+8UN5CRAV7a5EdFNwCjEaBR27b3W890TE7g24NAP/mMDXRWrGoFPQI9ls/MWO2dWFAar/xcOIImbbpA3zgAAAABJRU5ErkJggg==);
+        }
+    </style>
+    <div>
+        <a href="https://bokeh.org" target="_blank" class="bk-notebook-logo"></a>
+        <span id="p1010">Loading BokehJS ...</span>
     </div>
-</div>
 
 </div>
 
+</div>
 <div class="jp-OutputArea-child">
-
     
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
 
 
-<div id="87d2f35a-9782-40f7-8f39-8fbf376b465e" class="jp-RenderedJavaScript jp-OutputArea-output " data-mime-type="application/javascript">
-<script type="text/javascript">
-var element = document.getElementById('87d2f35a-9782-40f7-8f39-8fbf376b465e');
 
+<div id="11be4eab-a32a-4b43-bdaa-7aa55330152f" class="jp-RenderedJavaScript jp-OutputArea-output " data-mime-type="application/javascript">
+<script type="text/javascript">
+var element = document.getElementById('11be4eab-a32a-4b43-bdaa-7aa55330152f');
 (function(root) {
   function now() {
     return new Date();
@@ -14617,7 +14734,7 @@ var element = document.getElementById('87d2f35a-9782-40f7-8f39-8fbf376b465e');
     root._bokeh_is_loading = undefined;
   }
 
-  const JS_MIME_TYPE = 'application/javascript';
+const JS_MIME_TYPE = 'application/javascript';
   const HTML_MIME_TYPE = 'text/html';
   const EXEC_MIME_TYPE = 'application/vnd.bokehjs_exec.v0+json';
   const CLASS_NAME = 'output_bokeh rendered_html';
@@ -14740,8 +14857,6 @@ var element = document.getElementById('87d2f35a-9782-40f7-8f39-8fbf376b465e');
       register_renderer(events, OutputArea);
     }
   }
-
-  
   if (typeof (root._bokeh_timeout) === "undefined" || force === true) {
     root._bokeh_timeout = Date.now() + 5000;
     root._bokeh_failed_load = false;
@@ -14764,7 +14879,7 @@ var element = document.getElementById('87d2f35a-9782-40f7-8f39-8fbf376b465e');
      "</div>"}};
 
   function display_loaded() {
-    const el = document.getElementById("1011");
+    const el = document.getElementById("p1010");
     if (el != null) {
       el.textContent = "BokehJS is loading...";
     }
@@ -14776,7 +14891,6 @@ var element = document.getElementById('87d2f35a-9782-40f7-8f39-8fbf376b465e');
       setTimeout(display_loaded, 100)
     }
   }
-
 
   function run_callbacks() {
     try {
@@ -14848,29 +14962,22 @@ var element = document.getElementById('87d2f35a-9782-40f7-8f39-8fbf376b465e');
     document.body.appendChild(element);
   }
 
-  
-  const js_urls = ["https://cdn.bokeh.org/bokeh/release/bokeh-2.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-2.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-2.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-2.4.1.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-2.4.1.min.js"];
+  const js_urls = ["https://cdn.bokeh.org/bokeh/release/bokeh-3.0.3.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-gl-3.0.3.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-widgets-3.0.3.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-tables-3.0.3.min.js", "https://cdn.bokeh.org/bokeh/release/bokeh-mathjax-3.0.3.min.js"];
   const css_urls = [];
-  
 
-  const inline_js = [
-    function(Bokeh) {
+  const inline_js = [    function(Bokeh) {
       Bokeh.set_log_level("info");
     },
-    function(Bokeh) {
-    
-    
+function(Bokeh) {
     }
   ];
 
   function run_inline_js() {
-    
     if (root.Bokeh !== undefined || force === true) {
-      
-    for (let i = 0; i < inline_js.length; i++) {
+          for (let i = 0; i < inline_js.length; i++) {
       inline_js[i].call(root, root.Bokeh);
     }
-    if (force === true) {
+if (force === true) {
         display_loaded();
       }} else if (Date.now() < root._bokeh_timeout) {
       setTimeout(run_inline_js, 100);
@@ -14878,10 +14985,9 @@ var element = document.getElementById('87d2f35a-9782-40f7-8f39-8fbf376b465e');
       console.log("Bokeh: BokehJS failed to load within specified timeout.");
       root._bokeh_failed_load = true;
     } else if (force !== true) {
-      const cell = $(document.getElementById("1011")).parents('.cell').data().cell;
+      const cell = $(document.getElementById("p1010")).parents('.cell').data().cell;
       cell.output_area.append_execute_result(NB_LOAD_WARNING)
     }
-
   }
 
   if (root._bokeh_is_loading === 0) {
@@ -14904,7 +15010,11 @@ var element = document.getElementById('87d2f35a-9782-40f7-8f39-8fbf376b465e');
 </div>
 
 </div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="How-to-define-style-?">How to define style ?<a class="anchor-link" href="#How-to-define-style-?">&#182;</a></h2><p>Check bokeh documentation :</p>
 <ul>
@@ -14915,17 +15025,33 @@ var element = document.getElementById('87d2f35a-9782-40f7-8f39-8fbf376b465e');
 
 </div>
 </div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="first-way">first way<a class="anchor-link" href="#first-way">&#182;</a></h2>
 </div>
 </div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Prepare-input-data-from-geojson-and-map-them">Prepare input data from geojson and map them<a class="anchor-link" href="#Prepare-input-data-from-geojson-and-map-them">&#182;</a></h3>
 </div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
@@ -14974,12 +15100,20 @@ var element = document.getElementById('87d2f35a-9782-40f7-8f39-8fbf376b465e');
 </div>
 
 </div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h3 id="Let's-go-to-map-our-data">Let's go to map our data<a class="anchor-link" href="#Let's-go-to-map-our-data">&#182;</a></h3>
 </div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[3]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
@@ -15003,97 +15137,23 @@ var element = document.getElementById('87d2f35a-9782-40f7-8f39-8fbf376b465e');
 </div>
 
 <div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
 
 
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
     
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>/home/runner/miniconda3/envs/gdf2bokeh/lib/python3.9/site-packages/geopandas/geodataframe.py:1350: UserWarning: Geometry column does not contain geometry.
-  warnings.warn(&#34;Geometry column does not contain geometry.&#34;)
-/home/runner/miniconda3/envs/gdf2bokeh/lib/python3.9/site-packages/geopandas/geodataframe.py:1350: UserWarning: Geometry column does not contain geometry.
-  warnings.warn(&#34;Geometry column does not contain geometry.&#34;)
-</pre>
-</div>
-</div>
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+File <span class="ansi-green-fg">&lt;timed exec&gt;:1</span>
 
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-
-
-
-
-
-
-  <div class="bk-root" id="79126572-6c31-47d8-a11a-f77c42d4c37e" data-root-id="1012"></div>
-
-</div>
-
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-
-<div id="87d2f35a-9782-40f7-8f39-8fbf376b465e" class="jp-RenderedJavaScript jp-OutputArea-output " data-mime-type="application/javascript">
-<script type="text/javascript">
-var element = document.getElementById('87d2f35a-9782-40f7-8f39-8fbf376b465e');
-(function(root) {
-  function embed_document(root) {
-    
-  const docs_json = {"6909b2b3-50c2-453f-9092-823b1313fdd5":{"defs":[],"roots":{"references":[{"attributes":{"below":[{"id":"1023"}],"center":[{"id":"1026"},{"id":"1030"},{"id":"1062"}],"left":[{"id":"1027"}],"output_backend":"webgl","renderers":[{"id":"1043"},{"id":"1050"},{"id":"1071"},{"id":"1093"},{"id":"1117"},{"id":"1143"}],"title":{"id":"1013"},"toolbar":{"id":"1037"},"width":800,"x_range":{"id":"1015"},"x_scale":{"id":"1019"},"y_range":{"id":"1017"},"y_scale":{"id":"1021"}},"id":"1012","subtype":"Figure","type":"Plot"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"red"},"hatch_alpha":{"value":0.1},"line_alpha":{"value":0.1},"line_color":{"value":"blue"},"marker":{"value":"square"},"size":{"value":6},"x":{"field":"x"},"y":{"field":"y"}},"id":"1141","type":"Scatter"},{"attributes":{},"id":"1021","type":"LinearScale"},{"attributes":{"line_alpha":{"value":0.2},"line_color":{"field":"color"},"line_width":{"value":4},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1092","type":"MultiLine"},{"attributes":{"coordinates":null,"data_source":{"id":"1045"},"glyph":{"id":"1047"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"1049"},"nonselection_glyph":{"id":"1048"},"view":{"id":"1051"}},"id":"1050","type":"GlyphRenderer"},{"attributes":{"data":{"geom_type":["Polygon","MultiPolygon"],"name":["Polygon1","Multipolygon1"],"x":[[[[540016.2082595062,540017.2434982699,540019.8067638461,540020.5244782075,540019.396641354,540020.4219475843,540024.7282337521,540025.4459481135,540001.4537823214,539997.4038227113,540016.2082595062]]],[[[540049.0792567247,540070.661952875,540072.1999122206,540089.7326487608,540091.5658327314,540091.8235201214,540094.2777042497,540096.4996698815,540100.8059560494,540102.8565685102,540075.8910146501,540073.9890868046,540080.60742331,540074.0454634354,540051.2404200251,540049.0792567247]],[[540073.6353409432,540057.7430943716,540056.8203187642,540050.9760732509,540047.7584583072,540053.1804816464,540051.2404200251,540074.0454634354,540080.60742331,540073.9890868046,540073.6353409432]],[[540058.9734618482,540060.5114211937,540066.6632585762,540063.792401131,540058.9734618482],[540062.4047205987,540059.9600019288,540071.3686890547,540068.4146539953,540062.4047205987]],[[540091.0672570786,540102.0295357057,540106.2059301,540094.6298813347,540091.0672570786]],[[540098.4643209788,540097.3438249219,540100.1959967035,540098.4643209788]]]],"y":[[[[5742011.812036099,5742000.814194428,5742000.814194428,5741994.935679299,5741994.935679299,5741984.501324507,5741984.501324507,5741979.945483293,5741977.15319467,5742009.631974393,5742011.812036099]]],[[[5742051.075657235,5742051.663512286,5742044.609254307,5742047.401564089,5742031.914545932,5742029.737565665,5742009.00429058,5741990.232869993,5741990.967683784,5741973.332169551,5741970.980770289,5741985.107098498,5741989.204130789,5742035.644476193,5742032.644154385,5742051.075657235]],[[5741987.734503557,5741985.089175158,5741990.820721021,5741990.379832747,5742015.4697581325,5742016.098351922,5742032.644154385,5742035.644476193,5741989.204130789,5741985.107098498,5741987.734503557]],[[5742012.7181994505,5742004.047379403,5742006.398787395,5742013.893904513,5742012.7181994505],[5742026.287734413,5742022.491558394,5742018.54937732,5742025.849714021,5742026.287734413]],[[5742036.126586524,5742032.8580428865,5742008.328915999,5742006.02905552,5742036.126586524]],[[5742022.053538191,5742017.52733066,5742018.549377321,5742022.053538191]]]]},"selected":{"id":"1060"},"selection_policy":{"id":"1059"}},"id":"1045","type":"ColumnDataSource"},{"attributes":{"fill_color":{"value":"red"},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1068","type":"MultiPolygons"},{"attributes":{"coordinates":null,"data_source":{"id":"1066"},"glyph":{"id":"1068"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"1070"},"nonselection_glyph":{"id":"1069"},"view":{"id":"1072"}},"id":"1071","type":"GlyphRenderer"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"value":"red"},"hatch_alpha":{"value":0.2},"line_alpha":{"value":0.2},"line_color":{"value":"blue"},"marker":{"value":"square"},"size":{"value":6},"x":{"field":"x"},"y":{"field":"y"}},"id":"1142","type":"Scatter"},{"attributes":{"label":{"field":"name"},"renderers":[{"id":"1093"}]},"id":"1109","type":"LegendItem"},{"attributes":{"data":{"geom_type":["Point","Point","Point","Point","Point","Point","Point"],"name":["Point1","Point2","Point2","Point2","Point3","Point4","Point5"],"x":[540109.7261202541,540109.3159977619,540107.6755077933,540105.4198340864,540103.7793441176,540102.9590991334,540101.9337929029],"y":[5741972.7443196755,5741983.031698054,5741993.613013929,5742004.48826835,5742022.123844301,5742031.823425964,5742041.523018195]},"selected":{"id":"1161"},"selection_policy":{"id":"1160"}},"id":"1138","type":"ColumnDataSource"},{"attributes":{"axis":{"id":"1023"},"coordinates":null,"group":null,"ticker":null},"id":"1026","type":"Grid"},{"attributes":{"callback":null,"renderers":[{"id":"1071"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1086","type":"HoverTool"},{"attributes":{},"id":"1054","type":"BasicTickFormatter"},{"attributes":{"source":{"id":"1138"}},"id":"1144","type":"CDSView"},{"attributes":{},"id":"1083","type":"Selection"},{"attributes":{"label":{"value":"points layer"},"renderers":[{"id":"1143"}]},"id":"1163","type":"LegendItem"},{"attributes":{},"id":"1133","type":"Selection"},{"attributes":{},"id":"1017","type":"DataRange1d"},{"attributes":{"data":{"geom_type":["LineString","MultiLineString"],"name":["Line3","Multiline1_continuity"],"x":[[539993.4455212295,540067.4772964783],[540075.173300289,540144.8941239576,540144.8941239576,540130.6869059505]],"y":[[5741942.141488259,5741949.894055722],[5741950.699977471,5741957.7541610375,5741957.7541610375,5742067.004449318]]},"selected":{"id":"1133"},"selection_policy":{"id":"1132"}},"id":"1112","type":"ColumnDataSource"},{"attributes":{"axis":{"id":"1027"},"coordinates":null,"dimension":1,"group":null,"ticker":null},"id":"1030","type":"Grid"},{"attributes":{},"id":"1055","type":"AllLabels"},{"attributes":{},"id":"1082","type":"UnionRenderers"},{"attributes":{},"id":"1028","type":"BasicTicker"},{"attributes":{},"id":"1132","type":"UnionRenderers"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"value":"orange"},"hatch_alpha":{"value":0.2},"line_alpha":{"value":0.2},"line_color":{"value":"#1f77b4"},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1049","type":"MultiPolygons"},{"attributes":{},"id":"1057","type":"BasicTickFormatter"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"value":"red"},"hatch_alpha":{"value":0.2},"line_alpha":{"value":0.2},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1070","type":"MultiPolygons"},{"attributes":{"callback":null,"renderers":[{"id":"1117"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1136","type":"HoverTool"},{"attributes":{"label":{"value":"MultiPolygons layer"},"renderers":[{"id":"1050"}]},"id":"1063","type":"LegendItem"},{"attributes":{"bottom_units":"screen","coordinates":null,"fill_alpha":0.5,"fill_color":"lightgrey","group":null,"left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"right_units":"screen","syncable":false,"top_units":"screen"},"id":"1036","type":"BoxAnnotation"},{"attributes":{},"id":"1015","type":"DataRange1d"},{"attributes":{"attribution":"&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors,&copy; <a href=\"https://cartodb.com/attributions\">CartoDB</a>","url":"https://tiles.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png"},"id":"1002","type":"WMTSTileSource"},{"attributes":{},"id":"1058","type":"AllLabels"},{"attributes":{"source":{"id":"1088"}},"id":"1094","type":"CDSView"},{"attributes":{"coordinates":null,"formatter":{"id":"1054"},"group":null,"major_label_policy":{"id":"1055"},"ticker":{"id":"1028"}},"id":"1027","type":"LinearAxis"},{"attributes":{"line_alpha":{"value":0.1},"line_color":{"field":"color"},"line_width":{"value":4},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1091","type":"MultiLine"},{"attributes":{"coordinates":null,"data_source":{"id":"1138"},"glyph":{"id":"1140"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"1142"},"nonselection_glyph":{"id":"1141"},"view":{"id":"1144"}},"id":"1143","type":"GlyphRenderer"},{"attributes":{"fill_color":{"value":"orange"},"line_color":{"value":"#1f77b4"},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1047","type":"MultiPolygons"},{"attributes":{},"id":"1032","type":"WheelZoomTool"},{"attributes":{},"id":"1031","type":"PanTool"},{"attributes":{"source":{"id":"1045"}},"id":"1051","type":"CDSView"},{"attributes":{},"id":"1035","type":"SaveTool"},{"attributes":{"callback":null,"renderers":[{"id":"1143"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1164","type":"HoverTool"},{"attributes":{"source":{"id":"1112"}},"id":"1118","type":"CDSView"},{"attributes":{"overlay":{"id":"1036"}},"id":"1033","type":"BoxZoomTool"},{"attributes":{},"id":"1107","type":"Selection"},{"attributes":{},"id":"1034","type":"ResetTool"},{"attributes":{},"id":"1106","type":"UnionRenderers"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"red"},"hatch_alpha":{"value":0.1},"line_alpha":{"value":0.1},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1069","type":"MultiPolygons"},{"attributes":{"callback":null,"renderers":[{"id":"1093"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"],["COLOR","@color"]]},"id":"1110","type":"HoverTool"},{"attributes":{"tools":[{"id":"1031"},{"id":"1032"},{"id":"1033"},{"id":"1034"},{"id":"1035"},{"id":"1064"},{"id":"1086"},{"id":"1110"},{"id":"1136"},{"id":"1164"}]},"id":"1037","type":"Toolbar"},{"attributes":{},"id":"1160","type":"UnionRenderers"},{"attributes":{"fill_color":{"value":"red"},"line_color":{"value":"blue"},"marker":{"value":"square"},"size":{"value":6},"x":{"field":"x"},"y":{"field":"y"}},"id":"1140","type":"Scatter"},{"attributes":{"coordinates":null,"group":null,"tile_source":{"id":"1002"}},"id":"1043","type":"TileRenderer"},{"attributes":{"coordinates":null,"data_source":{"id":"1088"},"glyph":{"id":"1090"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"1092"},"nonselection_glyph":{"id":"1091"},"view":{"id":"1094"}},"id":"1093","type":"GlyphRenderer"},{"attributes":{"line_alpha":{"value":0.2},"line_color":{"value":"blue"},"line_width":{"value":6},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1116","type":"MultiLine"},{"attributes":{"coordinates":null,"formatter":{"id":"1057"},"group":null,"major_label_policy":{"id":"1058"},"ticker":{"id":"1024"}},"id":"1023","type":"LinearAxis"},{"attributes":{},"id":"1059","type":"UnionRenderers"},{"attributes":{"line_alpha":{"value":0.1},"line_color":{"value":"blue"},"line_width":{"value":6},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1115","type":"MultiLine"},{"attributes":{},"id":"1024","type":"BasicTicker"},{"attributes":{"coordinates":null,"group":null,"text":"My beautiful map"},"id":"1013","type":"Title"},{"attributes":{},"id":"1019","type":"LinearScale"},{"attributes":{},"id":"1060","type":"Selection"},{"attributes":{},"id":"1161","type":"Selection"},{"attributes":{"data":{"geom_type":["Polygon","Polygon"],"name":["Polygon2","Polygon3"],"x":[[[[539993.3025977896,540049.0792567247,540053.1804816464,539997.4038227113,539993.3025977896]],[[540022.7288866028,540023.241539718,540029.7009689697,540029.342111789,540022.7288866028],[540008.0097301943,540005.4631482465,540010.7600386981,540011.7786714771,540008.0097301943]]],[[[540033.6483979569,540056.0000737801,540056.0000737801,540073.6353409432,540075.8910146501,540035.4939491715,540033.6483979569]]]],"y":[[[[5742044.903181607,5742051.075657235,5742016.098351922,5742009.631974393,5742044.903181607]],[[5742035.203585692,5742029.178084462,5742029.839419763,5742035.570994436,5742035.203585692],[5742032.42002217,5742028.331829864,5742025.1196800815,5742031.251967033,5742032.42002217]]],[[[5741983.325623325,5741986.852727335,5741984.795249826,5741987.734503557,5741970.980770289,5741966.277973637,5741983.325623325]]]]},"selected":{"id":"1083"},"selection_policy":{"id":"1082"}},"id":"1066","type":"ColumnDataSource"},{"attributes":{"source":{"id":"1066"}},"id":"1072","type":"CDSView"},{"attributes":{"label":{"value":"multilinestrings layer"},"renderers":[{"id":"1117"}]},"id":"1135","type":"LegendItem"},{"attributes":{"line_color":{"field":"color"},"line_width":{"value":4},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1090","type":"MultiLine"},{"attributes":{"coordinates":null,"data_source":{"id":"1112"},"glyph":{"id":"1114"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"1116"},"nonselection_glyph":{"id":"1115"},"view":{"id":"1118"}},"id":"1117","type":"GlyphRenderer"},{"attributes":{"click_policy":"hide","coordinates":null,"group":null,"items":[{"id":"1063"},{"id":"1085"},{"id":"1109"},{"id":"1135"},{"id":"1163"}]},"id":"1062","type":"Legend"},{"attributes":{"data":{"color":["black","red"],"geom_type":["LineString","LineString"],"name":["Line1","Line2"],"x":[[539984.3881464862,539970.8061063938],[539979.455293679,540123.8304611129]],"y":[[5741948.617673062,5742051.336474528],[5742052.594088212,5742073.5866285805]]},"selected":{"id":"1107"},"selection_policy":{"id":"1106"}},"id":"1088","type":"ColumnDataSource"},{"attributes":{"line_color":{"value":"blue"},"line_width":{"value":6},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1114","type":"MultiLine"},{"attributes":{"callback":null,"renderers":[{"id":"1050"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1064","type":"HoverTool"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"orange"},"hatch_alpha":{"value":0.1},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1048","type":"MultiPolygons"},{"attributes":{"label":{"value":"Polygons layer"},"renderers":[{"id":"1071"}]},"id":"1085","type":"LegendItem"}],"root_ids":["1012"]},"title":"Bokeh Application","version":"2.4.1"}};
-  const render_items = [{"docid":"6909b2b3-50c2-453f-9092-823b1313fdd5","root_ids":["1012"],"roots":{"1012":"79126572-6c31-47d8-a11a-f77c42d4c37e"}}];
-  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
-
-  }
-  if (root.Bokeh !== undefined) {
-    embed_document(root);
-  } else {
-    let attempts = 0;
-    const timer = setInterval(function(root) {
-      if (root.Bokeh !== undefined) {
-        clearInterval(timer);
-        embed_document(root);
-      } else {
-        attempts++;
-        if (attempts > 100) {
-          clearInterval(timer);
-          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
-        }
-      }
-    }, 10, root)
-  }
-})(window);
-</script>
-</div>
-
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 186 ms, sys: 6.16 ms, total: 192 ms
-Wall time: 192 ms
-</pre>
+<span class="ansi-red-fg">TypeError</span>: Gdf2Bokeh.__init__() got an unexpected keyword argument &#39;x_range&#39;</pre>
 </div>
 </div>
 
@@ -15102,12 +15162,20 @@ Wall time: 192 ms
 </div>
 
 </div>
-<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
 <h2 id="Second-way">Second way<a class="anchor-link" href="#Second-way">&#182;</a></h2>
 </div>
+</div>
+</div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
 <div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
 <div class="jp-InputArea jp-Cell-inputArea">
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
@@ -15168,97 +15236,23 @@ Wall time: 192 ms
 </div>
 
 <div class="jp-Cell-outputWrapper">
+<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
+</div>
 
 
 <div class="jp-OutputArea jp-Cell-outputArea">
-
 <div class="jp-OutputArea-child">
-
     
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>/home/runner/miniconda3/envs/gdf2bokeh/lib/python3.9/site-packages/geopandas/geodataframe.py:1350: UserWarning: Geometry column does not contain geometry.
-  warnings.warn(&#34;Geometry column does not contain geometry.&#34;)
-/home/runner/miniconda3/envs/gdf2bokeh/lib/python3.9/site-packages/geopandas/geodataframe.py:1350: UserWarning: Geometry column does not contain geometry.
-  warnings.warn(&#34;Geometry column does not contain geometry.&#34;)
-</pre>
-</div>
-</div>
+<pre>
+<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
+<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
+File <span class="ansi-green-fg">&lt;timed exec&gt;:1</span>
 
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
-
-
-
-
-
-
-  <div class="bk-root" id="ba90f039-9b48-4fe6-961a-f254ccbfa55d" data-root-id="1274"></div>
-
-</div>
-
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-
-
-<div id="87d2f35a-9782-40f7-8f39-8fbf376b465e" class="jp-RenderedJavaScript jp-OutputArea-output " data-mime-type="application/javascript">
-<script type="text/javascript">
-var element = document.getElementById('87d2f35a-9782-40f7-8f39-8fbf376b465e');
-(function(root) {
-  function embed_document(root) {
-    
-  const docs_json = {"07e7a906-526a-41a3-96a7-6496b9266a73":{"defs":[],"roots":{"references":[{"attributes":{"below":[{"id":"1285"}],"center":[{"id":"1288"},{"id":"1292"},{"id":"1324"}],"height":800,"left":[{"id":"1289"}],"output_backend":"webgl","renderers":[{"id":"1305"},{"id":"1312"},{"id":"1333"},{"id":"1355"},{"id":"1379"},{"id":"1405"}],"title":{"id":"1275"},"toolbar":{"id":"1299"},"width":700,"x_range":{"id":"1277"},"x_scale":{"id":"1281"},"y_range":{"id":"1279"},"y_scale":{"id":"1283"}},"id":"1274","subtype":"Figure","type":"Plot"},{"attributes":{"coordinates":null,"group":null,"tile_source":{"id":"1006"}},"id":"1305","type":"TileRenderer"},{"attributes":{},"id":"1319","type":"BasicTickFormatter"},{"attributes":{},"id":"1277","type":"DataRange1d"},{"attributes":{"data":{"color":["black","red"],"geom_type":["LineString","LineString"],"name":["Line1","Line2"],"x":[[539984.3881464862,539970.8061063938],[539979.455293679,540123.8304611129]],"y":[[5741948.617673062,5742051.336474528],[5742052.594088212,5742073.5866285805]]},"selected":{"id":"1369"},"selection_policy":{"id":"1368"}},"id":"1350","type":"ColumnDataSource"},{"attributes":{"source":{"id":"1400"}},"id":"1406","type":"CDSView"},{"attributes":{},"id":"1394","type":"UnionRenderers"},{"attributes":{},"id":"1297","type":"SaveTool"},{"attributes":{},"id":"1316","type":"BasicTickFormatter"},{"attributes":{},"id":"1296","type":"ResetTool"},{"attributes":{"callback":null,"renderers":[{"id":"1379"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1398","type":"HoverTool"},{"attributes":{"label":{"value":"Polygons layer"},"renderers":[{"id":"1379"}]},"id":"1397","type":"LegendItem"},{"attributes":{},"id":"1320","type":"AllLabels"},{"attributes":{"fill_color":{"value":"blue"},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1402","type":"MultiPolygons"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"red"},"hatch_alpha":{"value":0.1},"line_alpha":{"value":0.1},"line_color":{"value":"#1f77b4"},"marker":{"value":"cross"},"size":{"value":10},"x":{"field":"x"},"y":{"field":"y"}},"id":"1310","type":"Scatter"},{"attributes":{},"id":"1321","type":"UnionRenderers"},{"attributes":{},"id":"1294","type":"WheelZoomTool"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"blue"},"hatch_alpha":{"value":0.1},"line_alpha":{"value":0.1},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1403","type":"MultiPolygons"},{"attributes":{"label":{"value":"points layer"},"renderers":[{"id":"1312"}]},"id":"1325","type":"LegendItem"},{"attributes":{"source":{"id":"1307"}},"id":"1313","type":"CDSView"},{"attributes":{"line_color":{"value":"green"},"line_width":{"value":6},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1330","type":"MultiLine"},{"attributes":{"source":{"id":"1350"}},"id":"1356","type":"CDSView"},{"attributes":{"coordinates":null,"data_source":{"id":"1350"},"glyph":{"id":"1352"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"1354"},"nonselection_glyph":{"id":"1353"},"view":{"id":"1356"}},"id":"1355","type":"GlyphRenderer"},{"attributes":{"line_color":{"value":"orange"},"line_width":{"value":4},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1352","type":"MultiLine"},{"attributes":{"overlay":{"id":"1298"}},"id":"1295","type":"BoxZoomTool"},{"attributes":{},"id":"1322","type":"Selection"},{"attributes":{},"id":"1344","type":"UnionRenderers"},{"attributes":{},"id":"1369","type":"Selection"},{"attributes":{"line_alpha":{"value":0.2},"line_color":{"value":"orange"},"line_width":{"value":4},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1354","type":"MultiLine"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"value":"blue"},"hatch_alpha":{"value":0.2},"line_alpha":{"value":0.2},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1404","type":"MultiPolygons"},{"attributes":{},"id":"1395","type":"Selection"},{"attributes":{"label":{"value":"multilinestrings layer"},"renderers":[{"id":"1333"}]},"id":"1347","type":"LegendItem"},{"attributes":{"fill_color":{"value":"red"},"line_color":{"value":"#1f77b4"},"marker":{"value":"cross"},"size":{"value":10},"x":{"field":"x"},"y":{"field":"y"}},"id":"1309","type":"Scatter"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"value":"red"},"hatch_alpha":{"value":0.2},"line_alpha":{"value":0.2},"line_color":{"value":"#1f77b4"},"marker":{"value":"cross"},"size":{"value":10},"x":{"field":"x"},"y":{"field":"y"}},"id":"1311","type":"Scatter"},{"attributes":{"callback":null,"renderers":[{"id":"1333"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1348","type":"HoverTool"},{"attributes":{"bottom_units":"screen","coordinates":null,"fill_alpha":0.5,"fill_color":"lightgrey","group":null,"left_units":"screen","level":"overlay","line_alpha":1.0,"line_color":"black","line_dash":[4,4],"line_width":2,"right_units":"screen","syncable":false,"top_units":"screen"},"id":"1298","type":"BoxAnnotation"},{"attributes":{"coordinates":null,"data_source":{"id":"1400"},"glyph":{"id":"1402"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"1404"},"nonselection_glyph":{"id":"1403"},"view":{"id":"1406"}},"id":"1405","type":"GlyphRenderer"},{"attributes":{},"id":"1368","type":"UnionRenderers"},{"attributes":{"callback":null,"renderers":[{"id":"1405"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1426","type":"HoverTool"},{"attributes":{},"id":"1290","type":"BasicTicker"},{"attributes":{},"id":"1423","type":"Selection"},{"attributes":{"coordinates":null,"group":null,"text":"My beautiful map v2"},"id":"1275","type":"Title"},{"attributes":{"coordinates":null,"data_source":{"id":"1328"},"glyph":{"id":"1330"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"1332"},"nonselection_glyph":{"id":"1331"},"view":{"id":"1334"}},"id":"1333","type":"GlyphRenderer"},{"attributes":{"axis":{"id":"1289"},"coordinates":null,"dimension":1,"group":null,"ticker":null},"id":"1292","type":"Grid"},{"attributes":{"callback":null,"renderers":[{"id":"1312"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]},"id":"1326","type":"HoverTool"},{"attributes":{"label":{"value":"MultiPolygons layer"},"renderers":[{"id":"1405"}]},"id":"1425","type":"LegendItem"},{"attributes":{},"id":"1317","type":"AllLabels"},{"attributes":{"label":{"value":"linestrings layer"},"renderers":[{"id":"1355"}]},"id":"1371","type":"LegendItem"},{"attributes":{},"id":"1283","type":"LinearScale"},{"attributes":{"source":{"id":"1328"}},"id":"1334","type":"CDSView"},{"attributes":{"data":{"geom_type":["Polygon","MultiPolygon"],"name":["Polygon1","Multipolygon1"],"x":[[[[540016.2082595062,540017.2434982699,540019.8067638461,540020.5244782075,540019.396641354,540020.4219475843,540024.7282337521,540025.4459481135,540001.4537823214,539997.4038227113,540016.2082595062]]],[[[540049.0792567247,540070.661952875,540072.1999122206,540089.7326487608,540091.5658327314,540091.8235201214,540094.2777042497,540096.4996698815,540100.8059560494,540102.8565685102,540075.8910146501,540073.9890868046,540080.60742331,540074.0454634354,540051.2404200251,540049.0792567247]],[[540073.6353409432,540057.7430943716,540056.8203187642,540050.9760732509,540047.7584583072,540053.1804816464,540051.2404200251,540074.0454634354,540080.60742331,540073.9890868046,540073.6353409432]],[[540058.9734618482,540060.5114211937,540066.6632585762,540063.792401131,540058.9734618482],[540062.4047205987,540059.9600019288,540071.3686890547,540068.4146539953,540062.4047205987]],[[540091.0672570786,540102.0295357057,540106.2059301,540094.6298813347,540091.0672570786]],[[540098.4643209788,540097.3438249219,540100.1959967035,540098.4643209788]]]],"y":[[[[5742011.812036099,5742000.814194428,5742000.814194428,5741994.935679299,5741994.935679299,5741984.501324507,5741984.501324507,5741979.945483293,5741977.15319467,5742009.631974393,5742011.812036099]]],[[[5742051.075657235,5742051.663512286,5742044.609254307,5742047.401564089,5742031.914545932,5742029.737565665,5742009.00429058,5741990.232869993,5741990.967683784,5741973.332169551,5741970.980770289,5741985.107098498,5741989.204130789,5742035.644476193,5742032.644154385,5742051.075657235]],[[5741987.734503557,5741985.089175158,5741990.820721021,5741990.379832747,5742015.4697581325,5742016.098351922,5742032.644154385,5742035.644476193,5741989.204130789,5741985.107098498,5741987.734503557]],[[5742012.7181994505,5742004.047379403,5742006.398787395,5742013.893904513,5742012.7181994505],[5742026.287734413,5742022.491558394,5742018.54937732,5742025.849714021,5742026.287734413]],[[5742036.126586524,5742032.8580428865,5742008.328915999,5742006.02905552,5742036.126586524]],[[5742022.053538191,5742017.52733066,5742018.549377321,5742022.053538191]]]]},"selected":{"id":"1423"},"selection_policy":{"id":"1422"}},"id":"1400","type":"ColumnDataSource"},{"attributes":{},"id":"1281","type":"LinearScale"},{"attributes":{"line_alpha":{"value":0.1},"line_color":{"value":"green"},"line_width":{"value":6},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1331","type":"MultiLine"},{"attributes":{"data":{"geom_type":["Polygon","Polygon"],"name":["Polygon2","Polygon3"],"x":[[[[539993.3025977896,540049.0792567247,540053.1804816464,539997.4038227113,539993.3025977896]],[[540022.7288866028,540023.241539718,540029.7009689697,540029.342111789,540022.7288866028],[540008.0097301943,540005.4631482465,540010.7600386981,540011.7786714771,540008.0097301943]]],[[[540033.6483979569,540056.0000737801,540056.0000737801,540073.6353409432,540075.8910146501,540035.4939491715,540033.6483979569]]]],"y":[[[[5742044.903181607,5742051.075657235,5742016.098351922,5742009.631974393,5742044.903181607]],[[5742035.203585692,5742029.178084462,5742029.839419763,5742035.570994436,5742035.203585692],[5742032.42002217,5742028.331829864,5742025.1196800815,5742031.251967033,5742032.42002217]]],[[[5741983.325623325,5741986.852727335,5741984.795249826,5741987.734503557,5741970.980770289,5741966.277973637,5741983.325623325]]]]},"selected":{"id":"1395"},"selection_policy":{"id":"1394"}},"id":"1374","type":"ColumnDataSource"},{"attributes":{"coordinates":null,"formatter":{"id":"1316"},"group":null,"major_label_policy":{"id":"1317"},"ticker":{"id":"1290"}},"id":"1289","type":"LinearAxis"},{"attributes":{"fill_alpha":{"value":0.1},"fill_color":{"value":"red"},"hatch_alpha":{"value":0.1},"line_alpha":{"value":0.1},"line_color":{"value":"yellow"},"line_width":{"value":5},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1377","type":"MultiPolygons"},{"attributes":{"click_policy":"hide","coordinates":null,"group":null,"items":[{"id":"1325"},{"id":"1347"},{"id":"1371"},{"id":"1397"},{"id":"1425"}]},"id":"1324","type":"Legend"},{"attributes":{"axis":{"id":"1285"},"coordinates":null,"group":null,"ticker":null},"id":"1288","type":"Grid"},{"attributes":{"coordinates":null,"data_source":{"id":"1374"},"glyph":{"id":"1376"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"1378"},"nonselection_glyph":{"id":"1377"},"view":{"id":"1380"}},"id":"1379","type":"GlyphRenderer"},{"attributes":{},"id":"1293","type":"PanTool"},{"attributes":{"attribution":"Map tiles by <a href=\"https://stamen.com\">Stamen Design</a>, under <a href=\"https://creativecommons.org/licenses/by/3.0\">CC BY 3.0</a>. Data by <a href=\"https://openstreetmap.org\">OpenStreetMap</a>, under <a href=\"https://creativecommons.org/licenses/by-sa/3.0\">CC BY SA</a>.","url":"https://stamen-tiles.a.ssl.fastly.net/terrain/{Z}/{X}/{Y}.png"},"id":"1006","type":"WMTSTileSource"},{"attributes":{"data":{"geom_type":["Point","Point","Point","Point","Point","Point","Point"],"name":["Point1","Point2","Point2","Point2","Point3","Point4","Point5"],"x":[540109.7261202541,540109.3159977619,540107.6755077933,540105.4198340864,540103.7793441176,540102.9590991334,540101.9337929029],"y":[5741972.7443196755,5741983.031698054,5741993.613013929,5742004.48826835,5742022.123844301,5742031.823425964,5742041.523018195]},"selected":{"id":"1322"},"selection_policy":{"id":"1321"}},"id":"1307","type":"ColumnDataSource"},{"attributes":{},"id":"1345","type":"Selection"},{"attributes":{},"id":"1279","type":"DataRange1d"},{"attributes":{"tools":[{"id":"1293"},{"id":"1294"},{"id":"1295"},{"id":"1296"},{"id":"1297"},{"id":"1326"},{"id":"1348"},{"id":"1372"},{"id":"1398"},{"id":"1426"}]},"id":"1299","type":"Toolbar"},{"attributes":{"callback":null,"renderers":[{"id":"1355"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"],["COLOR","@color"]]},"id":"1372","type":"HoverTool"},{"attributes":{},"id":"1286","type":"BasicTicker"},{"attributes":{"coordinates":null,"data_source":{"id":"1307"},"glyph":{"id":"1309"},"group":null,"hover_glyph":null,"muted_glyph":{"id":"1311"},"nonselection_glyph":{"id":"1310"},"view":{"id":"1313"}},"id":"1312","type":"GlyphRenderer"},{"attributes":{"data":{"geom_type":["LineString","MultiLineString"],"name":["Line3","Multiline1_continuity"],"x":[[539993.4455212295,540067.4772964783],[540075.173300289,540144.8941239576,540144.8941239576,540130.6869059505]],"y":[[5741942.141488259,5741949.894055722],[5741950.699977471,5741957.7541610375,5741957.7541610375,5742067.004449318]]},"selected":{"id":"1345"},"selection_policy":{"id":"1344"}},"id":"1328","type":"ColumnDataSource"},{"attributes":{},"id":"1422","type":"UnionRenderers"},{"attributes":{"line_alpha":{"value":0.1},"line_color":{"value":"orange"},"line_width":{"value":4},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1353","type":"MultiLine"},{"attributes":{"fill_color":{"value":"red"},"line_color":{"value":"yellow"},"line_width":{"value":5},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1376","type":"MultiPolygons"},{"attributes":{"coordinates":null,"formatter":{"id":"1319"},"group":null,"major_label_policy":{"id":"1320"},"ticker":{"id":"1286"}},"id":"1285","type":"LinearAxis"},{"attributes":{"fill_alpha":{"value":0.2},"fill_color":{"value":"red"},"hatch_alpha":{"value":0.2},"line_alpha":{"value":0.2},"line_color":{"value":"yellow"},"line_width":{"value":5},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1378","type":"MultiPolygons"},{"attributes":{"source":{"id":"1374"}},"id":"1380","type":"CDSView"},{"attributes":{"line_alpha":{"value":0.2},"line_color":{"value":"green"},"line_width":{"value":6},"xs":{"field":"x"},"ys":{"field":"y"}},"id":"1332","type":"MultiLine"}],"root_ids":["1274"]},"title":"Bokeh Application","version":"2.4.1"}};
-  const render_items = [{"docid":"07e7a906-526a-41a3-96a7-6496b9266a73","root_ids":["1274"],"roots":{"1274":"ba90f039-9b48-4fe6-961a-f254ccbfa55d"}}];
-  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
-
-  }
-  if (root.Bokeh !== undefined) {
-    embed_document(root);
-  } else {
-    let attempts = 0;
-    const timer = setInterval(function(root) {
-      if (root.Bokeh !== undefined) {
-        clearInterval(timer);
-        embed_document(root);
-      } else {
-        attempts++;
-        if (attempts > 100) {
-          clearInterval(timer);
-          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
-        }
-      }
-    }, 10, root)
-  }
-})(window);
-</script>
-</div>
-
-</div>
-
-<div class="jp-OutputArea-child">
-
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
-<pre>CPU times: user 230 ms, sys: 0 ns, total: 230 ms
-Wall time: 227 ms
-</pre>
+<span class="ansi-red-fg">TypeError</span>: Gdf2Bokeh.__init__() got an unexpected keyword argument &#39;x_range&#39;</pre>
 </div>
 </div>
 
