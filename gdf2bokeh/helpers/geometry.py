@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Set
 from typing import Union
 
 from shapely.geometry import base
@@ -71,6 +71,10 @@ def geometry_2_bokeh_format(geometry: base, coord_output_format: str = "xy") -> 
         )
 
     return coord_values
+
+
+def get_gdf_geom_type(input_gdf: gpd.GeoDataFrame, geom_col: str) -> Set[str]:
+    return set(input_gdf[geom_col].geom_type.unique())
 
 
 def wkt_to_gpd(geom_wkt: str, geom_epsg: int = 3857) -> gpd.GeoDataFrame:

@@ -62,7 +62,7 @@ class MyMapBokeh(Gdf2Bokeh):
         input_data = self._input_layer_settings["input_gdf"]
         input_data_filtered = input_data.loc[input_data["value"] == self._start_value]
         layer_filtered = {**self._input_layer_settings, "input_gdf": input_data_filtered}
-        self.add_layer(layer_filtered)
+        self.push_layer_to_map(layer_filtered)
 
     def slider_widget(self):
         input_data = self._input_layer_settings["input_gdf"]
@@ -74,7 +74,7 @@ class MyMapBokeh(Gdf2Bokeh):
         input_data = self._input_layer_settings["input_gdf"]
         input_data_filtered = input_data.loc[input_data["value"] == new_value]
         layer_filtered = {**self._input_layer_settings, "input_gdf": input_data_filtered}
-        self.get_bokeh_layer_containers[layer_filtered["legend"]].data = self.refresh_existing_layer(layer_filtered)
+        self.get_bokeh_layer_containers[layer_filtered["legend"]].layers = self.refresh_existing_layer(layer_filtered)
 
     def _map_layout(self):
         layout = column(

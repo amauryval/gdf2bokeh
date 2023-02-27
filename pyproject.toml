@@ -10,6 +10,7 @@ readme = "README.md"
 python = "3.11.0"
 geopandas = "^0.12.2"
 bokeh = "^3.0.3"
+gpd = "^1.1.1"
 
 
 [tool.poetry.dev-dependencies]

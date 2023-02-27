@@ -42,7 +42,7 @@ def test_bokeh_processing(multipolygons_data, polygons_data, linestrings_data, m
     my_map.add_points(
         points_data,
         fill_color="orange",
-        legend="points",
+        title="points",
         style="diamond"
     )
 
@@ -76,7 +76,7 @@ def test_bokeh_processing_with_incompatible_features(mixed_features_data, multil
         my_map.add_points(
             mixed_features_data,
             fill_color="orange",
-            legend="my data3"
+            title="my data3"
         )
     assert "layer concerned 'my data3'" in str(exception_returned.value)
     assert "geometry not supported by add_points()" in str(exception_returned.value)
@@ -85,7 +85,7 @@ def test_bokeh_processing_with_incompatible_features(mixed_features_data, multil
         my_map.add_points(
             multilines_data,
             fill_color="orange",
-            legend="points",
+            title="points",
             style="diamond"
         )
     assert "layer concerned 'points'" in str(exception_returned.value)
