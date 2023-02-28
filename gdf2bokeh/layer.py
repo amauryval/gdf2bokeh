@@ -65,11 +65,11 @@ class LayerCore:
         self._data = data
 
     @property
-    def bokeh_data(self):
+    def data_source(self):
         raise NotImplemented
 
     @property
-    def bokeh_data_structure(self) -> ColumnDataSource:
+    def data_source_structure(self) -> ColumnDataSource:
         """
         To build the bokeh data structure from a GeoDataframe.
         """
@@ -108,7 +108,7 @@ class LayerCore:
         return bokeh_data
 
     def _set_tooltip(self, figure_obj: figure, rendered: GlyphRenderer) -> None:
-        column_tooltip = self.__build_column_tooltip(self.bokeh_data)
+        column_tooltip = self.__build_column_tooltip(self.data_source)
         figure_obj.add_tools(
             HoverTool(tooltips=column_tooltip, renderers=[rendered], mode="mouse")
         )
@@ -129,13 +129,13 @@ class PointLayer(LayerCore):
         super().__init__(title=title, data=data, **style_parameters)
 
     @property
-    def bokeh_data(self) -> ColumnDataSource:
+    def data_source(self) -> ColumnDataSource:
         return self._format_gdf_features_to_bokeh(self.data)
 
     def render(self, figure_obj: figure) -> None:
         """render the bokeh object"""
         render = getattr(figure_obj, self._DEFAULT_STYLE)(
-            x="x", y="y", source=self.bokeh_data, legend_label=self.title, **self._style_parameters
+            x="x", y="y", source=self.data_source, legend_label=self.title, **self._style_parameters
         )
         self._set_tooltip(figure_obj, render)
 
@@ -147,7 +147,7 @@ class LinestringLayer(LayerCore):
         super().__init__(title=title, data=data, **style_parameters)
 
     @property
-    def bokeh_data(self) -> ColumnDataSource:
+    def data_source(self) -> ColumnDataSource:
         # go to check the multilinestring continuity, because the bokeh format cannot display a multilinestring
         # containing a discontinuity. We'll convert the objet into linestring if needed.
         data = self.__post_proc_multilinestring_gdf(self.data)
@@ -156,7 +156,7 @@ class LinestringLayer(LayerCore):
     def render(self, figure_obj: figure) -> None:
         """render the bokeh object"""
         render = figure_obj.multi_line(
-            xs="x", ys="y", source=self.bokeh_data, **self._style_parameters
+            xs="x", ys="y", source=self.data_source, **self._style_parameters
         )
         self._set_tooltip(figure_obj, render)
 
@@ -168,12 +168,12 @@ class PolygonLayer(LayerCore):
         super().__init__(title=title, data=data, **style_parameters)
 
     @property
-    def bokeh_data(self) -> ColumnDataSource:
+    def data_source(self) -> ColumnDataSource:
         return self._format_gdf_features_to_bokeh(self.data)
 
     def render(self, figure_obj: figure) -> None:
         """render the bokeh object"""
         render = figure_obj.multi_polygons(
-            xs="x", ys="y", source=self.bokeh_data, **self._style_parameters
+            xs="x", ys="y", source=self.data_source, **self._style_parameters
         )
         self._set_tooltip(figure_obj, render)
