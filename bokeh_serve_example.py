@@ -10,6 +10,7 @@ from gdf2bokeh import Gdf2Bokeh
 from bokeh.io import curdoc
 from bokeh.layouts import column
 from bokeh.layouts import row
+from bokeh.plotting import show
 
 
 class RandomPointsGenerator:
@@ -44,64 +45,19 @@ class RandomPointsGenerator:
         )
 
 
-class MyMapBokeh(Gdf2Bokeh):
-
-    def __init__(self, input_layer_settings, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self._input_layer_settings = input_layer_settings
-
-        self._start_value = 1
-
-    def plot(self):
-        self.prepare_data()
-        self.slider_widget()
-
-        self._map_layout()
-
-    def prepare_data(self):
-        input_data = self._input_layer_settings["input_gdf"]
-        input_data_filtered = input_data.loc[input_data["value"] == self._start_value]
-        layer_filtered = {**self._input_layer_settings, "input_gdf": input_data_filtered}
-        self.push_layer_to_map(layer_filtered)
-
-    def slider_widget(self):
-        input_data = self._input_layer_settings["input_gdf"]
-        max_value = max(input_data["value"]) + 2
-        self._slider_widget = Slider(start=self._start_value, end=max_value, value=self._start_value, step=1, title="my slider")
-        self._slider_widget.on_change('value', self.__slider_update)
-
-    def __slider_update(self, attrname, old_value, new_value):
-        input_data = self._input_layer_settings["input_gdf"]
-        input_data_filtered = input_data.loc[input_data["value"] == new_value]
-        layer_filtered = {**self._input_layer_settings, "input_gdf": input_data_filtered}
-        self.get_bokeh_layer_containers[layer_filtered["legend"]].layers = self.refresh_existing_layer(layer_filtered)
-
-    def _map_layout(self):
-        layout = column(
-            row(self.figure),
-            row(self._slider_widget),
-        )
-        curdoc().add_root(layout)
-        curdoc().title = "My SandBox"
 
 
 bounds = (-604158.2716, 5312679.2139, 1081125.3281, 6633511.0627)
 random_points = RandomPointsGenerator(bounds, 50).to_gdf
 random_points["value"] = np.random.randint(1, 6, random_points.shape[0])
 
-layer_settings = {
-    "input_gdf": random_points,
-    "fill_color": "red",
-    "size": 10,
-    "legend": "my points"
-}
+map_session = Gdf2Bokeh()
+map_session.add_layer_from_geodataframe("tutu", random_points)
+map_session.add_layers_on_maps()
 
-MyMapBokeh(
-    layer_settings,
-    title="My beautiful map",
-    width=640,
-    height=800,
-    x_range=(bounds[0], bounds[2]),
-    y_range=(bounds[1], bounds[-1]),
-    background_map_name="STAMEN_TONER"
-).plot()
+layout = column(
+    row(map_session.figure),
+)
+curdoc().add_root(layout)
+curdoc().title = "My SandBox"
+

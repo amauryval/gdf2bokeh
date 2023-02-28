@@ -14,23 +14,22 @@ from gdf2bokeh.geometry import geometry_2_bokeh_format
 from gdf2bokeh.geometry import check_multilinestring_continuity
 
 
+class GeomTypeError(Exception):
+    pass
+
+
 class GeomTypes(set, Enum):
     LINESTRINGS = {"LineString", "MultiLineString"}
     POLYGONS = {"Polygon", "MultiPolygon"}
     POINT = {"Point"}
-
-    # geometry_collection_type = [
-    #     linestrings_types,
-    #     polygons_types,
-    #     point_types,
-    # ]
+    MULTIPOINT = {"MultiPoint"}  # TODO support it
 
     @staticmethod
     def has_value(item: set):
         for enum in GeomTypes.__members__.values():
             if item.issubset(enum):
                 return enum
-        raise ValueError(f"{item} not supported")
+        raise GeomTypeError(f"{item} not supported")
 
 
 class LayerCore:

@@ -1,8 +1,10 @@
+from pathlib import Path
 from typing import Dict
 from typing import List
 
 import geopandas as gpd
 import pandas as pd
+import shapely.geometry.base
 
 from gdf2bokeh.app_map import AppMap
 
@@ -69,6 +71,18 @@ class Gdf2Bokeh(AppMap):
         """Add layer from a list of dict"""
         data = pd.DataFrame(data)
         self.add_layer_from_dataframe(title, data, geom_column, geom_format)
+
+    def add_layer_from_dict_list(self, title: str, data: List[Dict], geom_column: str = "geometry",
+                                 geom_format: str = "shapely") -> None:
+        """Add layer from a list of dict"""
+        data = pd.DataFrame(data)
+        self.add_layer_from_dataframe(title, data, geom_column, geom_format)
+
+    def add_layer_from_geom_list(self, title: str, data: List[str | shapely.geometry.base.BaseGeometry],
+                                 geom_format: str = "shapely") -> None:
+        """Add layer from a geom (shapely, wkt) list"""
+        data = [{id: enum, "geometry": item} for enum, item in enumerate(data)]
+        self.add_layer_from_dict_list(title, data, "geometry", geom_format)
 
     @property
     def layers(self) -> Dict[str, LayerCore] | None:

@@ -49,11 +49,16 @@ from gdf2bokeh import Gdf2Bokeh
 map_session = Gdf2Bokeh()
 
 # add your layer from your data
-map_session.add_layer_from_geodataframe("your_layer1", gpd.GeoDataFrame.from_file("your_geo_layer.geojson"))
-map_session.add_layer_from_dataframe("your_layer2", gpd.GeoDataFrame.from_file("your_data.json"), 
+map_session.add_layer_from_geodataframe("layer1", gpd.GeoDataFrame.from_file("your_data.geojson"))
+
+map_session.add_layer_from_dataframe("layer2", gpd.GeoDataFrame.from_file("your_data.json"),
                                      geom_column="geometry", geom_format="shapely")
-map_session.add_layer_from_list_dict("your_layer3", gpd.GeoDataFrame.from_file("your_data.json"), 
+
+map_session.add_layer_from_dict_list("layer3", gpd.GeoDataFrame.from_file("your_data.json"),
                                      geom_column="geometry", geom_format="wkt")
+
+map_session.add_layer_from_geom_list("layer4", ["Point(0 0)", "Point(5 5)"], geom_format="wkt")
+
 
 # Let's go to register them on bokeh
 map_session.add_layers_on_maps()
