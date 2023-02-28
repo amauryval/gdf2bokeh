@@ -36,13 +36,15 @@ class LayerCore:
     title = None
     _data = None
     _geom_type = None
+    _style_parameters = None
 
     __GEOMETRY_FIELD_NAME: str = "geometry"
     _DEFAULT_EPSG: int = 3857
 
-    def __init__(self, title: str, data: gpd.GeoDataFrame):
+    def __init__(self, title: str, data: gpd.GeoDataFrame, **style_parameters):
         self.title = title
         self._data = data
+        self._style_parameters = style_parameters
 
     def render(self, figure_obj: figure):
         raise NotImplemented
@@ -123,16 +125,17 @@ class PointLayer(LayerCore):
     _geom_type = GeomTypes.POINT
     _DEFAULT_STYLE = "circle"
 
-    def __init__(self, title: str, data: gpd.GeoDataFrame) -> None:
-        super().__init__(title=title, data=data)
+    def __init__(self, title: str, data: gpd.GeoDataFrame, **style_parameters) -> None:
+        super().__init__(title=title, data=data, **style_parameters)
 
     @property
     def bokeh_data(self) -> ColumnDataSource:
         return self._format_gdf_features_to_bokeh(self.data)
 
     def render(self, figure_obj: figure) -> None:
+        """render the bokeh object"""
         render = getattr(figure_obj, self._DEFAULT_STYLE)(
-            x="x", y="y", source=self.bokeh_data, legend_label=self.title  # , **kwargs
+            x="x", y="y", source=self.bokeh_data, legend_label=self.title, **self._style_parameters
         )
         self._set_tooltip(figure_obj, render)
 
@@ -140,8 +143,8 @@ class PointLayer(LayerCore):
 class LinestringLayer(LayerCore):
     _geom_type = GeomTypes.LINESTRINGS
 
-    def __init__(self, title: str, data: gpd.GeoDataFrame) -> None:
-        super().__init__(title=title, data=data)
+    def __init__(self, title: str, data: gpd.GeoDataFrame, **style_parameters) -> None:
+        super().__init__(title=title, data=data, **style_parameters)
 
     @property
     def bokeh_data(self) -> ColumnDataSource:
@@ -151,8 +154,9 @@ class LinestringLayer(LayerCore):
         return self._format_gdf_features_to_bokeh(data)
 
     def render(self, figure_obj: figure) -> None:
+        """render the bokeh object"""
         render = figure_obj.multi_line(
-            xs="x", ys="y", source=self.bokeh_data  # , **kwargs
+            xs="x", ys="y", source=self.bokeh_data, **self._style_parameters
         )
         self._set_tooltip(figure_obj, render)
 
@@ -160,15 +164,16 @@ class LinestringLayer(LayerCore):
 class PolygonLayer(LayerCore):
     _geom_type = GeomTypes.POLYGONS
 
-    def __init__(self, title: str, data: gpd.GeoDataFrame) -> None:
-        super().__init__(title=title, data=data)
+    def __init__(self, title: str, data: gpd.GeoDataFrame, **style_parameters) -> None:
+        super().__init__(title=title, data=data, **style_parameters)
 
     @property
     def bokeh_data(self) -> ColumnDataSource:
         return self._format_gdf_features_to_bokeh(self.data)
 
     def render(self, figure_obj: figure) -> None:
+        """render the bokeh object"""
         render = figure_obj.multi_polygons(
-            xs="x", ys="y", source=self.bokeh_data  # , **kwargs
+            xs="x", ys="y", source=self.bokeh_data, **self._style_parameters
         )
         self._set_tooltip(figure_obj, render)

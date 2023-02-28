@@ -52,7 +52,7 @@ random_points = RandomPointsGenerator(bounds, 50).to_gdf
 random_points["value"] = np.random.randint(1, 6, random_points.shape[0])
 
 map_session = Gdf2Bokeh()
-map_session.add_layer_from_geodataframe("tutu", random_points)
+map_session.add_layer_from_geodataframe("tutu", random_points, size=6, fill_color="red", line_color="blue")
 map_session.add_layers_on_maps()
 
 layout = column(
