@@ -21,8 +21,6 @@ from bokeh.palettes import brewer
 from gdf2bokeh.helpers.geometry import geometry_2_bokeh_format
 from gdf2bokeh.helpers.geometry import check_multilinestring_continuity
 
-from gdf2bokeh.helpers.settings import expected_node_style
-from gdf2bokeh.helpers.settings import map_background_providers
 
 
 class GeomTypes(set, Enum):
@@ -43,21 +41,25 @@ class GeomTypes(set, Enum):
         raise ValueError(f"{item} not supported")
 
 
-class Layer:
+class LayerCore:
 
     title = None
     _data = None
-    geom_type = None
+    _geom_type = None
 
     __GEOMETRY_FIELD_NAME: str = "geometry"
     _DEFAULT_EPSG: int = 3857
 
-    def __init__(self, title: str, data: gpd.GeoDataFrame, geom_type: 'GeomTypes'):
-        super().__init__()
-
+    def __init__(self, title: str, data: gpd.GeoDataFrame):
         self.title = title
         self._data = data
-        self.geom_type = geom_type
+
+    def render(self, figure_obj: figure):
+        raise NotImplemented
+
+    @property
+    def geom_type(self) -> GeomTypes:
+        return self._geom_type
 
     @property
     def data(self) -> gpd.GeoDataFrame:
@@ -70,19 +72,11 @@ class Layer:
             data = self._data.to_crs(expected_epsg)
         self._data = data
 
+    @property
     def bokeh_data(self):
-        if self.geom_type in [GeomTypes.POINT, GeomTypes.POLYGONS]:
-            return self._format_gdf_features_to_bokeh(self.data)
+        raise NotImplemented
 
-        if self.geom_type == GeomTypes.LINESTRINGS:
-            # go to check the multilinestring continuity, because the bokeh format cannot display a multilinestring
-            # containing a discontinuity. We'll convert the objet into linestring if needed.
-            data = self.__post_proc_multilinestring_gdf(self.data)
-            return self._format_gdf_features_to_bokeh(data)
-
-        else:
-            raise ErrorGdf2Bokeh("It should not happened")
-
+    @property
     def bokeh_data_structure(self) -> ColumnDataSource:
         """
         To build the bokeh data structure from a GeoDataframe.
@@ -122,6 +116,75 @@ class Layer:
         )
         return bokeh_data
 
+    def _set_tooltip(self, figure_obj: figure, rendered: GlyphRenderer) -> None:
+        column_tooltip = self.__build_column_tooltip(self.bokeh_data)
+        figure_obj.add_tools(
+            HoverTool(tooltips=column_tooltip, renderers=[rendered], mode="mouse")
+        )
+
+    @staticmethod
+    def __build_column_tooltip(features_column_data_source: ColumnDataSource) -> List[Tuple[str, str]]:
+        columns = list(filter(lambda x: x not in ["x", "y"], features_column_data_source.data.keys()))
+        return list(
+            zip(map(lambda x: str(x.upper()), columns), map(lambda x: f"@{x}", columns))
+        )
+
+
+class PointLayer(LayerCore):
+
+    _geom_type = GeomTypes.POINT
+    _DEFAULT_STYLE = "circle"
+
+    def __init__(self, title: str, data: gpd.GeoDataFrame) -> None:
+        super().__init__(title=title, data=data)
+
+    @property
+    def bokeh_data(self) -> ColumnDataSource:
+        return self._format_gdf_features_to_bokeh(self.data)
+
+    def render(self, figure_obj: figure) -> None:
+        render = getattr(figure_obj, self._DEFAULT_STYLE)(
+            x="x", y="y", source=self.bokeh_data, legend_label=self.title  # , **kwargs
+        )
+        self._set_tooltip(figure_obj, render)
+
+
+class LinestringLayer(LayerCore):
+    _geom_type = GeomTypes.LINESTRINGS
+
+    def __init__(self, title: str, data: gpd.GeoDataFrame) -> None:
+        super().__init__(title=title, data=data)
+
+    @property
+    def bokeh_data(self) -> ColumnDataSource:
+        # go to check the multilinestring continuity, because the bokeh format cannot display a multilinestring
+        # containing a discontinuity. We'll convert the objet into linestring if needed.
+        data = self.__post_proc_multilinestring_gdf(self.data)
+        return self._format_gdf_features_to_bokeh(data)
+
+    def render(self, figure_obj: figure) -> None:
+        render = figure_obj.multi_line(
+           xs="x", ys="y", source=self.bokeh_data#, **kwargs
+        )
+        self._set_tooltip(figure_obj, render)
+
+
+class PolygonLayer(LayerCore):
+    _geom_type = GeomTypes.POLYGONS
+
+    def __init__(self, title: str, data: gpd.GeoDataFrame) -> None:
+        super().__init__(title=title, data=data)
+
+    @property
+    def bokeh_data(self) -> ColumnDataSource:
+        return self._format_gdf_features_to_bokeh(self.data)
+
+    def render(self, figure_obj: figure) -> None:
+        render = figure_obj.multi_polygons(
+            xs="x", ys="y", source=self.bokeh_data#, **kwargs
+        )
+        self._set_tooltip(figure_obj, render)
+
 
 class ErrorGdf2Bokeh(Exception):
     pass
@@ -153,7 +216,7 @@ class AppMap:
         self.figure = figure(
             title=title,
             output_backend="webgl",
-            tools="pan,wheel_zoom,box_zoom,reset,save",
+            tools=["pan", "wheel_zoom", "box_zoom", "reset", "save"],
         )
 
         self.figure.width = width
@@ -166,25 +229,4 @@ class AppMap:
         self.figure.legend.click_policy = "hide"
 
     def _add_background_map(self, background_map_name: str) -> None:
-        assert (
-            background_map_name in map_background_providers.keys()
-        ), f"Use one of these background map : {', '.join(map_background_providers)}"
-        self.figure.add_tile(map_background_providers[background_map_name])
-
-    def _set_tooltip_from_features(
-        self, features: ColumnDataSource, rendered: GlyphRenderer
-    ) -> None:
-
-        column_tooltip = self.__build_column_tooltip(features)
-        self.figure.add_tools(
-            HoverTool(tooltips=column_tooltip, renderers=[rendered], mode="mouse")
-        )
-    
-    @staticmethod
-    def __build_column_tooltip(features_column_data_source: ColumnDataSource) -> List[Tuple[str, str]]:
-        columns = list(filter(lambda x: x not in ["x", "y"], features_column_data_source.data.keys()))
-        return list(
-            zip(map(lambda x: str(x.upper()), columns), map(lambda x: f"@{x}", columns))
-        )
-    
-
+        self.figure.add_tile(background_map_name)
