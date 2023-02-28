@@ -15,6 +15,8 @@ Also, this library let you to build complex Bokeh dashboard: no limitations to u
 
 [![PyPI version](https://badge.fury.io/py/gdf2bokeh.svg)](https://badge.fury.io/py/gdf2bokeh)
 
+Check the demo [here](https://amauryval.github.io/gdf2bokeh/)
+
 
 ## How to install it ?
 
@@ -29,9 +31,6 @@ pip install gdf2bokeh
 ```bash
 conda install -c amauryval gdf2bokeh
 ```
-
-
-
 
 ## How to use it ?
 
@@ -94,6 +93,8 @@ On the terminal, run :
 ```bash
 bokeh serve --show examples/bokeh_simple_example.py
 ```
+
+Or you can use the jupyter notebook 'example.ipynb'
 
 ### An advanced example
 
