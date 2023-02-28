@@ -27,7 +27,8 @@ def test_from_geodataframe(multipolygons_data):
 
 def test_from_wkt_feature_list(data_wkt_list):
     map_session = Gdf2Bokeh()
-    map_session.add_layer_from_dict_list("layer_1", data_wkt_list, geom_format="wkt", size=6, fill_color="red", line_color="blue")
+    map_session.add_layer_from_dict_list("layer_1", data_wkt_list, geom_format="wkt",
+                                         size=6, fill_color="red", line_color="blue")
 
     layers = map_session.layers
     assert len(layers) == 1
