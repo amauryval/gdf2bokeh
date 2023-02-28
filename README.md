@@ -1,4 +1,4 @@
-# gdf2bokeh
+# Gdf2Bokeh
 An easy way to map your geographic data (from a GeoDataFrame, a DataFrame and a list of dictionaries containing wkt or shapely geometries).
 
 Yeah! Because it's boring to convert shapely geometry to bokeh format each time I need to map something !!
