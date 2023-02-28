@@ -54,7 +54,7 @@ Check bokeh documentation in order to style your data :
 * Polygon family: [bokeh multi_polygon style options](https://docs.bokeh.org/en/latest/docs/reference/plotting.html?highlight=multi_polygons#bokeh.plotting.figure.Figure.multi_polygons)
 
 
-A simple example :
+### A simple example
 
 ```python
 from bokeh.plotting import show
@@ -66,8 +66,8 @@ map_session = Gdf2Bokeh()
 # add your layer from your data
 
 # Map a points GeoDataFrame. You can see marker style arguments, so we suppose that input_data contains Point geometry
-map_session.add_layer_from_geodataframe("layer1", gpd.GeoDataFrame.from_file("your_poins_data.geojson"), 
-                                        size=6, fill_color="red", line_color="blue")  
+map_session.add_layer_from_geodataframe("layer1", gpd.GeoDataFrame.from_file("your_poins_data.geojson"),
+                                        size=6, fill_color="red", line_color="blue")
 
 # Map from a DataFrame. Style parameters are not required
 map_session.add_layer_from_dataframe("layer2", gpd.GeoDataFrame.from_file("your_data.json"),
@@ -80,19 +80,26 @@ map_session.add_layer_from_dict_list("layer3", gpd.GeoDataFrame.from_file("your_
 # Map from a geometry (shapely, wkt...) list
 map_session.add_layer_from_geom_list("layer4", ["Point(0 0)", "Point(5 5)"], geom_format="wkt")
 
-
 # Let's go to register them on bokeh
-map_session.add_layers_on_maps()
+map_session.add_layers_on_map()
 
 # Next, the map is displayed
 show(map_session.figure)
 ```
 
-An advanced example:
 
-Yu can find a bokeh serve example with a slider widget.
+Here a bokeh basic example.
 On the terminal, run :
 
 ```bash
-bokeh serve --show bokeh_serve_example.py
+bokeh serve --show examples/bokeh_simple_example.py
+```
+
+### An advanced example
+
+Here a bokeh serve example with a slider widget.
+On the terminal, run :
+
+```bash
+bokeh serve --show examples/bokeh_serve_example.py
 ```
