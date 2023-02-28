@@ -1,32 +1,24 @@
-from dataclasses import dataclass
 from enum import Enum
 from typing import List
-from typing import Optional
-from typing import Dict
-from typing import Set
 from typing import Tuple
-from typing import TYPE_CHECKING
-from typing import Any
 
 import geopandas as gpd
-import pandas as pd
 
 from bokeh.plotting import figure
 from bokeh.models import ColumnDataSource
 from bokeh.models.renderers import GlyphRenderer
 
 from bokeh.models import HoverTool
-from bokeh.palettes import brewer
 
-from gdf2bokeh.helpers.geometry import geometry_2_bokeh_format
-from gdf2bokeh.helpers.geometry import check_multilinestring_continuity
-
+from gdf2bokeh.geometry import geometry_2_bokeh_format
+from gdf2bokeh.geometry import check_multilinestring_continuity
 
 
 class GeomTypes(set, Enum):
     LINESTRINGS = {"LineString", "MultiLineString"}
     POLYGONS = {"Polygon", "MultiPolygon"}
     POINT = {"Point"}
+
     # geometry_collection_type = [
     #     linestrings_types,
     #     polygons_types,
@@ -42,7 +34,6 @@ class GeomTypes(set, Enum):
 
 
 class LayerCore:
-
     title = None
     _data = None
     _geom_type = None
@@ -96,7 +87,6 @@ class LayerCore:
 
     @staticmethod
     def _format_gdf_features_to_bokeh(data: gpd.GeoDataFrame) -> ColumnDataSource:
-
         bokeh_data = ColumnDataSource(
             {
                 **{
@@ -131,7 +121,6 @@ class LayerCore:
 
 
 class PointLayer(LayerCore):
-
     _geom_type = GeomTypes.POINT
     _DEFAULT_STYLE = "circle"
 
@@ -164,7 +153,7 @@ class LinestringLayer(LayerCore):
 
     def render(self, figure_obj: figure) -> None:
         render = figure_obj.multi_line(
-           xs="x", ys="y", source=self.bokeh_data#, **kwargs
+            xs="x", ys="y", source=self.bokeh_data  # , **kwargs
         )
         self._set_tooltip(figure_obj, render)
 
@@ -181,52 +170,6 @@ class PolygonLayer(LayerCore):
 
     def render(self, figure_obj: figure) -> None:
         render = figure_obj.multi_polygons(
-            xs="x", ys="y", source=self.bokeh_data#, **kwargs
+            xs="x", ys="y", source=self.bokeh_data  # , **kwargs
         )
         self._set_tooltip(figure_obj, render)
-
-
-class ErrorGdf2Bokeh(Exception):
-    pass
-
-
-class AppMap:
-
-    def __init__(
-        self,
-        title: str = "My empty Map",
-        width: int = 800,
-        height: int = 600,
-        background_map_name: str = "CARTODBPOSITRON",
-    ) -> None:
-        """
-        :param title: figure title
-        :type title: str
-        :param width: width value
-        :type width: int
-        :param height: height value
-        :type height: int
-        :param background_map_name: background map name
-        :type background_map_name: str
-        """
-        super().__init__()
-
-        self.__BOKEH_LAYER_CONTAINERS: Dict = {}
-
-        self.figure = figure(
-            title=title,
-            output_backend="webgl",
-            tools=["pan", "wheel_zoom", "box_zoom", "reset", "save"],
-        )
-
-        self.figure.width = width
-        self.figure.height = height
-
-        self._add_background_map(background_map_name)
-
-    def _legend_settings(self) -> None:
-        # interactive legend
-        self.figure.legend.click_policy = "hide"
-
-    def _add_background_map(self, background_map_name: str) -> None:
-        self.figure.add_tile(background_map_name)

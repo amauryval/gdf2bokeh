@@ -1,14 +1,23 @@
-from typing import Dict, List, Literal
+from typing import Dict
+from typing import List
 
 import geopandas as gpd
 import pandas as pd
 
-from shapely import wkt
+from gdf2bokeh.app_map import AppMap
 
-from gdf2bokeh.core import AppMap, ErrorGdf2Bokeh, GeomTypes, PointLayer, LinestringLayer, PolygonLayer, \
-    LayerCore
-from gdf2bokeh.helpers.geometry import get_gdf_geom_type
+from gdf2bokeh.layer import GeomTypes
+from gdf2bokeh.layer import PointLayer
+from gdf2bokeh.layer import LinestringLayer
+from gdf2bokeh.layer import PolygonLayer
+from gdf2bokeh.layer import LayerCore
+
+from gdf2bokeh.geometry import get_gdf_geom_type
 from gdf2bokeh.models import GeomFormat
+
+
+class ErrorGdf2Bokeh(Exception):
+    pass
 
 
 class Gdf2Bokeh(AppMap):
@@ -36,14 +45,13 @@ class Gdf2Bokeh(AppMap):
         geom_type = GeomTypes.has_value(geom_types_on_data)
 
         if geom_type == GeomTypes.POINT:
-            layer = PointLayer(title=title, data=data)
+            self.layers = PointLayer(title=title, data=data)
         elif geom_type == GeomTypes.LINESTRINGS:
-            layer = LinestringLayer(title=title, data=data)
+            self.layers = LinestringLayer(title=title, data=data)
         elif geom_type == GeomTypes.POLYGONS:
-            layer = PolygonLayer(title=title, data=data)
+            self.layers = PolygonLayer(title=title, data=data)
         else:
             raise ValueError(f"{geom_type} not supported")
-        self.layers = layer
 
     def add_layer_from_dataframe(self, title: str, data: pd.DataFrame, geom_column: str = "geometry",
                                  geom_format: str = "shapely") -> None:

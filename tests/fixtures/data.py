@@ -1,8 +1,6 @@
 from typing import List, Dict
 
-import pandas as pd
 import pytest
-
 
 import geopandas as gpd
 
@@ -104,7 +102,7 @@ def height():
 def polygon_from_coords_without_crs():
     lat_points = [50.9, 52.5, 50.0, 48.8, 50.9]
     lon_points = [4.4, 13.4, 14.4, 2.4, 4.4]
-    polygon_geom = Polygon(zip(lon_points , lat_points))
+    polygon_geom = Polygon(zip(lon_points, lat_points))
     return gpd.GeoDataFrame(index=[0], geometry=[polygon_geom])
 
 
@@ -130,7 +128,13 @@ def shapely_polygon():
 
 @pytest.fixture
 def shapely_polygon_with_hole():
-    return Polygon(((0, 0), (10, 0), (10, 10), (0, 10), (0, 0)), (((1, 2), (5, 2), (5, 1), (1, 1)), ((9, 9), (9, 8), (8, 8), (8, 9))))
+    return Polygon(
+        ((0, 0), (10, 0), (10, 10), (0, 10), (0, 0)),
+        (
+            ((1, 2), (5, 2), (5, 1), (1, 1)),
+            ((9, 9), (9, 8), (8, 8), (8, 9))
+        )
+    )
 
 
 @pytest.fixture
