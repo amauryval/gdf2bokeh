@@ -147,7 +147,7 @@ class LinestringLayer(LayerCore):
     def render(self, figure_obj: figure) -> None:
         """render the bokeh object"""
         render = figure_obj.multi_line(
-            xs="x", ys="y", source=self._data_source, **self._style_parameters
+            xs="x", ys="y", source=self._data_source, legend_label=self.title, **self._style_parameters
         )
         self._set_tooltip(figure_obj, render)
 
@@ -173,6 +173,6 @@ class PolygonLayer(LayerCore):
     def render(self, figure_obj: figure) -> None:
         """render the bokeh object"""
         render = figure_obj.multi_polygons(
-            xs="x", ys="y", source=self._data_source, **self._style_parameters
+            xs="x", ys="y", source=self._data_source, legend_label=self.title, **self._style_parameters
         )
         self._set_tooltip(figure_obj, render)
