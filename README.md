@@ -36,11 +36,11 @@ conda install -c amauryval gdf2bokeh
 
 Gdf2Bokeh is able to map your data from various format. About data, you must be aware to use compliant geometry types:
 
-It supports data containing these geometries families:
+It supports Geo/DataFrame/List of dict/List of geometry containing these 3 geometries families:
 
-* Point family: Point
-* Line family: LineString and/or MultiLineString
-* Polygon family: Polygon and/or MultiPolygon
+* Point data with Point
+* Line data with LineString and/or MultiLineString
+* Polygon data with Polygon and/or MultiPolygon
 
 GeometryCollection data are not supported, so explode it to use it. So the best practice consists to split your input 
 data by geometry type. 
