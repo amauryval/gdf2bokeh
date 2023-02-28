@@ -15,17 +15,19 @@ Because it's boring to convert shapely geometry to bokeh format !!
 
 ## How to install the conda package ?
 
+### with pip
+
+```bash
+pip install gdf2bokeh
+```
+
 ### With Anaconda
 
 ```bash
 conda install -c amauryval gdf2bokeh
 ```
 
-### with pip
 
-```bash
-pip install gdf2bokeh
-```
 
 
 ## How to use it ?!
@@ -43,33 +45,20 @@ from bokeh.plotting import show
 import geopandas as gpd
 from gdf2bokeh import Gdf2Bokeh
 
-layers_to_add = [
-    {
-        "input_gdf": gpd.GeoDataFrame.from_file("your_geo_layer.geojson"),
-        "legend": "My beautiful layer",  # required, can be the name of an column name (from your input gdf)
-        "fill_color": "orange",  # here we found one argument use by bokeh to style your layer. Take care about geometry type
-    },
-    {
-        "input_wkt": "LINESTRING(0 0, 25 25)",  # you can add an input wkt
-        "legend": "My beautiful layer",  # required
-        "color": "orange",  # here we found one argument use by bokeh to style your layer. Take care about geometry type
-    }
-]
-# Points, LineString, MultiLineString, Polygons (+ holes) and MultiPolygons (+ holes) are supported
+map_session = Gdf2Bokeh()
 
-my_map = Gdf2Bokeh(
-    "My beautiful map",  # required: map title
-    width=800,  # optional: figure width, default 800
-    height=600,  # optional: figure width, default 600
-    x_range=None,  # optional: x_range, default None
-    y_range=None,  # optional: y_range, default None
-    background_map_name="CARTODBPOSITRON",  # optional: background map name, default: CARTODBPOSITRON
-    layers=layers_to_add    # optional: bokeh layer to add from a list of dict contains geodataframe settings, see dict above
-)
-# to get all the bokeh layer containers (dict), in order to update them (interactivity, slider... on a bokeh serve)
-bokeh_layer_containers = my_map.get_bokeh_layer_containers
+# add your layer from your data
+map_session.add_layer_from_geodataframe("your_layer1", gpd.GeoDataFrame.from_file("your_geo_layer.geojson"))
+map_session.add_layer_from_dataframe("your_layer2", gpd.GeoDataFrame.from_file("your_data.json"), 
+                                     geom_column="geometry", geom_format="shapely")
+map_session.add_layer_from_list_dict("your_layer3", gpd.GeoDataFrame.from_file("your_data.json"), 
+                                     geom_column="geometry", geom_format="wkt")
 
-show(my_map.figure)
+# Let's go to register them on bokeh
+map_session.add_layers_on_maps()
+
+# Next, the map is displayed
+show(map_session.figure)
 ```
 
 
