@@ -33,13 +33,26 @@ conda install -c amauryval gdf2bokeh
 
 ## How to use it ?
 
-A small example :
+Gdf2Bokeh is able to map your data from various format. About data, you must be aware to use compliant geometry types:
 
+It supports data containing these geometries families:
+
+* Point family: Point
+* Line family: LineString and/or MultiLineString
+* Polygon family: Polygon and/or MultiPolygon
+
+GeometryCollection data are not supported, so explode it to use it. So the best practice consists to split your input 
+data by geometry type. 
+
+And you'll be able, optionally, to style your data thanks to the bokeh arguments :
 Check bokeh documentation in order to style your data :
     
-* [bokeh marker style options](https://docs.bokeh.org/en/latest/docs/reference/models/markers.html) to style point features
-* [bokeh multi_line style options](https://docs.bokeh.org/en/latest/docs/reference/plotting.html?highlight=multi_polygons#bokeh.plotting.figure.Figure.multi_line) to style LineString and MultiLineString features
-* [bokeh multi_polygon style options](https://docs.bokeh.org/en/latest/docs/reference/plotting.html?highlight=multi_polygons#bokeh.plotting.figure.Figure.multi_polygons) to style polygon and multipolygons features
+* Point family: [bokeh marker style options](https://docs.bokeh.org/en/latest/docs/reference/models/markers.html)
+* Line family: [bokeh multi_line style options](https://docs.bokeh.org/en/latest/docs/reference/plotting.html?highlight=multi_polygons#bokeh.plotting.figure.Figure.multi_line)
+* Polygon family: [bokeh multi_polygon style options](https://docs.bokeh.org/en/latest/docs/reference/plotting.html?highlight=multi_polygons#bokeh.plotting.figure.Figure.multi_polygons)
+
+
+A small example :
 
 ```python
 from bokeh.plotting import show
@@ -49,7 +62,8 @@ from gdf2bokeh import Gdf2Bokeh
 map_session = Gdf2Bokeh()
 
 # add your layer from your data
-map_session.add_layer_from_geodataframe("layer1", gpd.GeoDataFrame.from_file("your_data.geojson"))
+map_session.add_layer_from_geodataframe("layer1", gpd.GeoDataFrame.from_file("your_data.geojson"), 
+                                        size=6, fill_color="red", line_color="blue")  # marker style arguments
 
 map_session.add_layer_from_dataframe("layer2", gpd.GeoDataFrame.from_file("your_data.json"),
                                      geom_column="geometry", geom_format="shapely")
