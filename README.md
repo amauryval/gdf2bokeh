@@ -1,6 +1,7 @@
 # gdf2bokeh
-An easy way to map your geographic data (from a GeoDataFrame)
-Because it's boring to convert shapely geometry to bokeh format !!
+An easy way to map your geographic data (from a GeoDataFrame, a DataFrame and a list of dictionaries containing wkt or shapely geometries).
+
+Yeah! Because it's boring to convert shapely geometry to bokeh format each time I need to map something !!
 
 ![CI](https://github.com/amauryval/gdf2bokeh/workflows/RunTest/badge.svg)
 [![codecov](https://codecov.io/gh/amauryval/gdf2bokeh/branch/master/graph/badge.svg)](https://codecov.io/gh/amauryval/gdf2bokeh)
@@ -13,7 +14,7 @@ Because it's boring to convert shapely geometry to bokeh format !!
 [![PyPI version](https://badge.fury.io/py/gdf2bokeh.svg)](https://badge.fury.io/py/gdf2bokeh)
 
 
-## How to install the conda package ?
+## How to install it ?
 
 ### with pip
 
@@ -30,7 +31,7 @@ conda install -c amauryval gdf2bokeh
 
 
 
-## How to use it ?!
+## How to use it ?
 
 A small example :
 
