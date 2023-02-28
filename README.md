@@ -3,6 +3,8 @@ An easy way to map your geographic data (from a GeoDataFrame, a DataFrame and a 
 
 Yeah! Because it's boring to convert shapely geometry to bokeh format each time I need to map something !!
 
+Also, this library let you to build complex Bokeh dashboard: no limitations to use Bokeh mecanisms.
+
 ![CI](https://github.com/amauryval/gdf2bokeh/workflows/RunTest/badge.svg)
 [![codecov](https://codecov.io/gh/amauryval/gdf2bokeh/branch/master/graph/badge.svg)](https://codecov.io/gh/amauryval/gdf2bokeh)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/ambv/black)
@@ -52,7 +54,7 @@ Check bokeh documentation in order to style your data :
 * Polygon family: [bokeh multi_polygon style options](https://docs.bokeh.org/en/latest/docs/reference/plotting.html?highlight=multi_polygons#bokeh.plotting.figure.Figure.multi_polygons)
 
 
-A small example :
+A simple example :
 
 ```python
 from bokeh.plotting import show
@@ -86,8 +88,9 @@ map_session.add_layers_on_maps()
 show(map_session.figure)
 ```
 
+An advanced example:
 
-Also, you can find a bokeh serve example with a slider widget.
+Yu can find a bokeh serve example with a slider widget.
 On the terminal, run :
 
 ```bash
