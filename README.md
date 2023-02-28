@@ -62,15 +62,20 @@ from gdf2bokeh import Gdf2Bokeh
 map_session = Gdf2Bokeh()
 
 # add your layer from your data
-map_session.add_layer_from_geodataframe("layer1", gpd.GeoDataFrame.from_file("your_data.geojson"), 
-                                        size=6, fill_color="red", line_color="blue")  # marker style arguments
 
+# Map a points GeoDataFrame. You can see marker style arguments, so we suppose that input_data contains Point geometry
+map_session.add_layer_from_geodataframe("layer1", gpd.GeoDataFrame.from_file("your_poins_data.geojson"), 
+                                        size=6, fill_color="red", line_color="blue")  
+
+# Map from a DataFrame. Style parameters are not required
 map_session.add_layer_from_dataframe("layer2", gpd.GeoDataFrame.from_file("your_data.json"),
                                      geom_column="geometry", geom_format="shapely")
 
+# Map from a list of dictionnaries
 map_session.add_layer_from_dict_list("layer3", gpd.GeoDataFrame.from_file("your_data.json"),
                                      geom_column="geometry", geom_format="wkt")
 
+# Map from a geometry (shapely, wkt...) list
 map_session.add_layer_from_geom_list("layer4", ["Point(0 0)", "Point(5 5)"], geom_format="wkt")
 
 
