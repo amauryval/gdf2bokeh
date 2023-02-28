@@ -1,6 +1,8 @@
 import pytest
 
 import geopandas as gpd
+from bokeh.models import ColumnDataSource
+
 from gdf2bokeh import Gdf2Bokeh
 
 
@@ -16,6 +18,7 @@ def test_from_geodataframe(multipolygons_data):
     assert layer.data.shape[0] == 2
     assert layer.data.shape[-1] == 3
     assert layer.title == "layer_1"
+    assert isinstance(layer.bokeh_data(), ColumnDataSource)
 
     map_session.add_layers_on_maps()
 
