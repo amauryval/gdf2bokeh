@@ -5,7 +5,7 @@ Yeah! Because it's boring to convert shapely geometry to bokeh format each time 
 
 Also, this library let you to build complex Bokeh dashboard: no limitations to use Bokeh mecanisms.
 
-![CI](https://github.com/amauryval/gdf2bokeh/workflows/RunTest/badge.svg)
+[![CI](https://github.com/amauryval/gdf2bokeh/actions/workflows/main.yml/badge.svg?branch=master)](https://github.com/amauryval/gdf2bokeh/actions/workflows/main.yml)
 [![codecov](https://codecov.io/gh/amauryval/gdf2bokeh/branch/master/graph/badge.svg)](https://codecov.io/gh/amauryval/gdf2bokeh)
 
 [![Anaconda-Server Badge](https://anaconda.org/amauryval/gdf2bokeh/badges/version.svg)](https://anaconda.org/amauryval/gdf2bokeh)
