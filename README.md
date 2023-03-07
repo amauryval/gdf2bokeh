@@ -35,11 +35,12 @@ conda install -c amauryval gdf2bokeh
 
 Gdf2Bokeh is able to map your data from various format. About data, you must be aware to use compliant geometry types:
 
-It supports Geo/DataFrame/List of dict/List of geometry containing these 3 geometries families:
+It supports Geo/DataFrame/List of dict/List of geometry containing these 4 geometries families:
 
-* Point data with Point
-* Line data with LineString and/or MultiLineString
-* Polygon data with Polygon and/or MultiPolygon
+* Point data with Point geometry
+* MultiPoint data with MultiPoint geometry
+* Line data with LineString and/or MultiLineString geometries
+* Polygon data with Polygon and/or MultiPolygon geometries
 
 GeometryCollection data are not supported, so explode it to use it. So the best practice consists to split your input 
 data by geometry type. 
@@ -47,7 +48,7 @@ data by geometry type.
 And you'll be able, optionally, to style your data thanks to the bokeh arguments :
 Check bokeh documentation in order to style your data :
     
-* Point family: [bokeh marker style options](https://docs.bokeh.org/en/latest/docs/reference/models/markers.html)
+* Point / MultiPoint families: [bokeh marker style options](https://docs.bokeh.org/en/latest/docs/reference/models/markers.html)
 * Line family: [bokeh multi_line style options](https://docs.bokeh.org/en/latest/docs/reference/plotting.html?highlight=multi_polygons#bokeh.plotting.figure.Figure.multi_line)
 * Polygon family: [bokeh multi_polygon style options](https://docs.bokeh.org/en/latest/docs/reference/plotting.html?highlight=multi_polygons#bokeh.plotting.figure.Figure.multi_polygons)
 

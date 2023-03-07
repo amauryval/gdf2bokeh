@@ -22,7 +22,7 @@ class GeomTypes(set, Enum):
     LINESTRINGS = {"LineString", "MultiLineString"}
     POLYGONS = {"Polygon", "MultiPolygon"}
     POINT = {"Point"}
-    MULTIPOINT = {"MultiPoint"}  # TODO support it
+    MULTIPOINT = {"MultiPoint"}
 
     @staticmethod
     def has_value(item: set):
@@ -130,6 +130,12 @@ class PointLayer(LayerCore):
             x="x", y="y", source=self._data_source, legend_label=self.title, **self._style_parameters
         )
         self._set_tooltip(figure_obj, render)
+
+
+class MultiPointLayer(PointLayer):
+    def __init__(self, title: str, data: gpd.GeoDataFrame, from_epsg: int, **style_parameters) -> None:
+        data = data.explode(index_parts=False)
+        super().__init__(title=title, data=data, from_epsg=from_epsg, **style_parameters)
 
 
 class LinestringLayer(LayerCore):

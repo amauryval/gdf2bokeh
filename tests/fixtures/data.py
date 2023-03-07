@@ -14,6 +14,7 @@ from shapely.geometry import MultiPoint
 multipolygons = "tests/fixtures/multipolygons.geojson"
 polygons = "tests/fixtures/polygons.geojson"
 points = "tests/fixtures/points.geojson"
+multipoints = "tests/fixtures/multipoints.geojson"
 linestrings = "tests/fixtures/linestrings.geojson"
 multilinestrings = "tests/fixtures/multilinestrings.geojson"
 mixed_features = "tests/fixtures/mixed_features.geojson"
@@ -89,6 +90,11 @@ def points_data() -> gpd.GeoDataFrame:
 
 
 @pytest.fixture
+def multipoints_data() -> gpd.GeoDataFrame:
+    return open_geojson_to_gpd(multipoints)
+
+
+@pytest.fixture
 def width():
     return 640
 
@@ -151,7 +157,3 @@ def shapely_multilinestring_continuity():
 def shapely_multilinestring_unordered():
     return MultiLineString([((0, 0), (5, 2)), ((10, 10), (5, 2))])
 
-
-@pytest.fixture
-def shapely_multipoint():
-    return MultiPoint([(0, 0), (1, 1), (1, 2), (2, 2)])

@@ -1,7 +1,6 @@
 import pytest
 
 import geopandas as gpd
-from bokeh.models import ColumnDataSource
 
 from gdf2bokeh import Gdf2Bokeh
 from gdf2bokeh.layer import GeomTypeError
@@ -18,6 +17,23 @@ def test_from_geodataframe(multipolygons_data):
     assert isinstance(layer.data, gpd.GeoDataFrame)
     assert layer.data.shape[0] == 2
     assert layer.data.shape[-1] == 3
+    assert layer.title == "layer_1"
+
+    map_session.add_layers_on_maps()
+
+
+def test_from_multipoints_geodataframe(multipoints_data):
+    map_session = Gdf2Bokeh()
+    map_session.add_layer_from_geodataframe("layer_1", multipoints_data, from_epsg=4326)
+
+    layers = map_session.layers
+    assert len(layers) == 1
+
+    layer = layers["layer_1"]
+    assert isinstance(layer.data, gpd.GeoDataFrame)
+    # multipoint are exploded to be mapped
+    assert layer.data.shape[0] == 2
+    assert layer.data.shape[-1] == 2
     assert layer.title == "layer_1"
 
     map_session.add_layers_on_maps()

@@ -7,7 +7,7 @@ import shapely.geometry.base
 
 from gdf2bokeh.app_map import AppMap
 
-from gdf2bokeh.layer import GeomTypes
+from gdf2bokeh.layer import GeomTypes, MultiPointLayer
 from gdf2bokeh.layer import PointLayer
 from gdf2bokeh.layer import LinestringLayer
 from gdf2bokeh.layer import PolygonLayer
@@ -53,6 +53,8 @@ class Gdf2Bokeh(AppMap):
             self.layers = LinestringLayer(title=title, data=data, from_epsg=from_epsg, **style_parameters)
         elif geom_type == GeomTypes.POLYGONS:
             self.layers = PolygonLayer(title=title, data=data, from_epsg=from_epsg, **style_parameters)
+        elif geom_type == GeomTypes.MULTIPOINT:
+            self.layers = MultiPointLayer(title=title, data=data, from_epsg=from_epsg, **style_parameters)
         else:
             raise ValueError(f"{geom_type} not supported")
 
