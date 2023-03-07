@@ -73,7 +73,11 @@ map_session.add_layer_from_dataframe("layer2", gpd.GeoDataFrame.from_file("your_
                                      geom_column="geometry", geom_format="shapely")
 
 # Map from a list of dictionnaries
-map_session.add_layer_from_dict_list("layer3", gpd.GeoDataFrame.from_file("your_data.json"),
+map_session.add_layer_from_dict_list("layer3", 
+                                     [
+                                         {"geometry": "POINT(0 0)", "col1": "value1"},
+                                         {"geometry": "POINT(1 1)", "col1": "value2"}
+                                     ],
                                      geom_column="geometry", geom_format="wkt")
 
 # Map from a geometry (shapely, wkt...) list
