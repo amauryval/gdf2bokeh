@@ -18,7 +18,6 @@ def test_points_geom_to_bokeh_format(points_data):
     assert len(y_values) == points_data.shape[0]
     assert y_values == list(map(lambda feature: feature.y, points_data.geometry.to_list()))
 
-
 def test_linestrings_geom_to_bokeh_format(linestrings_data):
     x_values, y_values = compute_geometry(linestrings_data)
 

@@ -64,7 +64,7 @@ def geometry_2_bokeh_format(geometry: base, coord_output_format: str = "xy") -> 
 
     if isinstance(geometry, (MultiPoint, GeometryCollection)):
         raise ValueError(
-            f"no interest to handle {geometry.geom_type}"
+            f"{geometry.geom_type} not supported"
         )
 
     return coord_values
