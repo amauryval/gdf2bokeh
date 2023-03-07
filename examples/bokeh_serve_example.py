@@ -44,7 +44,6 @@ class MyMapBokeh(Gdf2Bokeh):
 
     def __slider_update(self, attrname, old_value, new_value) -> None:
         input_data_filtered = self._layer["data"].loc[self._layer["data"]["value"] == new_value]
-        print(input_data_filtered.shape)
         self._bokeh_layer.data = input_data_filtered
 
     def _map_layout(self) -> None:
@@ -56,16 +55,14 @@ class MyMapBokeh(Gdf2Bokeh):
         curdoc().title = "My SandBox"
 
 
-if __name__ == '__main__':
+layer = {
+    "title": "Points",
+    "data": build_data(),
+    "from_epsg": 2154,
+    "size": 10,
+    "fill_color": "red",
+    "line_color": "blue"
+}
 
-    layer = {
-        "title": "Points",
-        "data": build_data(),
-        "from_epsg": 2154,
-        "size": 10,
-        "fill_color": "red",
-        "line_color": "blue"
-    }
-
-    map_session = MyMapBokeh(layer)
-    map_session.plot()
+map_session = MyMapBokeh(layer)
+map_session.plot()

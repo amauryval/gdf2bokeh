@@ -95,7 +95,7 @@ Here a bokeh basic example.
 On the terminal, run :
 
 ```bash
-bokeh serve --show examples/bokeh_simple_example.py
+python examples/bokeh_simple_case_example.py
 ```
 
 Or you can use the jupyter notebook 'example.ipynb'
