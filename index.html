@@ -14624,7 +14624,35 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h1 id="gdf-2-bokeh">gdf 2 bokeh<a class="anchor-link" href="#gdf-2-bokeh">&#182;</a></h1>
+<h1 id="Gdf2Bokeh">Gdf2Bokeh<a class="anchor-link" href="#Gdf2Bokeh">&#182;</a></h1>
+</div>
+</div>
+</div>
+</div>
+<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
+</div>
+<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<p>Gdf2Bokeh is able to map your data from various format. About data, you must be aware to use compliant geometry types:</p>
+<p>It supports data containing these geometries families:</p>
+<ul>
+<li>Point data with Point geometry</li>
+<li>MultiPoint data with MultiPoint geometry</li>
+<li>Line data with LineString and/or MultiLineString geometries</li>
+<li>Polygon data with Polygon and/or MultiPolygon geometries</li>
+</ul>
+<p>GeometryCollection data are not supported, so explode it to use it. So the best practice consists to split your input 
+data by geometry type.</p>
+<p>And you'll be able, optionally, to style your data thanks to the bokeh arguments :
+Check bokeh documentation in order to style your data :</p>
+<ul>
+<li>Point / MultiPoint families: <a href="https://docs.bokeh.org/en/latest/docs/reference/models/markers.html">bokeh marker style options</a></li>
+<li>Line family: <a href="https://docs.bokeh.org/en/latest/docs/reference/plotting.html?highlight=multi_polygons#bokeh.plotting.figure.Figure.multi_line">bokeh multi_line style options</a></li>
+<li>Polygon family: <a href="https://docs.bokeh.org/en/latest/docs/reference/plotting.html?highlight=multi_polygons#bokeh.plotting.figure.Figure.multi_polygons">bokeh multi_polygon style options</a></li>
+</ul>
+
 </div>
 </div>
 </div>
@@ -14674,25 +14702,6 @@ body[data-format='mobile'] .jp-OutputArea-child .jp-OutputArea-output {
     <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
 
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>BokehDeprecationWarning: tile_providers module was deprecated in Bokeh 3.0.0 and will be removed, use add_tile directly instead.
-BokehDeprecationWarning: get_provider was deprecated in Bokeh 3.0.0 and will be removed, use add_tile directly instead.
-BokehDeprecationWarning: get_provider was deprecated in Bokeh 3.0.0 and will be removed, use add_tile directly instead.
-BokehDeprecationWarning: get_provider was deprecated in Bokeh 3.0.0 and will be removed, use add_tile directly instead.
-BokehDeprecationWarning: get_provider was deprecated in Bokeh 3.0.0 and will be removed, use add_tile directly instead.
-BokehDeprecationWarning: get_provider was deprecated in Bokeh 3.0.0 and will be removed, use add_tile directly instead.
-BokehDeprecationWarning: get_provider was deprecated in Bokeh 3.0.0 and will be removed, use add_tile directly instead.
-BokehDeprecationWarning: get_provider was deprecated in Bokeh 3.0.0 and will be removed, use add_tile directly instead.
-BokehDeprecationWarning: get_provider was deprecated in Bokeh 3.0.0 and will be removed, use add_tile directly instead.
-BokehDeprecationWarning: get_provider was deprecated in Bokeh 3.0.0 and will be removed, use add_tile directly instead.
-</pre>
-</div>
-</div>
-<div class="jp-OutputArea-child">
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
 
 <div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
 <style>
@@ -14705,7 +14714,7 @@ BokehDeprecationWarning: get_provider was deprecated in Bokeh 3.0.0 and will be 
     </style>
     <div>
         <a href="https://bokeh.org" target="_blank" class="bk-notebook-logo"></a>
-        <span id="p1010">Loading BokehJS ...</span>
+        <span id="p1001">Loading BokehJS ...</span>
     </div>
 
 </div>
@@ -14719,9 +14728,9 @@ BokehDeprecationWarning: get_provider was deprecated in Bokeh 3.0.0 and will be 
 
 
 
-<div id="7d0cc65e-16de-4117-bdd8-5c6a7617e21a" class="jp-RenderedJavaScript jp-OutputArea-output " data-mime-type="application/javascript">
+<div id="ea428274-b5d0-4ae3-9172-b637010586c0" class="jp-RenderedJavaScript jp-OutputArea-output " data-mime-type="application/javascript">
 <script type="text/javascript">
-var element = document.getElementById('7d0cc65e-16de-4117-bdd8-5c6a7617e21a');
+var element = document.getElementById('ea428274-b5d0-4ae3-9172-b637010586c0');
 (function(root) {
   function now() {
     return new Date();
@@ -14879,7 +14888,7 @@ const JS_MIME_TYPE = 'application/javascript';
      "</div>"}};
 
   function display_loaded() {
-    const el = document.getElementById("p1010");
+    const el = document.getElementById("p1001");
     if (el != null) {
       el.textContent = "BokehJS is loading...";
     }
@@ -14985,7 +14994,7 @@ if (force === true) {
       console.log("Bokeh: BokehJS failed to load within specified timeout.");
       root._bokeh_failed_load = true;
     } else if (force !== true) {
-      const cell = $(document.getElementById("p1010")).parents('.cell').data().cell;
+      const cell = $(document.getElementById("p1001")).parents('.cell').data().cell;
       cell.output_area.append_execute_result(NB_LOAD_WARNING)
     }
   }
@@ -15016,13 +15025,7 @@ if (force === true) {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="How-to-define-style-?">How to define style ?<a class="anchor-link" href="#How-to-define-style-?">&#182;</a></h2><p>Check bokeh documentation :</p>
-<ul>
-<li><a href="https://docs.bokeh.org/en/latest/docs/reference/models/markers.html">bokeh marker style options</a> to style point features</li>
-<li><a href="https://docs.bokeh.org/en/latest/docs/reference/plotting.html?highlight=multi_polygons#bokeh.plotting.figure.Figure.multi_line">bokeh multi_line style options</a> to style LineString and MultiLineString features</li>
-<li><a href="https://docs.bokeh.org/en/latest/docs/reference/plotting.html?highlight=multi_polygons#bokeh.plotting.figure.Figure.multi_polygons">bokeh multi_polygon style options</a> to style polygon and multipolygons features</li>
-</ul>
-
+<h2 id="How-to-?">How to ?<a class="anchor-link" href="#How-to-?">&#182;</a></h2>
 </div>
 </div>
 </div>
@@ -15033,18 +15036,7 @@ if (force === true) {
 </div>
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="first-way">first way<a class="anchor-link" href="#first-way">&#182;</a></h2>
-</div>
-</div>
-</div>
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h3 id="Prepare-input-data-from-geojson-and-map-them">Prepare input data from geojson and map them<a class="anchor-link" href="#Prepare-input-data-from-geojson-and-map-them">&#182;</a></h3>
+<h3 id="Prepare-input-data-from-geojson">Prepare input data from geojson<a class="anchor-link" href="#Prepare-input-data-from-geojson">&#182;</a></h3>
 </div>
 </div>
 </div>
@@ -15056,40 +15048,52 @@ if (force === true) {
 <div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[2]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">layers_to_add</span> <span class="o">=</span> <span class="p">[</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">layers_to_map</span> <span class="o">=</span> <span class="p">[</span>
     <span class="p">{</span>
-        <span class="c1"># contains both Polygon and MultiPolygon features (Ugly but only for testing)</span>
-        <span class="s2">&quot;input_gdf&quot;</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/multipolygons.geojson&quot;</span><span class="p">),</span>
-        <span class="s2">&quot;legend&quot;</span><span class="p">:</span> <span class="s2">&quot;MultiPolygons layer&quot;</span><span class="p">,</span>  <span class="c1"># required</span>
-        <span class="s2">&quot;fill_color&quot;</span><span class="p">:</span> <span class="s2">&quot;orange&quot;</span><span class="p">,</span>  <span class="c1"># bokeh multi_polygon style option</span>
+        <span class="c1"># contains both Polygon and MultiPolygon features</span>
+        <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;[Multi]Polygons layer&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/multipolygons.geojson&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;from_epsg&quot;</span><span class="p">:</span> <span class="mi">4326</span><span class="p">,</span>
+        <span class="s2">&quot;fill_color&quot;</span><span class="p">:</span> <span class="s2">&quot;orange&quot;</span>
     <span class="p">},</span>
     <span class="p">{</span>
-        <span class="s2">&quot;input_gdf&quot;</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/polygons.geojson&quot;</span><span class="p">),</span>
-        <span class="s2">&quot;legend&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygons layer&quot;</span><span class="p">,</span>  <span class="c1"># required</span>
-        <span class="s2">&quot;fill_color&quot;</span><span class="p">:</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span>  <span class="c1"># bokeh multi_polygon style option</span>
-        <span class="s2">&quot;line_color&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span><span class="p">,</span>  <span class="c1"># bokeh multi_polygon style option</span>
+        <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Polygons layer&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/polygons.geojson&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;from_epsg&quot;</span><span class="p">:</span> <span class="mi">4326</span><span class="p">,</span>
+        <span class="s2">&quot;fill_color&quot;</span><span class="p">:</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;line_color&quot;</span><span class="p">:</span> <span class="s2">&quot;black&quot;</span>
     <span class="p">},</span>
     <span class="p">{</span>
-        <span class="s2">&quot;input_gdf&quot;</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/linestrings.geojson&quot;</span><span class="p">),</span>
-        <span class="s2">&quot;legend&quot;</span><span class="p">:</span> <span class="s2">&quot;name&quot;</span><span class="p">,</span>  <span class="c1"># we can use the attribute called &#39;name&#39; containing name value (as usual on bokeh)</span>
+        <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;LineString layer&quot;</span><span class="p">,</span> 
+        <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/linestrings.geojson&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;from_epsg&quot;</span><span class="p">:</span> <span class="mi">4326</span><span class="p">,</span>
         <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;color&quot;</span><span class="p">,</span>  <span class="c1"># we can use the attribute called &#39;color&#39; containing name color (as usual on bokeh)</span>
-        <span class="s2">&quot;line_width&quot;</span><span class="p">:</span> <span class="mi">4</span>  <span class="c1"># bokeh multi_line style option</span>
+        <span class="s2">&quot;line_width&quot;</span><span class="p">:</span> <span class="mi">4</span>
     <span class="p">},</span>
     <span class="p">{</span>
-        <span class="c1"># contains both LineString and MultiLineString features (Ugly but only for testing)</span>
-        <span class="s2">&quot;input_gdf&quot;</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/multilinestrings.geojson&quot;</span><span class="p">),</span>
-        <span class="s2">&quot;legend&quot;</span><span class="p">:</span> <span class="s2">&quot;multilinestrings layer&quot;</span><span class="p">,</span>  <span class="c1"># required</span>
-        <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span>  <span class="c1"># bokeh multi_line style option</span>
-        <span class="s2">&quot;line_width&quot;</span><span class="p">:</span> <span class="mi">6</span>  <span class="c1"># bokeh multi_line style option</span>
+        <span class="c1"># contains both LineString and MultiLineString features</span>
+        <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Multi[LineStrings] layer&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/multilinestrings.geojson&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;from_epsg&quot;</span><span class="p">:</span> <span class="mi">4326</span><span class="p">,</span>
+        <span class="s2">&quot;color&quot;</span><span class="p">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;line_width&quot;</span><span class="p">:</span> <span class="mi">6</span>
 
     <span class="p">},</span>
     <span class="p">{</span>
-        <span class="s2">&quot;input_gdf&quot;</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/points.geojson&quot;</span><span class="p">),</span>
-        <span class="s2">&quot;legend&quot;</span><span class="p">:</span> <span class="s2">&quot;points layer&quot;</span><span class="p">,</span>  <span class="c1"># required</span>
-        <span class="s2">&quot;style&quot;</span><span class="p">:</span> <span class="s2">&quot;square&quot;</span><span class="p">,</span>   <span class="c1"># required</span>
-        <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>   <span class="c1"># bokeh marker style option</span>
-        <span class="s2">&quot;fill_color&quot;</span><span class="p">:</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span>   <span class="c1"># bokeh marker style option</span>
-        <span class="s2">&quot;line_color&quot;</span><span class="p">:</span> <span class="s2">&quot;blue&quot;</span><span class="p">,</span>  <span class="c1"># bokeh marker style option</span>
+        <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;MultiPoints layer&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/multipoints.geojson&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;from_epsg&quot;</span><span class="p">:</span> <span class="mi">4326</span><span class="p">,</span>
+        <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">12</span><span class="p">,</span>
+        <span class="s2">&quot;fill_color&quot;</span><span class="p">:</span> <span class="s2">&quot;yellow&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;line_color&quot;</span><span class="p">:</span> <span class="s2">&quot;blue&quot;</span>
+    <span class="p">},</span>
+    <span class="p">{</span>
+        <span class="s2">&quot;title&quot;</span><span class="p">:</span> <span class="s2">&quot;Points layer&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;data&quot;</span><span class="p">:</span> <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/points.geojson&quot;</span><span class="p">),</span>
+        <span class="s2">&quot;from_epsg&quot;</span><span class="p">:</span> <span class="mi">4326</span><span class="p">,</span>
+        <span class="s2">&quot;size&quot;</span><span class="p">:</span> <span class="mi">6</span><span class="p">,</span>
+        <span class="s2">&quot;fill_color&quot;</span><span class="p">:</span> <span class="s2">&quot;red&quot;</span><span class="p">,</span>
+        <span class="s2">&quot;line_color&quot;</span><span class="p">:</span> <span class="s2">&quot;blue&quot;</span>
     <span class="p">},</span>
 <span class="p">]</span>
 </pre></div>
@@ -15119,16 +15123,19 @@ if (force === true) {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
-<span class="n">my_map</span> <span class="o">=</span> <span class="n">Gdf2Bokeh</span><span class="p">(</span>
-    <span class="s2">&quot;My beautiful map&quot;</span><span class="p">,</span>  <span class="c1"># required: map title</span>
-    <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>  <span class="c1"># optional: figure width, default 800</span>
-    <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span>  <span class="c1"># optional: figure width, default 600</span>
-    <span class="n">x_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># optional: x_range, default None</span>
-    <span class="n">y_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># optional: y_range, default None</span>
-    <span class="n">background_map_name</span><span class="o">=</span><span class="s2">&quot;CARTODBPOSITRON&quot;</span><span class="p">,</span>  <span class="c1"># optional: background map name, default: CARTODBPOSITRON</span>
-    <span class="n">layers</span><span class="o">=</span><span class="n">layers_to_add</span>  <span class="c1"># optional: bokeh layer to add from a list of dict contains geodataframe settings, see dict above</span>
+
+<span class="n">map_session</span> <span class="o">=</span> <span class="n">Gdf2Bokeh</span><span class="p">(</span>
+    <span class="s2">&quot;My beautiful map&quot;</span><span class="p">,</span>
+    <span class="n">width</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>
+    <span class="n">height</span><span class="o">=</span><span class="mi">600</span><span class="p">,</span>
+    <span class="n">background_map_name</span><span class="o">=</span><span class="s2">&quot;CARTODBPOSITRON&quot;</span>
 <span class="p">)</span>
-<span class="n">show</span><span class="p">(</span><span class="n">my_map</span><span class="o">.</span><span class="n">figure</span><span class="p">)</span>
+
+<span class="k">for</span> <span class="n">layer</span> <span class="ow">in</span> <span class="n">layers_to_map</span><span class="p">:</span>
+    <span class="n">map_session</span><span class="o">.</span><span class="n">add_layer_from_geodataframe</span><span class="p">(</span><span class="o">**</span><span class="n">layer</span><span class="p">)</span>
+<span class="n">map_session</span><span class="o">.</span><span class="n">add_layers_on_maps</span><span class="p">()</span>
+
+<span class="n">show</span><span class="p">(</span><span class="n">map_session</span><span class="o">.</span><span class="n">figure</span><span class="p">)</span>
 </pre></div>
 
      </div>
@@ -15148,12 +15155,74 @@ if (force === true) {
 
 
 <div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
-File <span class="ansi-green-fg">&lt;timed exec&gt;:1</span>
+<pre>/home/runner/miniconda3/envs/gdf2bokeh/lib/python3.10/site-packages/geopandas/geodataframe.py:1442: UserWarning: Geometry column does not contain geometry.
+  warnings.warn(&#34;Geometry column does not contain geometry.&#34;)
+/home/runner/miniconda3/envs/gdf2bokeh/lib/python3.10/site-packages/geopandas/geodataframe.py:1442: UserWarning: Geometry column does not contain geometry.
+  warnings.warn(&#34;Geometry column does not contain geometry.&#34;)
+</pre>
+</div>
+</div>
+<div class="jp-OutputArea-child">
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
 
-<span class="ansi-red-fg">TypeError</span>: Gdf2Bokeh.__init__() got an unexpected keyword argument &#39;x_range&#39;</pre>
+
+
+<div class="jp-RenderedHTMLCommon jp-RenderedHTML jp-OutputArea-output " data-mime-type="text/html">
+
+  <div id="2e8197da-6fb3-46a9-b198-61548c781b50" data-root-id="p1002" style="display: contents;"></div>
+
+</div>
+
+</div>
+<div class="jp-OutputArea-child">
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+
+
+
+<div id="9e53c90e-af3f-45d3-b97f-11edc73f52cf" class="jp-RenderedJavaScript jp-OutputArea-output " data-mime-type="application/javascript">
+<script type="text/javascript">
+var element = document.getElementById('9e53c90e-af3f-45d3-b97f-11edc73f52cf');
+(function(root) {
+  function embed_document(root) {
+  const docs_json = {"0ae319a8-97e2-4b68-a7c3-5fc8134a2e00":{"version":"3.0.3","title":"Bokeh Application","defs":[],"roots":[{"type":"object","name":"Figure","id":"p1002","attributes":{"width":800,"x_range":{"type":"object","name":"DataRange1d","id":"p1003"},"y_range":{"type":"object","name":"DataRange1d","id":"p1004"},"x_scale":{"type":"object","name":"LinearScale","id":"p1016"},"y_scale":{"type":"object","name":"LinearScale","id":"p1018"},"title":{"type":"object","name":"Title","id":"p1005","attributes":{"text":"My beautiful map"}},"renderers":[{"type":"object","name":"TileRenderer","id":"p1048","attributes":{"tile_source":{"type":"object","name":"WMTSTileSource","id":"p1047","attributes":{"url":"https://a.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png","max_zoom":20,"attribution":"&copy; <a href=\"https://www.openstreetmap.org/copyright\">OpenStreetMap</a> contributors &copy; <a href=\"https://carto.com/attributions\">CARTO</a>"}}}},{"type":"object","name":"GlyphRenderer","id":"p1092","attributes":{"data_source":{"type":"object","name":"ColumnDataSource","id":"p1050","attributes":{"selected":{"type":"object","name":"Selection","id":"p1052","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"p1051"},"data":{"type":"map","entries":[["x",[[[[540016.2082595062,540017.2434982699,540019.8067638461,540020.5244782075,540019.396641354,540020.4219475843,540024.7282337521,540025.4459481135,540001.4537823214,539997.4038227113,540016.2082595062]]],[[[540049.0792567247,540070.661952875,540072.1999122206,540089.7326487608,540091.5658327314,540091.8235201214,540094.2777042497,540096.4996698815,540100.8059560494,540102.8565685102,540075.8910146501,540073.9890868046,540080.60742331,540074.0454634354,540051.2404200251,540049.0792567247]],[[540073.6353409432,540057.7430943716,540056.8203187642,540050.9760732509,540047.7584583072,540053.1804816464,540051.2404200251,540074.0454634354,540080.60742331,540073.9890868046,540073.6353409432]],[[540058.9734618482,540060.5114211937,540066.6632585762,540063.792401131,540058.9734618482],[540062.4047205987,540059.9600019288,540071.3686890547,540068.4146539953,540062.4047205987]],[[540091.0672570786,540102.0295357057,540106.2059301,540094.6298813347,540091.0672570786]],[[540098.4643209788,540097.3438249219,540100.1959967035,540098.4643209788]]]]],["y",[[[[5742011.812036099,5742000.814194428,5742000.814194428,5741994.935679299,5741994.935679299,5741984.501324507,5741984.501324507,5741979.945483293,5741977.15319467,5742009.631974393,5742011.812036099]]],[[[5742051.075657235,5742051.663512286,5742044.609254307,5742047.401564089,5742031.914545932,5742029.737565665,5742009.00429058,5741990.232869993,5741990.967683784,5741973.332169551,5741970.980770289,5741985.107098498,5741989.204130789,5742035.644476193,5742032.644154385,5742051.075657235]],[[5741987.734503557,5741985.089175158,5741990.820721021,5741990.379832747,5742015.4697581325,5742016.098351922,5742032.644154385,5742035.644476193,5741989.204130789,5741985.107098498,5741987.734503557]],[[5742012.7181994505,5742004.047379403,5742006.398787395,5742013.893904513,5742012.7181994505],[5742026.287734413,5742022.491558394,5742018.54937732,5742025.849714021,5742026.287734413]],[[5742036.126586524,5742032.8580428865,5742008.328915999,5742006.02905552,5742036.126586524]],[[5742022.053538191,5742017.52733066,5742018.549377321,5742022.053538191]]]]],["geom_type",["Polygon","MultiPolygon"]],["name",["Polygon1","Multipolygon1"]]]}}},"view":{"type":"object","name":"CDSView","id":"p1093","attributes":{"filter":{"type":"object","name":"AllIndices","id":"p1094"}}},"glyph":{"type":"object","name":"MultiPolygons","id":"p1089","attributes":{"xs":{"type":"field","field":"x"},"ys":{"type":"field","field":"y"},"line_color":{"type":"value","value":"#1f77b4"},"fill_color":{"type":"value","value":"orange"}}},"nonselection_glyph":{"type":"object","name":"MultiPolygons","id":"p1090","attributes":{"xs":{"type":"field","field":"x"},"ys":{"type":"field","field":"y"},"line_color":{"type":"value","value":"#1f77b4"},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"value","value":"orange"},"fill_alpha":{"type":"value","value":0.1},"hatch_alpha":{"type":"value","value":0.1}}},"muted_glyph":{"type":"object","name":"MultiPolygons","id":"p1091","attributes":{"xs":{"type":"field","field":"x"},"ys":{"type":"field","field":"y"},"line_color":{"type":"value","value":"#1f77b4"},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"value","value":"orange"},"fill_alpha":{"type":"value","value":0.2},"hatch_alpha":{"type":"value","value":0.2}}}}},{"type":"object","name":"GlyphRenderer","id":"p1118","attributes":{"data_source":{"type":"object","name":"ColumnDataSource","id":"p1056","attributes":{"selected":{"type":"object","name":"Selection","id":"p1058","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"p1057"},"data":{"type":"map","entries":[["x",[[[[539993.3025977896,540049.0792567247,540053.1804816464,539997.4038227113,539993.3025977896]],[[540022.7288866028,540023.241539718,540029.7009689697,540029.342111789,540022.7288866028],[540008.0097301943,540005.4631482465,540010.7600386981,540011.7786714771,540008.0097301943]]],[[[540033.6483979569,540056.0000737801,540056.0000737801,540073.6353409432,540075.8910146501,540035.4939491715,540033.6483979569]]]]],["y",[[[[5742044.903181607,5742051.075657235,5742016.098351922,5742009.631974393,5742044.903181607]],[[5742035.203585692,5742029.178084462,5742029.839419763,5742035.570994436,5742035.203585692],[5742032.42002217,5742028.331829864,5742025.1196800815,5742031.251967033,5742032.42002217]]],[[[5741983.325623325,5741986.852727335,5741984.795249826,5741987.734503557,5741970.980770289,5741966.277973637,5741983.325623325]]]]],["geom_type",["Polygon","Polygon"]],["name",["Polygon2","Polygon3"]]]}}},"view":{"type":"object","name":"CDSView","id":"p1119","attributes":{"filter":{"type":"object","name":"AllIndices","id":"p1120"}}},"glyph":{"type":"object","name":"MultiPolygons","id":"p1115","attributes":{"xs":{"type":"field","field":"x"},"ys":{"type":"field","field":"y"},"fill_color":{"type":"value","value":"red"}}},"nonselection_glyph":{"type":"object","name":"MultiPolygons","id":"p1116","attributes":{"xs":{"type":"field","field":"x"},"ys":{"type":"field","field":"y"},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"value","value":"red"},"fill_alpha":{"type":"value","value":0.1},"hatch_alpha":{"type":"value","value":0.1}}},"muted_glyph":{"type":"object","name":"MultiPolygons","id":"p1117","attributes":{"xs":{"type":"field","field":"x"},"ys":{"type":"field","field":"y"},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"value","value":"red"},"fill_alpha":{"type":"value","value":0.2},"hatch_alpha":{"type":"value","value":0.2}}}}},{"type":"object","name":"GlyphRenderer","id":"p1148","attributes":{"data_source":{"type":"object","name":"ColumnDataSource","id":"p1062","attributes":{"selected":{"type":"object","name":"Selection","id":"p1064","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"p1063"},"data":{"type":"map","entries":[["x",[[539984.3881464862,539970.8061063938],[539979.455293679,540123.8304611129]]],["y",[[5741948.617673062,5742051.336474528],[5742052.594088212,5742073.5866285805]]],["geom_type",["LineString","LineString"]],["name",["Line1","Line2"]],["color",["black","red"]]]}}},"view":{"type":"object","name":"CDSView","id":"p1149","attributes":{"filter":{"type":"object","name":"AllIndices","id":"p1150"}}},"glyph":{"type":"object","name":"MultiLine","id":"p1145","attributes":{"xs":{"type":"field","field":"x"},"ys":{"type":"field","field":"y"},"line_color":{"type":"field","field":"color"},"line_width":{"type":"value","value":4}}},"nonselection_glyph":{"type":"object","name":"MultiLine","id":"p1146","attributes":{"xs":{"type":"field","field":"x"},"ys":{"type":"field","field":"y"},"line_color":{"type":"field","field":"color"},"line_alpha":{"type":"value","value":0.1},"line_width":{"type":"value","value":4}}},"muted_glyph":{"type":"object","name":"MultiLine","id":"p1147","attributes":{"xs":{"type":"field","field":"x"},"ys":{"type":"field","field":"y"},"line_color":{"type":"field","field":"color"},"line_alpha":{"type":"value","value":0.2},"line_width":{"type":"value","value":4}}}}},{"type":"object","name":"GlyphRenderer","id":"p1183","attributes":{"data_source":{"type":"object","name":"ColumnDataSource","id":"p1068","attributes":{"selected":{"type":"object","name":"Selection","id":"p1070","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"p1069"},"data":{"type":"map","entries":[["x",[[539993.4455212295,540067.4772964783],[540075.173300289,540144.8941239576,540144.8941239576,540130.6869059505]]],["y",[[5741942.141488259,5741949.894055722],[5741950.699977471,5741957.7541610375,5741957.7541610375,5742067.004449318]]],["geom_type",["LineString","MultiLineString"]],["name",["Line3","Multiline1_continuity"]]]}}},"view":{"type":"object","name":"CDSView","id":"p1184","attributes":{"filter":{"type":"object","name":"AllIndices","id":"p1185"}}},"glyph":{"type":"object","name":"MultiLine","id":"p1180","attributes":{"xs":{"type":"field","field":"x"},"ys":{"type":"field","field":"y"},"line_color":{"type":"value","value":"blue"},"line_width":{"type":"value","value":6}}},"nonselection_glyph":{"type":"object","name":"MultiLine","id":"p1181","attributes":{"xs":{"type":"field","field":"x"},"ys":{"type":"field","field":"y"},"line_color":{"type":"value","value":"blue"},"line_alpha":{"type":"value","value":0.1},"line_width":{"type":"value","value":6}}},"muted_glyph":{"type":"object","name":"MultiLine","id":"p1182","attributes":{"xs":{"type":"field","field":"x"},"ys":{"type":"field","field":"y"},"line_color":{"type":"value","value":"blue"},"line_alpha":{"type":"value","value":0.2},"line_width":{"type":"value","value":6}}}}},{"type":"object","name":"GlyphRenderer","id":"p1223","attributes":{"data_source":{"type":"object","name":"ColumnDataSource","id":"p1074","attributes":{"selected":{"type":"object","name":"Selection","id":"p1076","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"p1075"},"data":{"type":"map","entries":[["x",[540103.7793441176,540109.3159352784]],["y",[5742022.123844301,5741983.032651549]],["field1",["value0","value0"]]]}}},"view":{"type":"object","name":"CDSView","id":"p1224","attributes":{"filter":{"type":"object","name":"AllIndices","id":"p1225"}}},"glyph":{"type":"object","name":"Circle","id":"p1220","attributes":{"x":{"type":"field","field":"x"},"y":{"type":"field","field":"y"},"size":{"type":"value","value":12},"line_color":{"type":"value","value":"blue"},"fill_color":{"type":"value","value":"yellow"}}},"nonselection_glyph":{"type":"object","name":"Circle","id":"p1221","attributes":{"x":{"type":"field","field":"x"},"y":{"type":"field","field":"y"},"size":{"type":"value","value":12},"line_color":{"type":"value","value":"blue"},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"value","value":"yellow"},"fill_alpha":{"type":"value","value":0.1},"hatch_alpha":{"type":"value","value":0.1}}},"muted_glyph":{"type":"object","name":"Circle","id":"p1222","attributes":{"x":{"type":"field","field":"x"},"y":{"type":"field","field":"y"},"size":{"type":"value","value":12},"line_color":{"type":"value","value":"blue"},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"value","value":"yellow"},"fill_alpha":{"type":"value","value":0.2},"hatch_alpha":{"type":"value","value":0.2}}}}},{"type":"object","name":"GlyphRenderer","id":"p1268","attributes":{"data_source":{"type":"object","name":"ColumnDataSource","id":"p1080","attributes":{"selected":{"type":"object","name":"Selection","id":"p1082","attributes":{"indices":[],"line_indices":[]}},"selection_policy":{"type":"object","name":"UnionRenderers","id":"p1081"},"data":{"type":"map","entries":[["x",[540109.7261202541,540109.3159977619,540107.6755077933,540105.4198340864,540103.7793441176,540102.9590991334,540101.9337929029]],["y",[5741972.7443196755,5741983.031698054,5741993.613013929,5742004.48826835,5742022.123844301,5742031.823425964,5742041.523018195]],["geom_type",["Point","Point","Point","Point","Point","Point","Point"]],["name",["Point1","Point2","Point2","Point2","Point3","Point4","Point5"]]]}}},"view":{"type":"object","name":"CDSView","id":"p1269","attributes":{"filter":{"type":"object","name":"AllIndices","id":"p1270"}}},"glyph":{"type":"object","name":"Circle","id":"p1265","attributes":{"x":{"type":"field","field":"x"},"y":{"type":"field","field":"y"},"size":{"type":"value","value":6},"line_color":{"type":"value","value":"blue"},"fill_color":{"type":"value","value":"red"}}},"nonselection_glyph":{"type":"object","name":"Circle","id":"p1266","attributes":{"x":{"type":"field","field":"x"},"y":{"type":"field","field":"y"},"size":{"type":"value","value":6},"line_color":{"type":"value","value":"blue"},"line_alpha":{"type":"value","value":0.1},"fill_color":{"type":"value","value":"red"},"fill_alpha":{"type":"value","value":0.1},"hatch_alpha":{"type":"value","value":0.1}}},"muted_glyph":{"type":"object","name":"Circle","id":"p1267","attributes":{"x":{"type":"field","field":"x"},"y":{"type":"field","field":"y"},"size":{"type":"value","value":6},"line_color":{"type":"value","value":"blue"},"line_alpha":{"type":"value","value":0.2},"fill_color":{"type":"value","value":"red"},"fill_alpha":{"type":"value","value":0.2},"hatch_alpha":{"type":"value","value":0.2}}}}}],"toolbar":{"type":"object","name":"Toolbar","id":"p1010","attributes":{"tools":[{"type":"object","name":"PanTool","id":"p1034"},{"type":"object","name":"WheelZoomTool","id":"p1035"},{"type":"object","name":"BoxZoomTool","id":"p1036","attributes":{"overlay":{"type":"object","name":"BoxAnnotation","id":"p1037","attributes":{"syncable":false,"level":"overlay","visible":false,"left_units":"canvas","right_units":"canvas","bottom_units":"canvas","top_units":"canvas","line_color":"black","line_alpha":1.0,"line_width":2,"line_dash":[4,4],"fill_color":"lightgrey","fill_alpha":0.5}}}},{"type":"object","name":"ResetTool","id":"p1038"},{"type":"object","name":"SaveTool","id":"p1039"},{"type":"object","name":"HoverTool","id":"p1110","attributes":{"renderers":[{"id":"p1092"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]}},{"type":"object","name":"HoverTool","id":"p1140","attributes":{"renderers":[{"id":"p1118"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]}},{"type":"object","name":"HoverTool","id":"p1175","attributes":{"renderers":[{"id":"p1148"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"],["COLOR","@color"]]}},{"type":"object","name":"HoverTool","id":"p1215","attributes":{"renderers":[{"id":"p1183"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]}},{"type":"object","name":"HoverTool","id":"p1260","attributes":{"renderers":[{"id":"p1223"}],"tooltips":[["FIELD1","@field1"]]}},{"type":"object","name":"HoverTool","id":"p1310","attributes":{"renderers":[{"id":"p1268"}],"tooltips":[["GEOM_TYPE","@geom_type"],["NAME","@name"]]}}]}},"left":[{"type":"object","name":"LinearAxis","id":"p1027","attributes":{"ticker":{"type":"object","name":"BasicTicker","id":"p1028","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"p1029"},"major_label_policy":{"type":"object","name":"AllLabels","id":"p1030"}}}],"below":[{"type":"object","name":"LinearAxis","id":"p1020","attributes":{"ticker":{"type":"object","name":"BasicTicker","id":"p1021","attributes":{"mantissas":[1,2,5]}},"formatter":{"type":"object","name":"BasicTickFormatter","id":"p1022"},"major_label_policy":{"type":"object","name":"AllLabels","id":"p1023"}}}],"center":[{"type":"object","name":"Grid","id":"p1026","attributes":{"axis":{"id":"p1020"}}},{"type":"object","name":"Grid","id":"p1033","attributes":{"dimension":1,"axis":{"id":"p1027"}}},{"type":"object","name":"Legend","id":"p1108","attributes":{"click_policy":"hide","items":[{"type":"object","name":"LegendItem","id":"p1109","attributes":{"label":{"type":"value","value":"[Multi]Polygons layer"},"renderers":[{"id":"p1092"}]}},{"type":"object","name":"LegendItem","id":"p1139","attributes":{"label":{"type":"value","value":"Polygons layer"},"renderers":[{"id":"p1118"}]}},{"type":"object","name":"LegendItem","id":"p1174","attributes":{"label":{"type":"value","value":"LineString layer"},"renderers":[{"id":"p1148"}]}},{"type":"object","name":"LegendItem","id":"p1214","attributes":{"label":{"type":"value","value":"Multi[LineStrings] layer"},"renderers":[{"id":"p1183"}]}},{"type":"object","name":"LegendItem","id":"p1259","attributes":{"label":{"type":"value","value":"MultiPoints layer"},"renderers":[{"id":"p1223"}]}},{"type":"object","name":"LegendItem","id":"p1309","attributes":{"label":{"type":"value","value":"Points layer"},"renderers":[{"id":"p1268"}]}}]}}],"output_backend":"webgl"}}]}};
+  const render_items = [{"docid":"0ae319a8-97e2-4b68-a7c3-5fc8134a2e00","roots":{"p1002":"2e8197da-6fb3-46a9-b198-61548c781b50"},"root_ids":["p1002"]}];
+  root.Bokeh.embed.embed_items_notebook(docs_json, render_items);
+  }
+  if (root.Bokeh !== undefined) {
+    embed_document(root);
+  } else {
+    let attempts = 0;
+    const timer = setInterval(function(root) {
+      if (root.Bokeh !== undefined) {
+        clearInterval(timer);
+        embed_document(root);
+      } else {
+        attempts++;
+        if (attempts > 100) {
+          clearInterval(timer);
+          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+        }
+      }
+    }, 10, root)
+  }
+})(window);
+</script>
+</div>
+
+</div>
+<div class="jp-OutputArea-child">
+    
+    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
+
+
+<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="text/plain">
+<pre>CPU times: user 276 ms, sys: 8.4 ms, total: 284 ms
+Wall time: 284 ms
+</pre>
 </div>
 </div>
 
@@ -15161,103 +15230,20 @@ File <span class="ansi-green-fg">&lt;timed exec&gt;:1</span>
 
 </div>
 
-</div>
-<div class="jp-Cell jp-MarkdownCell jp-Notebook-cell">
-<div class="jp-Cell-inputWrapper">
-<div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
-</div>
-<div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
-</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
-<h2 id="Second-way">Second way<a class="anchor-link" href="#Second-way">&#182;</a></h2>
-</div>
-</div>
-</div>
-</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell   ">
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
 <div class="jp-Cell-inputWrapper">
 <div class="jp-Collapser jp-InputCollapser jp-Cell-inputCollapser">
 </div>
 <div class="jp-InputArea jp-Cell-inputArea">
-<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[4]:</div>
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[&nbsp;]:</div>
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="o">%%time</span>
-<span class="n">my_map</span> <span class="o">=</span> <span class="n">Gdf2Bokeh</span><span class="p">(</span>
-    <span class="s2">&quot;My beautiful map v2&quot;</span><span class="p">,</span>  <span class="c1"># required: map title</span>
-    <span class="n">width</span><span class="o">=</span><span class="mi">700</span><span class="p">,</span>  <span class="c1"># optional: figure width, default 800</span>
-    <span class="n">height</span><span class="o">=</span><span class="mi">800</span><span class="p">,</span>  <span class="c1"># optional: figure width, default 600</span>
-    <span class="n">x_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># optional: x_range, default None</span>
-    <span class="n">y_range</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span>  <span class="c1"># optional: y_range, default None</span>
-    <span class="n">background_map_name</span><span class="o">=</span><span class="s2">&quot;STAMEN_TERRAIN&quot;</span><span class="p">,</span>  <span class="c1"># optional: background map name, default: CARTODBPOSITRON</span>
-<span class="p">)</span>
-
-<span class="n">my_map</span><span class="o">.</span><span class="n">add_points</span><span class="p">(</span>
-    <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/points.geojson&quot;</span><span class="p">),</span>
-    <span class="n">legend</span><span class="o">=</span><span class="s2">&quot;points layer&quot;</span><span class="p">,</span>  <span class="c1"># required</span>
-    <span class="n">style</span><span class="o">=</span><span class="s2">&quot;cross&quot;</span><span class="p">,</span>  <span class="c1"># optional, check list : https://docs.bokeh.org/en/latest/docs/reference/models/markers.html</span>
-    <span class="n">size</span><span class="o">=</span><span class="mi">10</span><span class="p">,</span>  <span class="c1"># bokeh marker style option</span>
-    <span class="n">fill_color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>  <span class="c1"># bokeh marker style option</span>
-<span class="p">)</span>
-
-<span class="n">my_map</span><span class="o">.</span><span class="n">add_lines</span><span class="p">(</span>
-    <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/multilinestrings.geojson&quot;</span><span class="p">),</span>
-    <span class="n">legend</span><span class="o">=</span><span class="s2">&quot;multilinestrings layer&quot;</span><span class="p">,</span>  <span class="c1"># required</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;green&quot;</span><span class="p">,</span>  <span class="c1"># bokeh multi_line style option</span>
-    <span class="n">line_width</span><span class="o">=</span><span class="mi">6</span>  <span class="c1"># bokeh multi_line style option</span>
-<span class="p">)</span>
-
-<span class="n">my_map</span><span class="o">.</span><span class="n">add_lines</span><span class="p">(</span>
-    <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/linestrings.geojson&quot;</span><span class="p">),</span>
-    <span class="n">legend</span><span class="o">=</span><span class="s2">&quot;linestrings layer&quot;</span><span class="p">,</span>  <span class="c1"># required</span>
-    <span class="n">color</span><span class="o">=</span><span class="s2">&quot;orange&quot;</span><span class="p">,</span>  <span class="c1"># bokeh multi_line style option</span>
-    <span class="n">line_width</span><span class="o">=</span><span class="mi">4</span>  <span class="c1"># bokeh multi_line style option</span>
-<span class="p">)</span>
-
-<span class="n">my_map</span><span class="o">.</span><span class="n">add_polygons</span><span class="p">(</span>
-    <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/polygons.geojson&quot;</span><span class="p">),</span>
-    <span class="n">legend</span><span class="o">=</span><span class="s2">&quot;Polygons layer&quot;</span><span class="p">,</span>  <span class="c1"># required</span>
-    <span class="n">fill_color</span><span class="o">=</span><span class="s2">&quot;red&quot;</span><span class="p">,</span>  <span class="c1"># bokeh multi_polygon style option</span>
-    <span class="n">line_width</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span>  <span class="c1"># bokeh multi_polygon style option</span>
-    <span class="n">line_color</span><span class="o">=</span><span class="s2">&quot;yellow&quot;</span>  <span class="c1"># bokeh multi_polygon style option</span>
-<span class="p">)</span>
-
-<span class="n">my_map</span><span class="o">.</span><span class="n">add_polygons</span><span class="p">(</span>
-    <span class="n">gpd</span><span class="o">.</span><span class="n">GeoDataFrame</span><span class="o">.</span><span class="n">from_file</span><span class="p">(</span><span class="s2">&quot;tests/fixtures/multipolygons.geojson&quot;</span><span class="p">),</span>
-    <span class="n">legend</span><span class="o">=</span><span class="s2">&quot;MultiPolygons layer&quot;</span><span class="p">,</span>  <span class="c1"># required</span>
-    <span class="n">fill_color</span><span class="o">=</span><span class="s2">&quot;blue&quot;</span><span class="p">,</span>  <span class="c1"># bokeh multi_polygon style option</span>
-    <span class="n">line_color</span><span class="o">=</span><span class="s2">&quot;black&quot;</span><span class="p">,</span>  <span class="c1"># bokeh multi_polygon style option</span>
-<span class="p">)</span>
-
-<span class="n">show</span><span class="p">(</span><span class="n">my_map</span><span class="o">.</span><span class="n">figure</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span> 
 </pre></div>
 
      </div>
 </div>
 </div>
-</div>
-
-<div class="jp-Cell-outputWrapper">
-<div class="jp-Collapser jp-OutputCollapser jp-Cell-outputCollapser">
-</div>
-
-
-<div class="jp-OutputArea jp-Cell-outputArea">
-<div class="jp-OutputArea-child">
-    
-    <div class="jp-OutputPrompt jp-OutputArea-prompt"></div>
-
-
-<div class="jp-RenderedText jp-OutputArea-output" data-mime-type="application/vnd.jupyter.stderr">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">TypeError</span>                                 Traceback (most recent call last)
-File <span class="ansi-green-fg">&lt;timed exec&gt;:1</span>
-
-<span class="ansi-red-fg">TypeError</span>: Gdf2Bokeh.__init__() got an unexpected keyword argument &#39;x_range&#39;</pre>
-</div>
-</div>
-
-</div>
-
 </div>
 
 </div>
