@@ -70,10 +70,10 @@ jobs:
         publish_dir: _build/
 
     - name: publish-to-conda
-      uses: amauryval/publish_conda_package_action@1.1.0
+      uses: amauryval/publish_conda_package_action@2.3.0
       with:
         CondaDir: 'conda_recipe'
-        Platforms: 'linux-64 win-64 osx-64'
+        Platforms: 'noarch'
         Channels: 'bokeh conda-forge'
         CondaUsername: ${{ secrets.CONDA_USERNAME }}
         CondaPassword: ${{ secrets.CONDA_PASSWORD }}

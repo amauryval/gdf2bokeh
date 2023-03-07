@@ -1,5 +1,4 @@
-from typing import List
-from typing import Union
+from typing import List, Set
 
 from shapely.geometry import base
 from shapely.geometry import Point
@@ -15,12 +14,10 @@ from shapely.geometry import MultiPolygon
 
 from shapely.geometry import GeometryCollection
 
-import pandas as pd
 import geopandas as gpd
-from shapely.wkt import loads
 
 
-def geometry_2_bokeh_format(geometry: base, coord_output_format: str = "xy") -> List:
+def geometry_2_bokeh_format(geometry: base, coord_output_format: str = "xy") -> List[float | tuple[float]]:
     """
     geometry_2_bokeh_format
 
@@ -67,37 +64,18 @@ def geometry_2_bokeh_format(geometry: base, coord_output_format: str = "xy") -> 
 
     if isinstance(geometry, (MultiPoint, GeometryCollection)):
         raise ValueError(
-            f"no interest to handle {geometry.geom_type}"
+            f"{geometry.geom_type} not supported"
         )
 
     return coord_values
 
 
-def wkt_to_gpd(geom_wkt: str, geom_epsg: int = 3857) -> gpd.GeoDataFrame:
-    """
-    wkt_to_gpd
-
-    To convert a wkt into a geodataframe
-
-    :type geom_wkt: str
-    :type geom_epsg: int
-
-    :return: float or list of tuple
-    """
-    df = pd.DataFrame([{
-        "geometry": loads(geom_wkt),
-    }])
-    geometry = df["geometry"]
-    properties = df.drop(columns=["geometry"])
-
-    return gpd.GeoDataFrame(
-        properties,
-        geometry=geometry,
-        crs=f"EPSG:{geom_epsg}"
-    )
+def get_gdf_geom_type(input_gdf: gpd.GeoDataFrame, geom_col: str) -> Set[str]:
+    return set(input_gdf[geom_col].geom_type.unique())
 
 
-def check_multilinestring_continuity(input_geometry: Union[LineString, MultiLineString]) -> list:
+def check_multilinestring_continuity(input_geometry: LineString | MultiLineString
+                                     ) -> list[LineString | MultiLineString]:
     """
     check_if_multilinestring_is_not_continuous
 

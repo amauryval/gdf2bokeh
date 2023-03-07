@@ -1,7 +1,6 @@
-from gdf2bokeh.helpers.geometry import geometry_2_bokeh_format
-from gdf2bokeh.helpers.geometry import wkt_to_gpd
-
 import itertools
+
+from gdf2bokeh.geometry import geometry_2_bokeh_format
 
 
 def compute_geometry(data):
@@ -18,7 +17,6 @@ def test_points_geom_to_bokeh_format(points_data):
 
     assert len(y_values) == points_data.shape[0]
     assert y_values == list(map(lambda feature: feature.y, points_data.geometry.to_list()))
-
 
 def test_linestrings_geom_to_bokeh_format(linestrings_data):
     x_values, y_values = compute_geometry(linestrings_data)
@@ -82,10 +80,12 @@ def test_polygons_geom_to_bokeh_format(polygons_data):
     # first object
     assert len(x_values[0][0]) == 1
     assert x_values[0][0][0] == list(polygons_data.iloc[0].geometry.exterior.xy[0])
-    exterior_count = 1  # because it a polygon
+    exterior_count = 1  # because it's a polygon
     assert x_values[0][0][0] == list(polygons_data.iloc[0].geometry.exterior.xy[0])
     # holes
-    assert x_values[0][exterior_count - len(x_values[0])] == list(list(interior.xy[0]) for interior in polygons_data.iloc[0].geometry.interiors)
+    assert x_values[0][exterior_count - len(x_values[0])] == list(list(interior.xy[0])
+                                                                  for interior
+                                                                  in polygons_data.iloc[0].geometry.interiors)
     # sec object
     assert x_values[-1][0][0] == list(polygons_data.iloc[-1].geometry.exterior.xy[0])
     assert x_values[-1][0][-1] == list(polygons_data.iloc[-1].geometry.exterior.xy[0])
@@ -94,10 +94,12 @@ def test_polygons_geom_to_bokeh_format(polygons_data):
     # first object
     assert y_values[0][0][0] == list(polygons_data.iloc[0].geometry.exterior.xy[-1])
     assert y_values[0][0][-1] == list(polygons_data.iloc[0].geometry.exterior.xy[-1])
-    exterior_count = 1  # because it a polygon
+    exterior_count = 1  # because it's a polygon
     assert y_values[0][0][0] == list(polygons_data.iloc[0].geometry.exterior.xy[-1])
     # holes
-    assert y_values[0][exterior_count - len(y_values[0])] == list(list(interior.xy[-1]) for interior in polygons_data.iloc[0].geometry.interiors)
+    assert y_values[0][exterior_count - len(y_values[0])] == list(list(interior.xy[-1])
+                                                                  for interior
+                                                                  in polygons_data.iloc[0].geometry.interiors)
     # sec object
     assert y_values[-1][0][0] == list(polygons_data.iloc[-1].geometry.exterior.xy[-1])
     assert y_values[-1][0][-1] == list(polygons_data.iloc[-1].geometry.exterior.xy[-1])
@@ -120,9 +122,3 @@ def test_multilines_geom_to_bokekeh_format(multilines_data):
     assert y_values[-1] == list(itertools.chain.from_iterable(
         [list(geom.xy[-1]) for geom in multilines_data.iloc[-1].geometry.geoms]
     ))
-
-
-def test_wkt_to_gpd(geom_wkt):
-    output_gdf = wkt_to_gpd(geom_wkt)
-    assert output_gdf.shape[0] == 1
-    assert output_gdf.shape[-1] == 1

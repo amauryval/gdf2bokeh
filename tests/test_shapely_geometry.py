@@ -1,5 +1,5 @@
-from gdf2bokeh.helpers.geometry import geometry_2_bokeh_format
-from gdf2bokeh.helpers.geometry import check_multilinestring_continuity
+from gdf2bokeh.geometry import geometry_2_bokeh_format
+from gdf2bokeh.geometry import check_multilinestring_continuity
 
 
 def test_shapely_point_geom_to_bokeh_format(shapely_point):
@@ -41,7 +41,11 @@ def test_shapely_polygon_geom_to_bokeh_format(shapely_polygon):
 def test_shapely_polygon_with_hole_geom_to_bokeh_format(shapely_polygon_with_hole):
 
     output = geometry_2_bokeh_format(shapely_polygon_with_hole, "xy")
-    assert output == [[[(0.0, 0.0), (10.0, 0.0), (10.0, 10.0), (0.0, 10.0), (0.0, 0.0)]], [[(1.0, 2.0), (5.0, 2.0), (5.0, 1.0), (1.0, 1.0), (1.0, 2.0)],  [(9.0, 9.0), (9.0, 8.0), (8.0, 8.0), (8.0, 9.0), (9.0, 9.0)]]]
+    assert output == [[
+        [(0.0, 0.0), (10.0, 0.0), (10.0, 10.0), (0.0, 10.0), (0.0, 0.0)]],
+        [[(1.0, 2.0), (5.0, 2.0), (5.0, 1.0), (1.0, 1.0), (1.0, 2.0)],
+         [(9.0, 9.0), (9.0, 8.0), (8.0, 8.0), (8.0, 9.0), (9.0, 9.0)]]
+    ]
 
     output = geometry_2_bokeh_format(shapely_polygon_with_hole, "x")
     assert output == [[[0.0, 10.0, 10.0, 0.0, 0.0]], [[1.0, 5.0, 5.0, 1.0, 1.0], [9.0, 9.0, 8.0, 8.0, 9.0]]]
