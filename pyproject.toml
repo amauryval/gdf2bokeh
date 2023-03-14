@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "gdf2bokeh"
-version = "3.0.3"
+version = "3.0.4"
 description = "An easy way to map geodataframes on bokeh"
 authors = ["amauryval <amauryval@gmail.com>"]
 license = "GPL3"
@@ -9,10 +9,10 @@ readme = "README.md"
 [tool.poetry.dependencies]
 python = "3.11.0"
 geopandas = "^0.12.2"
-bokeh = "^3.0.3"
+bokeh = "^3.1.0"
 
 [tool.poetry.dev-dependencies]
-pytest = "^7.1.3"
+pytest = "^7.2.2"
 pytest-cov = "^4.0.0"
 jupyter = "^1.0.0"
 
