@@ -18,6 +18,7 @@ def test_points_geom_to_bokeh_format(points_data):
     assert len(y_values) == points_data.shape[0]
     assert y_values == list(map(lambda feature: feature.y, points_data.geometry.to_list()))
 
+
 def test_linestrings_geom_to_bokeh_format(linestrings_data):
     x_values, y_values = compute_geometry(linestrings_data)
 
@@ -105,7 +106,7 @@ def test_polygons_geom_to_bokeh_format(polygons_data):
     assert y_values[-1][0][-1] == list(polygons_data.iloc[-1].geometry.exterior.xy[-1])
 
 
-def test_multilines_geom_to_bokekeh_format(multilines_data):
+def test_multilines_geom_to_bokeh_format(multilines_data):
     x_values, y_values = compute_geometry(multilines_data)
 
     assert len(x_values) == multilines_data.shape[0]

@@ -11,7 +11,6 @@ from bokeh.models.renderers import GlyphRenderer
 from bokeh.models import HoverTool
 
 from gdf2bokeh.geometry import geometry_2_bokeh_format
-from gdf2bokeh.geometry import check_multilinestring_continuity
 
 
 class GeomTypeError(Exception):

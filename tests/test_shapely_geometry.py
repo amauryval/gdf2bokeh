@@ -1,5 +1,4 @@
 from gdf2bokeh.geometry import geometry_2_bokeh_format
-from gdf2bokeh.geometry import check_multilinestring_continuity
 
 
 def test_shapely_point_geom_to_bokeh_format(shapely_point):
@@ -64,23 +63,3 @@ def test_shapely_multilinestring_geom_to_bokeh_format(shapely_multilinestring_wi
 
     output = geometry_2_bokeh_format(shapely_multilinestring_without_continuity, "y")
     assert output == [0.0, 2.0, 0.0, 10.0]
-
-
-def test_check_multilinestring_without_continuity(shapely_multilinestring_without_continuity):
-    output = check_multilinestring_continuity(shapely_multilinestring_without_continuity)
-    assert len(output) == 2
-    assert set([feature.geom_type for feature in output]) == {"LineString"}
-
-
-def test_check_multilinestring_continuity(shapely_multilinestring_continuity):
-    output = check_multilinestring_continuity(shapely_multilinestring_continuity)
-    assert len(output) == 1
-    assert output[0].geom_type == "MultiLineString"
-
-
-def test_check_multilinestring_unordered_to_reordered(shapely_multilinestring_unordered):
-    output = check_multilinestring_continuity(shapely_multilinestring_unordered)
-    assert len(output) == 1
-    assert output[0].geom_type == "MultiLineString"
-    assert output[0].wkt == "MULTILINESTRING ((0 0, 5 2), (5 2, 10 10))"
-
