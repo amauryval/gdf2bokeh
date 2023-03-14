@@ -82,6 +82,21 @@ def test_from_wkt_geom_list(geom_wkt):
     assert layer.title == "layer_1"
 
 
+def test_from_mutilinestring_geom(shapely_multilinestring_without_continuity):
+    map_session = Gdf2Bokeh()
+    map_session.add_layer_from_geom_list("layer_1", [shapely_multilinestring_without_continuity], from_epsg=4326,
+                                         geom_format="shapely")
+
+    layers = map_session.layers
+    assert len(layers) == 1
+
+    layer = layers["layer_1"]
+    assert isinstance(layer.data, gpd.GeoDataFrame)
+    assert layer.data.shape[0] == 2
+    assert layer.data.shape[-1] == 2
+    assert layer.title == "layer_1"
+
+
 def test_from_dummy_shapely_geom_list(shapely_point, shapely_polygon):
     map_session = Gdf2Bokeh()
     with pytest.raises(GeomTypeError):

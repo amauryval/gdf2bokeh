@@ -142,13 +142,14 @@ class LinestringLayer(LayerCore):
     _geom_type = GeomTypes.LINESTRINGS
 
     def __init__(self, title: str, data: gpd.GeoDataFrame, from_epsg: int, **style_parameters) -> None:
+        data = self._clean_lines_from_gdf(data)
         super().__init__(title=title, data=data, from_epsg=from_epsg, **style_parameters)
 
     def refresh_data_source(self):
         # go to check the multilinestring continuity, because the bokeh format cannot display a multilinestring
         # containing a discontinuity. We'll convert the objet into linestring if needed.
-        # data = self._clean_lines_from_gdf(self.data)  # DEPRECATED
-        self._data_source.data = dict(self._format_gdf_features_to_bokeh(self.data).data)
+        data = self._clean_lines_from_gdf(self.data)
+        self._data_source.data = dict(self._format_gdf_features_to_bokeh(data).data)
 
     def render(self, figure_obj: figure) -> None:
         """render the bokeh object"""
@@ -159,13 +160,7 @@ class LinestringLayer(LayerCore):
 
     @staticmethod
     def _clean_lines_from_gdf(input_gdf: gpd.GeoDataFrame) -> gpd.GeoDataFrame:
-        # DEPRECATED
-        input_gdf_proceed = input_gdf.copy(deep=True)
-        input_gdf_proceed["geometry"] = input_gdf_proceed["geometry"].apply(
-            lambda x: check_multilinestring_continuity(x)
-        )
-        input_gdf_proceed = input_gdf_proceed.explode("geometry")
-        return input_gdf_proceed
+        return input_gdf.explode(index_parts=False)
 
 
 class PolygonLayer(LayerCore):
