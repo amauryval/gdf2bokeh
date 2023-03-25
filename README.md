@@ -58,6 +58,7 @@ Check bokeh documentation in order to style your data :
 ```python
 from bokeh.plotting import show
 import geopandas as gpd
+import paandas as pd
 from gdf2bokeh import Gdf2Bokeh
 
 map_session = Gdf2Bokeh()
@@ -69,7 +70,7 @@ map_session.add_layer_from_geodataframe("layer1", gpd.GeoDataFrame.from_file("yo
                                         size=6, fill_color="red", line_color="blue")
 
 # Map from a DataFrame. Style parameters are not required
-map_session.add_layer_from_dataframe("layer2", gpd.GeoDataFrame.from_file("your_data.json"),
+map_session.add_layer_from_dataframe("layer2", pd.DataFrame.from_file("your_data.json"),
                                      geom_column="geometry", geom_format="shapely")
 
 # Map from a list of dictionnaries
