@@ -57,6 +57,7 @@ def test_from_wkt_feature_list(data_wkt_list):
 def test_from_shapely_feature_list(data_shapely_list):
     map_session = Gdf2Bokeh()
     map_session.add_layer_from_dict_list("layer_1", data_shapely_list, from_epsg=4326)
+    map_session.add_layer_from_dict_list("layer_2", [], from_epsg=4326)
 
     layers = map_session.layers
     assert len(layers) == 1
@@ -66,6 +67,15 @@ def test_from_shapely_feature_list(data_shapely_list):
     assert layer.data.shape[0] == 2
     assert layer.data.shape[-1] == 2
     assert layer.title == "layer_1"
+
+def test_from_shapely_feature_list_empty():
+    map_session = Gdf2Bokeh()
+    map_session.add_layer_from_dict_list("layer_1", [], from_epsg=4326)
+
+    layers = map_session.layers
+    assert len(layers) == 0
+
+    assert isinstance(layers, dict)
 
 
 def test_from_wkt_geom_list(geom_wkt):

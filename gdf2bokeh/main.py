@@ -34,7 +34,6 @@ class Gdf2Bokeh(AppMap):
 
     def add_layers_on_maps(self):
         for _, layer in self.layers.items():
-
             layer.render(self.figure)
             self._legend_settings()
 
@@ -44,19 +43,20 @@ class Gdf2Bokeh(AppMap):
         if data.shape[0] == 0:
             raise Gdf2BokehError("GeoDataFrame is empty")
 
-        geom_types_on_data = get_gdf_geom_type(data, "geometry")
-        geom_type = GeomTypes.has_value(geom_types_on_data)
+        if not self.is_df_empty(data):
+            geom_types_on_data = get_gdf_geom_type(data, "geometry")
+            geom_type = GeomTypes.has_value(geom_types_on_data)
 
-        if geom_type == GeomTypes.POINT:
-            self.layers = PointLayer(title=title, data=data, from_epsg=from_epsg, **style_parameters)
-        elif geom_type == GeomTypes.LINESTRINGS:
-            self.layers = LinestringLayer(title=title, data=data, from_epsg=from_epsg, **style_parameters)
-        elif geom_type == GeomTypes.POLYGONS:
-            self.layers = PolygonLayer(title=title, data=data, from_epsg=from_epsg, **style_parameters)
-        elif geom_type == GeomTypes.MULTIPOINT:
-            self.layers = MultiPointLayer(title=title, data=data, from_epsg=from_epsg, **style_parameters)
-        else:
-            raise ValueError(f"{geom_type} not supported")
+            if geom_type == GeomTypes.POINT:
+                self.layers = PointLayer(title=title, data=data, from_epsg=from_epsg, **style_parameters)
+            elif geom_type == GeomTypes.LINESTRINGS:
+                self.layers = LinestringLayer(title=title, data=data, from_epsg=from_epsg, **style_parameters)
+            elif geom_type == GeomTypes.POLYGONS:
+                self.layers = PolygonLayer(title=title, data=data, from_epsg=from_epsg, **style_parameters)
+            elif geom_type == GeomTypes.MULTIPOINT:
+                self.layers = MultiPointLayer(title=title, data=data, from_epsg=from_epsg, **style_parameters)
+            else:
+                raise ValueError(f"{geom_type} not supported")
 
     def add_layer_from_dataframe(self, title: str, data: pd.DataFrame, from_epsg: int, geom_column: str = "geometry",
                                  geom_format: str = "shapely", **style_parameters) -> None:
@@ -66,8 +66,9 @@ class Gdf2Bokeh(AppMap):
             pass
         elif geom_format == GeomFormat.WKT:
             data[geom_column] = gpd.GeoSeries.from_wkt(data[geom_column])
-        data = gpd.GeoDataFrame(data, geometry=geom_column, crs=f"epsg:{from_epsg}")
-        self.add_layer_from_geodataframe(title, data, from_epsg, **style_parameters)
+        if not self.is_df_empty(data):
+            data = gpd.GeoDataFrame(data, geometry=geom_column, crs=f"epsg:{from_epsg}")
+            self.add_layer_from_geodataframe(title, data, from_epsg, **style_parameters)
 
     def add_layer_from_list_dict(self, title: str, data: List[Dict], from_epsg: int, geom_column: str = "geometry",
                                  geom_format: str = "shapely", **style_parameters) -> None:
@@ -96,3 +97,9 @@ class Gdf2Bokeh(AppMap):
     def layers(self, data: LayerCore) -> None:
         """To add a layer"""
         self._layers[data.title] = data
+
+    @staticmethod
+    def is_df_empty(data: pd.DataFrame | gpd.GeoDataFrame) -> bool:
+        if data.shape[0] == 0:
+            return True
+        return False
