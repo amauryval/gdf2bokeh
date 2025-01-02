@@ -4,9 +4,9 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - python=3.10
-  - geopandas>=0.8.0
-  - bokeh>=2.3
+  - python=3.13
+  - geopandas>=1.0.1
+  - bokeh>=2.6
   - pytest
   - pytest-cov
   - jupyter=1.0.0
